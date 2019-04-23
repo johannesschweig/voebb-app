@@ -1,3 +1,4 @@
+const $ = require('cheerio')
 var session
 var searchTerm
 
@@ -105,8 +106,9 @@ function startSearch() {
       });
 
       res.on("end", function (chunk) {
-        var body = Buffer.concat(chunks);
-        // console.log(body.toString());
+        var body = Buffer.concat(chunks)
+        console.log('search successfull')
+        extractResult(body.toString())
       });
 
       res.on("error", function (error) {
@@ -142,7 +144,53 @@ function startSearch() {
     req.end();
 }
 
+// extracts all the fields from a single result row
+function extractFields(row) {
+    // image cover (if any)
+    let img = $('.img-delayed', row).attr('data-src')
+    // medium (CD, Buch,...)
+    let medium = $('.rList_medium > img', row).attr('title')
+    // title
+    let title = $('.rList_titel > a', row).text()
+    // link
+    let link =  $('.rList_titel > a', row).attr('href')
+    link = link.match(/'([^']+)'/)[1]
+    // available
+    let avail = $('.rList_availability > span > img', row).attr('alt')
+    // name
+    let name = $('.rList_name:nth-child(4)', row).text()
+    // year
+    let year = $('.rList_jahr', row).text()
+    return {
+        'title': title,
+        'name': name,
+        'medium': medium,
+        'year': year,
+        'img': img,
+        'link': link,
+        'avail': avail,
+    }
+}
+
+// extracts the results from the html
+function extractResult(html) {
+    let data = []
+    var rows = $('.rList > li', html)
+    // console.log(rows.length + ' rows found')
+    for (let i = 0; i < rows.length; i++) {
+        data.push(extractFields(rows[i]))
+    }
+    console.log(data)
+    return data
+}
+
 export default function search(term) {
     searchTerm = term
-    landingPage()
+    // TODO refactor callbacks to promises
+    // landingPage()
+    // TODO mocked html
+    var fs = require('fs')
+    var path = require('path')
+    var html = fs.readFileSync(path.join(__dirname, '..', 'search.html'), { encoding: 'utf8' })
+    return extractResult(html)
 }

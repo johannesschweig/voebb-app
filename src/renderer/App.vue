@@ -1,19 +1,25 @@
 <template>
   <div id='app'>
-      <h1>test</h1>
+      <Searchfield />
+      <Searchresults />
   </div>
 </template>
 
 <script>
-  import search from './utils/requests.js'
+  import Searchfield from './components/Searchfield.vue'
+  import Searchresults from './components/Searchresults.vue'
 
   export default {
-    mounted () {
-      search('Rüdiger Hoffmann')
+    components: {
+        Searchfield,
+        Searchresults
     }
   }
 </script>
 
 <style scoped>
-  /* CSS */
+    #app {
+        font-family: Lato, sans-serif;
+        padding: 0 16px;
+    }
 </style>
