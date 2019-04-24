@@ -67,7 +67,9 @@
         },
         mounted () {
             // TODO make this work on search button press
-            this.results = search('Mario Barth')
+            search('Heiner lauterbach').then(res => {
+                this.results = res
+            })
         }
     }
 </script>
