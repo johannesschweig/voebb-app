@@ -2,7 +2,7 @@ const https = require('https')
 const qs = require('querystring')
 
 // returns a promise of a http request
-export default function req(options, data = '') {
+export default function req(options, data = '', header = '') {
     return new Promise((resolve, reject) => {
         const req = https.request(options,
             (res) => {
@@ -18,6 +18,13 @@ export default function req(options, data = '') {
                 })
             })
         req.on('error', reject)
+        // if header present, set header
+        if (header != '') {
+            // iterate over key-value pairs and set header
+            for (let key in header) {
+                req.setHeader(key, header[key])
+            }
+        }
         req.write(data, 'binary')
         req.end()
     })

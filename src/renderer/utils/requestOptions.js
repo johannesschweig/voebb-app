@@ -67,3 +67,22 @@ export function resultsPageData(searchTerm) {
       'winDim': '952;966'
     })
 }
+
+export function resultPageOptions(link) {
+    return {
+        'method': 'GET',
+        'hostname': 'voebb.de',
+        'path': '/aDISWeb/app?service=direct%2F0%2FHome%2F%24DirectLink&sp=SPROD00&sp=S' + link,
+        'headers': {
+            'Connection': 'keep-alive',
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-cache',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.9,de;q=0.8',
+            'Cookie': 'TS01b85d9e=01d33437f9ff0173042a02e2f57dfecd3489ef8d35f381632ab5394981ce8c6f8821bacb66a902f2f900e0acc8831841140b447118'
+        }
+    }
+}

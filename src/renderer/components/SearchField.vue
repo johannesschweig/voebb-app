@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='container'>
        <span>Search</span>
        <input ref='input' placeholder='Search for books, cds...' @keyup.enter='submit'/>
     </div>
@@ -17,8 +17,19 @@ export default {
 </script>
 
 <style scoped>
-div {
-    padding-top: 20px;
-    padding-bottom: 30px;
+.container {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    padding: 8px 0 24px 0;
+}
+
+span {
+    padding-right: 4px;
+}
+
+input {
+    height: 24px;
+    width: 50%;
+    font-size: 16px;
 }
 </style>

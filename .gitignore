@@ -2,6 +2,7 @@
 dist/electron/*
 dist/web/*
 node_modules/
+html-data/
 npm-debug.log
 npm-debug.log.*
 thumbs.db

@@ -1,23 +1,47 @@
 <template>
     <div id='app'>
-        <Searchpage />
+        <Navigation :currentPage='currentPage' @switch-page='switchPage'/>
+        <keep-alive>
+            <component
+                :is='currentPage'>
+            </component>
+        </keep-alive>
     </div>
 </template>
 
 <script>
-import Searchpage from './components/Searchpage.vue'
+import BookmarksPage from './components/BookmarksPage.vue'
+import Navigation from './components/Navigation.vue'
+import SearchPage from './components/SearchPage.vue'
 
 export default {
+    data () {
+        return {
+            currentPage: 'SearchPage'
+        }
+    },
     components: {
-        Searchpage
+        BookmarksPage,
+        Navigation,
+        SearchPage
+    },
+    methods: {
+        // switch pages: search or bookmarks
+        switchPage(page) {
+            this.currentPage = page
+        }
     }
 }
 </script>
 
-<style scoped>
-    #app {
-        font-family: Lato, sans-serif;
-        color: #3e3e3e;
-        padding: 0 16px;
-    }
+<style>
+#app {
+    font-family: Lato, sans-serif;
+    color: #3e3e3e;
+    padding: 8px 16px;
+}
+
+i {
+    opacity: .9;
+}
 </style>
