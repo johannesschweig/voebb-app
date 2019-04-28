@@ -2,7 +2,7 @@
     <div class='container'>
         <table>
             <tbody>
-                <tr v-for='row in results' @click.left='open(row.link)'>
+                <tr v-for='row in results' @click.left='open(row.identifier)'>
                     <td>
                         <img :src='row.img'/>
                     </td>
@@ -20,13 +20,14 @@
                     <td class='availability'>
                         <AvailableIcon :avail='row.avail' />
                     </td>
+                    <td>
+                        <BookmarkIcon
+                            :active='bookmarks.indexOf(row.identifier) != -1'
+                            :identifier='row.identifier'
+                            @bookmark='addBookmark' />
+                    </td>
                     <td class='link'>
-                        <a
-                            :href='"https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=S" + row.link'
-                            target='_blank'
-                            >
-                            <i class="fas fa-external-link-square-alt"></i>
-                        </a>
+                        <LinkIcon :identifier='row.identifier' />
                     </td>
                 </tr>
             </tbody>
@@ -35,15 +36,23 @@
 </template>
 
 <script>
+import BookmarkIcon from './icons/BookmarkIcon.vue'
 import MediumIcon from './icons/MediumIcon.vue'
+import LinkIcon from './icons/LinkIcon.vue'
 import AvailableIcon from './icons/AvailableIcon.vue'
 
 export default {
     components: {
         AvailableIcon,
+        BookmarkIcon,
+        LinkIcon,
         MediumIcon
     },
     props: {
+        bookmarks: {
+            type: Array,
+            required: true
+        },
         results: {
             type: Array,
             required: true
@@ -51,8 +60,13 @@ export default {
     },
     methods: {
         // opens the clicked row in the preview
-        open(link) {
-            this.$emit('open', link)
+        open(identifier) {
+            this.$emit('open', identifier)
+        },
+        // adds a bookmark
+        // TODO not beautiful; replace with Vuex
+        addBookmark(identifier) {
+            this.$emit('addBookmark', identifier)
         }
     }
 }

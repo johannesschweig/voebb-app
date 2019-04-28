@@ -68,11 +68,11 @@ export function resultsPageData(searchTerm) {
     })
 }
 
-export function resultPageOptions(link) {
+export function resultPageOptions(identifier) {
     return {
         'method': 'GET',
         'hostname': 'voebb.de',
-        'path': '/aDISWeb/app?service=direct%2F0%2FHome%2F%24DirectLink&sp=SPROD00&sp=S' + link,
+        'path': '/aDISWeb/app?service=direct%2F0%2FHome%2F%24DirectLink&sp=SPROD00&sp=S' + identifier,
         'headers': {
             'Connection': 'keep-alive',
             'Pragma': 'no-cache',

@@ -91,12 +91,6 @@ export default {
 .title {
 }
 
-.placeholder {
-    font-size: 12px;
-    opacity: .5;
-    font-style: italic;
-}
-
 .details {
     margin-bottom: 32px;
 }

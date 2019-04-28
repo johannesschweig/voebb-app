@@ -1,7 +1,11 @@
 <template>
     <div class='root'>
         <SearchField @search='search' />
-        <SearchResults :results='searchResults' @open='open'/>
+        <SearchResults
+            :bookmarks='bookmarks'
+            :results='searchResults'
+            @open='open'
+            @addBookmark='addBookmark' />
         <Preview :data='previewData'/>
     </div>
 </template>
@@ -22,6 +26,12 @@ export default {
             }
         }
     },
+    props: {
+        bookmarks: {
+            type: Array,
+            required: true
+        }
+    },
     components: {
         Preview,
         SearchField,
@@ -35,10 +45,15 @@ export default {
             })
         },
         // fetches data and displays row in preview
-        open(link) {
-            getEntryDetails(link).then(res => {
+        open(identifier) {
+            getEntryDetails(identifier).then(res => {
                 this.previewData = res
             })
+        },
+        // add bookmark
+        // TODO not beautiful; replace with Vuex
+        addBookmark(identifier) {
+            this.$emit('addBookmark', identifier)
         }
     },
     mounted() {

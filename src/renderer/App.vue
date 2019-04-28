@@ -1,11 +1,13 @@
 <template>
     <div id='app'>
         <Navigation :currentPage='currentPage' @switch-page='switchPage'/>
-        <keep-alive>
-            <component
-                :is='currentPage'>
-            </component>
-        </keep-alive>
+        <SearchPage
+            v-show='currentPage == "SearchPage"'
+            :bookmarks='bookmarks'
+            @addBookmark='addBookmark' />
+        <BookmarksPage
+            v-show='currentPage == "BookmarksPage"'
+            @bookmarks='updateBookmarks' />
     </div>
 </template>
 
@@ -17,7 +19,9 @@ import SearchPage from './components/SearchPage.vue'
 export default {
     data () {
         return {
-            currentPage: 'SearchPage'
+            // currentPage: 'SearchPage'
+            currentPage: 'BookmarksPage',
+            bookmarks: []
         }
     },
     components: {
@@ -29,6 +33,14 @@ export default {
         // switch pages: search or bookmarks
         switchPage(page) {
             this.currentPage = page
+        },
+        // updates current bookmarks
+        updateBookmarks(bookmarks) {
+            this.bookmarks = bookmarks
+        },
+        // adds a bookmark
+        addBookmark(identifier) {
+            this.bookmarks.push(identifier)
         }
     }
 }
@@ -44,4 +56,11 @@ export default {
 i {
     opacity: .9;
 }
+
+.placeholder {
+    font-size: 12px;
+    opacity: .5;
+    font-style: italic;
+}
+
 </style>
