@@ -1,13 +1,9 @@
 <template>
     <div id='app'>
-        <Navigation :currentPage='currentPage' @switch-page='switchPage'/>
-        <SearchPage
-            v-show='currentPage == "SearchPage"'
-            :bookmarks='bookmarks'
-            @addBookmark='addBookmark' />
-        <BookmarksPage
-            v-show='currentPage == "BookmarksPage"'
-            @bookmarks='updateBookmarks' />
+        <Navigation />
+        <keep-alive>
+            <component :is='currentPage' />
+        </keep-alive>
     </div>
 </template>
 
@@ -15,33 +11,23 @@
 import BookmarksPage from './components/BookmarksPage.vue'
 import Navigation from './components/Navigation.vue'
 import SearchPage from './components/SearchPage.vue'
+import { mapState } from 'vuex'
 
 export default {
-    data () {
-        return {
-            // currentPage: 'SearchPage'
-            currentPage: 'BookmarksPage',
-            bookmarks: []
-        }
-    },
     components: {
         BookmarksPage,
         Navigation,
         SearchPage
     },
-    methods: {
-        // switch pages: search or bookmarks
-        switchPage(page) {
-            this.currentPage = page
-        },
-        // updates current bookmarks
-        updateBookmarks(bookmarks) {
-            this.bookmarks = bookmarks
-        },
-        // adds a bookmark
-        addBookmark(identifier) {
-            this.bookmarks.push(identifier)
-        }
+    computed: mapState({
+        'currentPage': state => state.currentPage
+    }),
+    created() {
+        // read in bookmarks from file
+        this.$store.dispatch('readBookmarks')
+        // TODO remove before deployment
+        this.$store.dispatch('fakeSearch')
+        this.$store.dispatch('fakeFetchDetails')
     }
 }
 </script>

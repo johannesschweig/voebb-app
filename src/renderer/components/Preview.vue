@@ -63,16 +63,15 @@
 <script>
 import MediumIcon from './icons/MediumIcon.vue'
 import { libraryAliases } from '../utils/constants.js'
+import { mapState } from 'vuex'
 
 export default {
-    props: {
-        data: {
-            type: Object
-        }
-    },
     components: {
         MediumIcon
     },
+    computed: mapState({
+        data: state => state.preview
+    }),
     methods: {
         // returns a shorter alias name for the library
         getLibraryAlias(library) {

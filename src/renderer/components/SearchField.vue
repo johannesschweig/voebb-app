@@ -1,18 +1,17 @@
 <template>
     <div class='container'>
        <span>Search</span>
-       <input ref='input' placeholder='Search for books, cds...' @keyup.enter='submit'/>
+       <input ref='input' placeholder='Search for books, cds...' @keyup.enter='search($refs.input.value)'/>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-    methods: {
-        // submit the search
-        submit() {
-            this.$emit('search', this.$refs.input.value)
-        }
-    }
+    methods: mapActions([
+        'search'
+    ])
 }
 </script>
 

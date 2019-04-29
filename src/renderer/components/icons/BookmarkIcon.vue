@@ -1,11 +1,13 @@
 <template>
     <i
-        :class="['fa-bookmark', { 'fas': active, 'far': !active }]">
-        @click='clicked'
+        :class="['fa-bookmark', { 'fas': active, 'far': !active }]"
+        @click="toggleBookmark( {'active': active, 'identifier': identifier} )" >
     </i>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     props: {
         active: {
@@ -17,11 +19,9 @@ export default {
             required: true
         }
     },
-    methods: {
-        clicked() {
-            this.$emit('bookmark', this.identifier)
-        }
-    }
+    methods: mapActions([
+        'toggleBookmark'
+    ])
 }
 </script>
 

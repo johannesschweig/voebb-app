@@ -2,7 +2,7 @@
     <div class='container'>
         <table>
             <tbody>
-                <tr v-for='row in results' @click.left='open(row.identifier)'>
+                <tr v-for='row in results' @click.left='fetchDetails(row.identifier)'>
                     <td>
                         <img :src='row.img'/>
                     </td>
@@ -22,9 +22,8 @@
                     </td>
                     <td>
                         <BookmarkIcon
-                            :active='bookmarks.indexOf(row.identifier) != -1'
-                            :identifier='row.identifier'
-                            @bookmark='addBookmark' />
+                            :active='bookmarksList.indexOf(row.identifier) != -1'
+                            :identifier='row.identifier' />
                     </td>
                     <td class='link'>
                         <LinkIcon :identifier='row.identifier' />
@@ -40,6 +39,7 @@ import BookmarkIcon from './icons/BookmarkIcon.vue'
 import MediumIcon from './icons/MediumIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import AvailableIcon from './icons/AvailableIcon.vue'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -48,27 +48,18 @@ export default {
         LinkIcon,
         MediumIcon
     },
-    props: {
-        bookmarks: {
-            type: Array,
-            required: true
-        },
-        results: {
-            type: Array,
-            required: true
-        }
+    computed: {
+        ...mapState({
+            bookmarks: state => state.bookmarks.data,
+            results: state => state.searchResults
+        }),
+        ...mapGetters([
+            'bookmarksList'
+        ])
     },
-    methods: {
-        // opens the clicked row in the preview
-        open(identifier) {
-            this.$emit('open', identifier)
-        },
-        // adds a bookmark
-        // TODO not beautiful; replace with Vuex
-        addBookmark(identifier) {
-            this.$emit('addBookmark', identifier)
-        }
-    }
+    methods: mapActions([
+        'fetchDetails'
+    ])
 }
 </script>
 

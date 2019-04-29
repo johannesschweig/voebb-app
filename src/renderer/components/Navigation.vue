@@ -20,21 +20,15 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
-    props: {
-        currentPage: {
-            type: String,
-            required: true
-        }
-    },
-    methods: {
-        switchPage(page) {
-            // different page than currently
-            if (page != this.currentPage) {
-                this.$emit('switch-page', page)
-            }
-        }
-    }
+    computed: mapState({
+        'currentPage': state => state.currentPage
+    }),
+    methods: mapActions([
+        'switchPage'
+    ])
 }
 </script>
 

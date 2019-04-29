@@ -16,7 +16,7 @@ export default {
     },
     methods: {
         clicked() {
-            this.$emit('remove', this.identifier)
+            this.$store.dispatch('removeBookmark', this.identifier)
         }
     }
 }

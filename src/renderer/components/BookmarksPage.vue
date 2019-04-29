@@ -1,6 +1,6 @@
 <template>
     <div class='container'>
-        <div v-if='this.data.length != 0'>
+        <div v-if='detailsAvailable'>
             <button @click='refetchExisting'>Refresh</button>
             <span>Last updated:</span>
             <span> {{ lastUpdated }}</span>
@@ -10,11 +10,9 @@
                         <td class='instance'>
                             <div class='title'>{{ getProperty(instance.details, 'Titel') }}</div>
                             <div class='person'>
-                                <!-- {{ getProperty(instance.details, 'Person') }} -->
+                                 <!-- {{ getProperty(instance.details, 'Person') }} -->
                                 <LinkIcon :identifier='instance.identifier' />
-                                <RemoveIcon
-                                    :identifier='instance.identifier'
-                                    @remove='remove' />
+                                <RemoveIcon :identifier='instance.identifier' />
                             </div>
                         </td>
                         <td v-for='avail in instance.availability.filter(obj => obj.preferred)'>
@@ -48,15 +46,15 @@ import { libraryAliases } from '../utils/constants.js'
 import AvailableIcon from './icons/AvailableIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-    data() {
-        return {
-            // bookmarks: [],
-            // bookmarks: ['AK12594954', 'AK02026972', 'AK34182220', 'AK16100851'],
-            data: [],
-            lastUpdated: ''
-        }
+    computed: {
+        ...mapState({
+            data: state => state.bookmarks.data,
+            lastUpdated: state => state.bookmarks.lastUpdated
+        }),
+        ...mapGetters([ 'detailsAvailable' ])
     },
     components: {
         AvailableIcon,
@@ -64,60 +62,18 @@ export default {
         RemoveIcon
     },
     methods: {
-        // read bookmarks from bookmarks.json file
-        readBookmarks() {
-            var fs = require('fs')
-            var _this = this
-            fs.readFile(__dirname + '/../../bookmarks.txt', 'utf8', function(err, contents) {
-                _this.refresh(contents.trim().split('\n'))
-            })
-        },
         // get property (e.g. title, person) from array of objects
         getProperty(arr, prop) {
             return arr.filter(e => Object.keys(e)[0] == prop)[0][prop]
         },
-        // returns a shorter alias name for the library
+        // // returns a shorter alias name for the library
         getLibraryAlias(library) {
             return libraryAliases[library]
         },
-        // removes a bookmark from the list
-        remove(identifier) {
-            // update data
-            this.data = this.data.filter(e => e.identifier != identifier)
-            // update bookmarks file
-            // var fs = require('fs')
-            // let bookmarks = getBookmarks().join('\n')
-            // fs.writeFile(__dirname + '/../../bookmarks.txt', bookmarks, function(err, contents) {
-            //     if(err) {
-            //         return console.log(err)
-            //     }
-            // })
-            this.$emit('bookmarks', this.getBookmarks())
-        },
-        // refetches the bookmarks data and refreshes the view
-        refresh(bookmarks) {
-            this.data = []
-            for (let i = 0; i < bookmarks.length; i++) {
-                getEntryDetails(bookmarks[i]).then(res => {
-                   this.data.push(res)
-                   let date = new Date()
-                   this.lastUpdated = date.getDate().toString().padStart(2, '0') + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getFullYear() + " " + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0')
-                })
-            }
-            this.$emit('bookmarks', this.getBookmarks())
-        },
         // refresh the existing bookmarks
         refetchExisting() {
-            let bookmarks = getBookmarks()
-            this.refresh(bookmarks)
-        },
-        // returns an array with identifiers of all bookmarks
-        getBookmarks() {
-            return this.data.map(i => i.identifier)
+            this.$store.dispatch('readBookmarks')
         }
-    },
-    mounted() {
-        this.readBookmarks()
     }
 }
 </script>
