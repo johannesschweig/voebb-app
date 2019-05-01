@@ -48,6 +48,8 @@ export default {
     // search for term
     search({ commit }, term) {
         search(term, false).then(res => {
+            // reset preview
+            commit('setPreviewData', { details: [], availability: [] })
             commit('setSearchResults', res)
         })
     },

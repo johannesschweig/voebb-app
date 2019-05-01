@@ -8,8 +8,10 @@ Vue.use(Vuex)
 
 // initial state
 const state = {
-    currentPage: 'BookmarksPage',//'SearchPage'
-    searchResults: [],
+    currentPage: 'SearchPage', //'BookmarksPage',
+    searchResults: [
+        // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
+    ],
     preview: {
         details: [],
         availability: []

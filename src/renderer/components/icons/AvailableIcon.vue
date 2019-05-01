@@ -8,7 +8,7 @@
         class='fas fa-times'
     ></i>
     <i
-        v-else-if='avail == "siehe Vollanzeige"'
+        v-else-if='avail == "siehe Vollanzeige" || avail == ""'
         class='fas fa-question'
     ></i>
     <div
@@ -50,7 +50,7 @@ export default {
     .wait {
         display: flex;
     }
-    
+
     .unknown,
     .days {
         font-size: 16px;

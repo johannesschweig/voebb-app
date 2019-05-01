@@ -1,6 +1,6 @@
 <template>
     <div class='container'>
-        <table>
+        <table v-if='results.length != 0'>
             <tbody>
                 <tr v-for='row in results' @click.left='fetchDetails(row.identifier)'>
                     <td>
@@ -31,6 +31,11 @@
                 </tr>
             </tbody>
         </table>
+        <span
+            v-else
+            class='placeholder'>
+            No results
+        </span>
     </div>
 </template>
 
@@ -50,7 +55,6 @@ export default {
     },
     computed: {
         ...mapState({
-            bookmarks: state => state.bookmarks.data,
             results: state => state.searchResults
         }),
         ...mapGetters([

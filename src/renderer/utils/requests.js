@@ -20,7 +20,7 @@ function extractFields(row) {
     let medium = $('.rList_medium > img', row).attr('title')
     // title
     let title = $('.rList_titel > a', row).text()
-    // identifier
+    // identifier, e.g. javascript:htmlOnLink('AK15216034')
     let identifier =  $('.rList_titel > a', row).attr('href')
     identifier = identifier.match(/'([^']+)'/)[1]
     // available
@@ -44,6 +44,7 @@ function extractFields(row) {
 function extractResult(html) {
     let data = []
     var rows = $('.rList > li', html)
+    console.log('r', rows)
     // console.log(rows.length + ' rows found')
     for (let i = 0; i < rows.length; i++) {
         data.push(extractFields(rows[i]))
@@ -72,12 +73,33 @@ export function search(term, mocked=false) {
                 // open search results page with search term
                 return req(resultsPageOptions(session), resultsPageData(searchTerm))
             }).then(res => {
-                // extract results from html
-                let results = extractResult(res)
-                console.log('resultsPage successfull:', results.length, 'results')
-                return results
+                // redirected to entry details page
+                if ($('.rList > li', res).length == 0 && $('.gi tr', res).length > 0) {
+                    let results = extractEntryDetails(res)
+                    // extract identifier
+                    let id = $('.gi tr:nth-of-type(1) td a', res).attr('href')
+                    id = id.substring(id.lastIndexOf('=') + 2)
+                    console.log('Redirected to entry details page of', Object.values(results.details[3])[0])
+
+                    return {
+                        details: {
+                                'title': Object.values(results.details[3])[0],
+                                'name': Object.values(results.details[2])[0],
+                                'medium': Object.values(results.details[0])[0].slice(1, -1),
+                                'year': Object.values(results.details[4])[0],
+                                'img': null,
+                                'identifier': id,
+                                'avail': ''
+                        }
+                    }
+                } else {
+                    // extract results from html
+                    let results = extractResult(res)
+                    console.log('resultsPage successfull:', results.length, 'results')
+                    return results
+                }
             })
-            .catch((err) => { console.log("oh no: " + err)});
+            .catch((err) => { console.log(err)});
     } else {
         // reads a prepared html file and extracts the data
         // var fs = require('fs')
