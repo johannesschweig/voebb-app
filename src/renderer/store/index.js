@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 // initial state
 const state = {
-    currentPage: 'SearchPage', //'BookmarksPage',
+    currentPage: 'SearchPage',/* 'BookmarksPage',*/
     searchResults: [
         // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
     ],
@@ -19,9 +19,11 @@ const state = {
     bookmarks: {
         lastUpdated: '',
         data: [
-            // { identifier: 'AK123', data: [..], availability: [...]}
+            // { identifier: 'AK123', details: [..], availability: [...]}
         ]
-    }
+    },
+    // list of preferred libraries
+    libraries: []
 }
 
 export default new Vuex.Store({

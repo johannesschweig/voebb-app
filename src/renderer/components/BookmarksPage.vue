@@ -6,7 +6,7 @@
             <span> {{ lastUpdated }}</span>
             <table v-if='data.length != 0'>
                 <tbody>
-                    <tr v-for='(instance, index) in data'>
+                    <tr v-for='instance in data'>
                         <td class='instance'>
                             <div class='title'>{{ getProperty(instance.details, 'Titel') }}</div>
                             <div class='person'>
@@ -15,7 +15,7 @@
                                 <RemoveIcon :identifier='instance.identifier' />
                             </div>
                         </td>
-                        <td v-for='avail in instance.availability.filter(obj => obj.preferred)'>
+                        <td v-for='avail in getPreferred(instance.availability)'>
                             <AvailableIcon
                             :avail='avail.status'
                             class='fa-2x'/>
@@ -54,7 +54,10 @@ export default {
             data: state => state.bookmarks.data,
             lastUpdated: state => state.bookmarks.lastUpdated
         }),
-        ...mapGetters([ 'detailsAvailable' ])
+        ...mapGetters([
+            'detailsAvailable',
+            'getPreferredLibraries'
+        ]),
     },
     components: {
         AvailableIcon,
@@ -66,13 +69,17 @@ export default {
         getProperty(arr, prop) {
             return arr.filter(e => Object.keys(e)[0] == prop)[0][prop]
         },
-        // // returns a shorter alias name for the library
+        // returns a shorter alias name for the library
         getLibraryAlias(library) {
             return libraryAliases[library]
         },
         // refresh the existing bookmarks
         refetchExisting() {
             this.$store.dispatch('readBookmarks')
+        },
+        // get only availabilities from preferred libraries
+        getPreferred(availabilities) {
+            return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
         }
     }
 }

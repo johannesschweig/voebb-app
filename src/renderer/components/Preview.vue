@@ -21,7 +21,7 @@
         </span>
         <!-- table with availability info-->
         <table
-            v-if='data.availability.filter(row => row.preferred).length != 0 '
+            v-if='getPreferred(data.availability).length != 0 '
             class='availability'>
             <thead>
                 <tr>
@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='instance in data.availability.filter(row => row.preferred)'>
+                <tr v-for='instance in getPreferred(data.availability)'>
                     <td> {{ getLibraryAlias(instance.library) }}</td>
                     <td> {{ instance.place }}</td>
                     <td> {{ instance.signature }}</td>
@@ -43,11 +43,11 @@
             </tbody>
         </table>
         <div
-            v-if='data.availability.filter(row => !row.preferred).length != 0'
+            v-if='getNotPreferred(data.availability).length != 0'
             class='placeholder'>
             <span>Available in:</span>
             <br />
-            <template v-for='instance in data.availability.filter(row => !row.preferred)'>
+            <template v-for='instance in getNotPreferred(data.availability)'>
                 {{ instance.library}},
             </template>
         </div>
@@ -63,19 +63,38 @@
 <script>
 import MediumIcon from './icons/MediumIcon.vue'
 import { libraryAliases } from '../utils/constants.js'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     components: {
         MediumIcon
     },
-    computed: mapState({
-        data: state => state.preview
-    }),
+    computed: {
+        ...mapState({
+            data: state => state.preview
+        }),
+        ...mapGetters([
+            'getPreferredLibraries'
+        ])
+    },
     methods: {
         // returns a shorter alias name for the library
         getLibraryAlias(library) {
-            return libraryAliases[library]
+            let alias = libraryAliases[library]
+            // alias present
+            if (alias) {
+                return alias
+            } else { // no alias present
+                return library
+            }
+        },
+        // get only availabilities from preferred libraries
+        getPreferred(availabilities) {
+            return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
+        },
+        // get only availabilities from preferred libraries
+        getNotPreferred(availabilities) {
+            return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
         }
     }
 }

@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "electron-json-storage": "^4.1.6",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",

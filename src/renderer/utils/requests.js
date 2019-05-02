@@ -44,8 +44,6 @@ function extractFields(row) {
 function extractResult(html) {
     let data = []
     var rows = $('.rList > li', html)
-    console.log('r', rows)
-    // console.log(rows.length + ' rows found')
     for (let i = 0; i < rows.length; i++) {
         data.push(extractFields(rows[i]))
     }
@@ -126,16 +124,12 @@ function extractAvailability(row) {
     let orderStatus = $('td:nth-of-type(4)', row).text().trim()
     // status
     let status = $('td:nth-of-type(5)', row).text().trim()
-    // preferred libary
-    let whitelist = ['ZLB: Amerika-Gedenkbibliothek (AGB)', 'Mitte: Bibliothek am Luisenbad', 'ZLB: Berliner Stadtbibliothek  (BStB)']
-    let preferred = whitelist.includes(library)
     return {
         'library': library,
         'place': place,
         'signature': signature,
         'orderStatus': orderStatus,
-        'status': status,
-        'preferred': preferred
+        'status': status
     }
 
 }

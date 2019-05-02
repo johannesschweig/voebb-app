@@ -1,17 +1,18 @@
 import { search, getEntryDetails } from '../utils/requests.js'
 import { readFileAsync, writeFileAsync } from '../utils/file.js'
 import { getCurrentDateString } from '../utils/string.js'
-
+import { getUserData, setUserData } from '../utils/userStorage.js'
 
 // actions
 export default {
     // read bookmarks from file
     readBookmarks ({ commit }) {
-        readFileAsync('/../../bookmarks.txt')
-            .then(res => {
+            getUserData('bookmarks')
+            .then(data => {
+                console.log('Fetched user data for key', 'bookmarks', data)
                 // fetch all bookmarks details, availability
                 let promises = []
-                res.map(bookmark => {
+                data.map(bookmark => {
                     promises.push(getEntryDetails(bookmark))
                 })
                 return Promise.all(promises)
@@ -26,15 +27,18 @@ export default {
     toggleBookmark ({ commit, getters }, payload) {
         if (payload.active) {
             // update bookmarks file
-            let string = getters.bookmarksList.filter(b => b != payload.identifier).join('\n')
-            writeFileAsync('/../../bookmarks.txt', string)
+            let bookmarks = getters.bookmarksList.filter(b => b != payload.identifier)
+            // update user storage
+            setUserData('bookmarks', bookmarks)
+            commit('addBookmark', res)
             commit('removeBookmark', payload.identifier)
         } else {
             // fetch all bookmarks details, availability
             getEntryDetails(payload.identifier)
                 .then(res => {
-                    let string = getters.bookmarksList.concat([payload.identifier]).join('\n')
-                    writeFileAsync('/../../bookmarks.txt', string)
+                    let bookmarks = getters.bookmarksList.concat([payload.identifier])
+                    // update user storage
+                    setUserData('bookmarks', bookmarks)
                     commit('addBookmark', res)
                 })
         }
@@ -73,9 +77,9 @@ export default {
     },
    // removes bookmark
    removeBookmark({ commit, getters }, identifier) {
-        // update bookmarks file
-        let string = getters.bookmarksList.filter(b => b != identifier).join('\n')
-        writeFileAsync('/../../bookmarks.txt', string)
+        // update user storage
+        let bookmarks = getters.bookmarksList.filter(b => b != identifier)
+        setUserData('bookmarks', bookmarks)
         commit('removeBookmark', identifier)
    }
 }

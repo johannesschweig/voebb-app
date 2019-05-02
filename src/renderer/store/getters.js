@@ -1,3 +1,5 @@
+import { allLibraries } from '../utils/constants.js'
+
 export default {
     // returns a list with all the bookmarks identifiers
     bookmarksList: state => {
@@ -14,5 +16,14 @@ export default {
         } else {
             return true
         }
+    },
+    // returns a list of the availabilities from preferred libraries
+    getPreferredLibraries: state => {
+        if (state.libraries.length == 0) {
+            return allLibraries
+        } else {
+            return state.libraries
+        }
     }
+
 }

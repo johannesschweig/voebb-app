@@ -26,9 +26,9 @@ export default {
         // read in bookmarks from file
         this.$store.dispatch('readBookmarks')
         // TODO remove before deployment
-        // this.$store.dispatch('fakeSearch')
-        // this.$store.dispatch('fakeFetchDetails')
-        this.$store.dispatch('search', 'felix und felka')
+        this.$store.dispatch('fakeSearch')
+        this.$store.dispatch('fakeFetchDetails')
+        // this.$store.dispatch('search', 'felix und felka')
     }
 }
 </script>
