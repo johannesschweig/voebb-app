@@ -21,12 +21,15 @@
                             class='fa-2x'/>
                             <div class='library'>
                                 <i class="fas fa-landmark"></i>
-                                {{ getLibraryAlias(avail.library) }}
+                                {{ getShortLibrary(avail.library) }}
                             </div>
                             <div class='signature'>
                                 <i class="fas fa-barcode"></i>
                                 {{ avail.signature }}
                             </div>
+                        </td>
+                        <td v-if='getPreferred(instance.availability).length == 0'>
+                            <span class='placeholder'>Not available in your preferred libraries</span>
                         </td>
                     </tr>
                 </tbody>
@@ -42,7 +45,7 @@
 
 <script>
 import { getEntryDetails } from '../utils/requests.js'
-import { libraryAliases } from '../utils/constants.js'
+import { shortenLibraryName } from '../utils/string.js'
 import AvailableIcon from './icons/AvailableIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
@@ -69,9 +72,9 @@ export default {
         getProperty(arr, prop) {
             return arr.filter(e => Object.keys(e)[0] == prop)[0][prop]
         },
-        // returns a shorter alias name for the library
-        getLibraryAlias(library) {
-            return libraryAliases[library]
+        // returns a shorter name for the library
+        getShortLibrary(library) {
+            return shortenLibraryName(library)
         },
         // refresh the existing bookmarks
         refetchExisting() {

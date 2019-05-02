@@ -11,23 +11,25 @@
 import BookmarksPage from './components/BookmarksPage.vue'
 import Navigation from './components/Navigation.vue'
 import SearchPage from './components/SearchPage.vue'
+import SettingsPage from './components/SettingsPage.vue'
 import { mapState } from 'vuex'
 
 export default {
     components: {
         BookmarksPage,
         Navigation,
-        SearchPage
+        SearchPage,
+        SettingsPage
     },
     computed: mapState({
         'currentPage': state => state.currentPage
     }),
     created() {
         // read in bookmarks from file
-        this.$store.dispatch('readBookmarks')
+        this.$store.dispatch('readUserData')
         // TODO remove before deployment
-        this.$store.dispatch('fakeSearch')
-        this.$store.dispatch('fakeFetchDetails')
+        // this.$store.dispatch('fakeSearch')
+        // this.$store.dispatch('fakeFetchDetails')
         // this.$store.dispatch('search', 'felix und felka')
     }
 }

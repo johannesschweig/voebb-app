@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import store from './store/index.js'
+import store from './store/store.js'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false

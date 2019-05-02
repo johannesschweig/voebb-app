@@ -34,7 +34,7 @@
             </thead>
             <tbody>
                 <tr v-for='instance in getPreferred(data.availability)'>
-                    <td> {{ getLibraryAlias(instance.library) }}</td>
+                    <td> {{ getShortLibrary(instance.library) }}</td>
                     <td> {{ instance.place }}</td>
                     <td> {{ instance.signature }}</td>
                     <td> {{ instance.orderStatus }}</td>
@@ -48,7 +48,7 @@
             <span>Available in:</span>
             <br />
             <template v-for='instance in getNotPreferred(data.availability)'>
-                {{ instance.library}},
+                {{ getShortLibrary(instance.library) }},
             </template>
         </div>
 
@@ -62,7 +62,7 @@
 
 <script>
 import MediumIcon from './icons/MediumIcon.vue'
-import { libraryAliases } from '../utils/constants.js'
+import { shortenLibraryName } from '../utils/string.js'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -78,15 +78,9 @@ export default {
         ])
     },
     methods: {
-        // returns a shorter alias name for the library
-        getLibraryAlias(library) {
-            let alias = libraryAliases[library]
-            // alias present
-            if (alias) {
-                return alias
-            } else { // no alias present
-                return library
-            }
+        // returns a shorter name for the library
+        getShortLibrary(library) {
+            return shortenLibraryName(library)
         },
         // get only availabilities from preferred libraries
         getPreferred(availabilities) {

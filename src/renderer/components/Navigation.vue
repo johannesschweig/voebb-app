@@ -1,34 +1,27 @@
 <template>
     <div class='container'>
-        <div
-            class='search'
-            :class="{ 'active': this.currentPage === 'SearchPage' }"
-            @click='switchPage("SearchPage")'
-        >
-            <i class="fas fa-search"></i>
-            <span>Search</span>
-        </div>
-        <div
-            class='bookmarks'
-            :class="{ 'active': this.currentPage === 'BookmarksPage' }"
-            @click='switchPage("BookmarksPage")'
-        >
-            <i class="fas fa-bookmark"></i>
-            <span>Bookmarks</span>
-        </div>
+        <NavigationItem
+            page='SearchPage'
+            label='Search'
+            icon='fas fa-search' />
+        <NavigationItem
+            page='BookmarksPage'
+            label='Bookmarks'
+            icon='fas fa-bookmark' />
+        <NavigationItem
+            page='SettingsPage'
+            label='Settings'
+            icon='fas fa-cog' />
     </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import NavigationItem from './NavigationItem.vue'
 
 export default {
-    computed: mapState({
-        'currentPage': state => state.currentPage
-    }),
-    methods: mapActions([
-        'switchPage'
-    ])
+    components: {
+        NavigationItem
+    },
 }
 </script>
 
@@ -38,34 +31,5 @@ export default {
     margin-bottom: 12px;
 }
 
-.search,
-.bookmarks {
-    opacity: .5;
-    cursor: pointer;
-    padding: 8px 4px 4px 4px;
-    margin: 0 32px 0 0;
-}
 
-.search:hover,
-.bookmarks:hover,
-.search.active,
-.bookmarks.active {
-    opacity: 1;
-}
-
-.search.active,
-.bookmarks.active {
-    border-width: 0 0 2px 0;
-    border-style: solid;
-    border-color: #3e3e3e;
-}
-
-.search span,
-.bookmarks span{
-    font-size: 18px;
-}
-
-.bookmarks i {
-    padding-right: 2px;
-}
 </style>

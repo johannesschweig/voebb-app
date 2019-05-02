@@ -26,5 +26,9 @@ export default {
     // sets the last updated label to a new string
     setLastUpdated(state, dateString) {
         state.bookmarks.lastUpdated = dateString
+    },
+    // updates the store for preferred libraries
+    setLibraries(state, libraries) {
+        state.libraries = libraries
     }
 }

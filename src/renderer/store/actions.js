@@ -5,21 +5,37 @@ import { getUserData, setUserData } from '../utils/userStorage.js'
 
 // actions
 export default {
-    // read bookmarks from file
-    readBookmarks ({ commit }) {
-            getUserData('bookmarks')
-            .then(data => {
-                console.log('Fetched user data for key', 'bookmarks', data)
-                // fetch all bookmarks details, availability
-                let promises = []
-                data.map(bookmark => {
-                    promises.push(getEntryDetails(bookmark))
-                })
-                return Promise.all(promises)
-            }).then(res => {
-                commit('setBookmarks', res)
-                commit('setLastUpdated', getCurrentDateString())
+    // read user data (bookmarks, preferred libraries)
+    readUserData ({ commit }) {
+        // read libraries
+        getUserData('libraries').then(data => {
+            if (Object.keys(data).length == 0) {
+                throw new Error('handled')
+            }
+            console.log('Fetched user data for key', 'libraries', data.length, 'entries')
+            commit('setLibraries', data)
+        }).catch(error => {
+            console.log('Libraries user file not available')
+        })
+        // read bookmarks
+        getUserData('bookmarks').then(data => {
+            // no bookmarks
+            if (Object.keys(data).length == 0) {
+                throw new Error('handled')
+            }
+            console.log('Fetched user data for key', 'bookmarks', data.length, 'entries')
+            // fetch all bookmarks details, availability
+            let promises = []
+            data.map(bookmark => {
+                promises.push(getEntryDetails(bookmark))
             })
+            return Promise.all(promises)
+        }).then(res => {
+            commit('setBookmarks', res)
+            commit('setLastUpdated', getCurrentDateString())
+        }).catch(error => {
+            console.log('Bookmarks user file not available')
+        })
     },
     // toggles a bookmark: removes or adds it
     // active: if the bookmark is active or not
@@ -81,5 +97,11 @@ export default {
         let bookmarks = getters.bookmarksList.filter(b => b != identifier)
         setUserData('bookmarks', bookmarks)
         commit('removeBookmark', identifier)
+   },
+   // updates the store and user settings for preferred libraries
+   setLibraries({ commit }, libraries) {
+       console.log('Updating libraries', libraries.length, 'entries')
+       setUserData('libraries', libraries)
+       commit('setLibraries', libraries)
    }
 }

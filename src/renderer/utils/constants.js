@@ -1,10 +1,3 @@
-export const libraryAliases = {
-    'ZLB: Amerika-Gedenkbibliothek (AGB)': 'AGB',
-    'Mitte: Bibliothek am Luisenbad': 'Luise',
-    'ZLB: Berliner Stadtbibliothek  (BStB)': 'BStB',
-    'ZLB: Außenmagazin Amerika-Gedenkbibliothek': 'AGB (Magazin)'
-}
-
 export const allLibraries = [
     'Charlottenburg-Wilmersdorf: Adolf-Reichwein-Bibliothek',
     'Charlottenburg-Wilmersdorf: Dietrich-Bonhoeffer-Bibliothek',
@@ -107,7 +100,13 @@ export const detailsBlacklist = [
     'Inhaltsverzeichnis',
     'Sprache Original',
     'FSK/USK',
-    'Physische Beschreibung'
+    'Physische Beschreibung',
+    'Bevorzugter Titel',
+    'Ausgabe',
+    'Freie Schlagwörter',
+    'Sammelrezension',
+    'Erläuterungen',
+    'URL'
 ]
 
 // contains the medium - font awesome class mappings
