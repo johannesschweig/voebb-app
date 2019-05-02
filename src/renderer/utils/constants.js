@@ -19,3 +19,39 @@ export const detailsBlacklist = [
     'FSK/USK',
     'Physische Beschreibung'
 ]
+
+// contains the medium - font awesome class mappings
+export const mediumIcons = [
+    {
+        name: 'DVD',
+        icon: 'fas fa-film'
+    },
+    {
+        name: 'CD',
+        icon: 'fas fa-compact-disc'
+    },
+    {
+        name: 'Buch',
+        icon: 'fas fa-book'
+    },
+    {
+        name: 'Band',
+        icon: 'fas fa-book'
+    },
+    {
+        name: 'E-Audio',
+        icon: 'far fa-file-audio'
+    },
+    {
+        name: 'MP3',
+        icon: 'far fa-file-audio'
+    },
+    {
+        name: 'E-Book',
+        icon: 'fas fa-atlas'
+    },
+    {
+        name: 'Video',
+        icon: 'fas fa-video'
+    }
+]

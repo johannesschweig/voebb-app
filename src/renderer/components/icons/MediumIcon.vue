@@ -1,15 +1,31 @@
 <template>
-    <i v-if='medium == "DVD"' class="fas fa-film"></i>
-    <i v-else-if='medium == "CD"' class="fas fa-compact-disc"></i>
-    <i v-else-if='medium == "Buch" || medium == "Band"' class="fas fa-book"></i>
+    <i v-if='getIconClasses != ""':class='getIconClasses'></i>
 </template>
 
 <script>
+import { mediumIcons } from '../../utils/constants.js'
+
 export default {
+    data() {
+        return {
+            mediumIcons: mediumIcons
+        }
+    },
     props: {
         medium: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        getIconClasses() {
+            let icons = this.mediumIcons.filter(m => m.name == this.medium)
+            if (icons.length == 0) {
+                console.log('No icon found for medium', this.medium)
+                return ''
+            } else {
+                return icons[0].icon
+            }
         }
     }
 }
