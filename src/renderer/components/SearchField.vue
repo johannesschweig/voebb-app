@@ -28,7 +28,7 @@ span {
 
 input {
     height: 24px;
-    width: 50%;
+    width: 300px;
     font-size: 16px;
 }
 </style>

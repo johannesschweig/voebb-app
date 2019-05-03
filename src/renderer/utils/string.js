@@ -1,7 +1,7 @@
 // returns the current date string dd.mm.yyyy hh:mm
 export function getCurrentDateString() {
     let date = new Date()
-    let dateString = date.getDate().toString().padStart(2, '0') + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getFullYear() + " " + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0')
+    let dateString =  date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0')
     return dateString
 }
 
@@ -19,4 +19,17 @@ export function shortenLibraryName(library) {
     lib = lib.replace('Bibl.', 'Bibliothek')
     lib = lib.replace('Ju.bibl.', 'Jugendbibliothek')
     return lib
+}
+
+// sanitizes details, removes unncessary content
+// key: key of the content
+// value: value of the content
+// returns a sanitized value
+export function sanitizeDetail(key, value) {
+    switch(key) {
+        // remove dashes from isbn
+        case 'ISBN': return value.replace(/-/g, '')
+        break
+        default: return value
+    }
 }

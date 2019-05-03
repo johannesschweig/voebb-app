@@ -1,9 +1,6 @@
 <template>
     <div class='container'>
         <div v-if='detailsAvailable'>
-            <button @click='refetchExisting'>Refresh</button>
-            <span>Last updated:</span>
-            <span> {{ lastUpdated }}</span>
             <table v-if='data.length != 0'>
                 <tbody>
                     <tr v-for='instance in data'>
@@ -34,6 +31,11 @@
                     </tr>
                 </tbody>
             </table>
+            <div class='last-updated'>
+                <span class='placeholder'>Last updated:</span>
+                <span class='placeholder'> {{ lastUpdated }}</span>
+                <button @click='refetchExisting'><i class="fas fa-sync-alt"></i></button>
+            </div>
         </div>
         <span
             v-else
@@ -78,7 +80,7 @@ export default {
         },
         // refresh the existing bookmarks
         refetchExisting() {
-            this.$store.dispatch('readBookmarks')
+            this.$store.dispatch('readUserData')
         },
         // get only availabilities from preferred libraries
         getPreferred(availabilities) {
@@ -131,5 +133,13 @@ i {
 .person {
     font-size: 14px;
     opacity: .8;
+}
+
+.last-updated {
+    margin-top: 12px;
+}
+
+.last-updated button {
+    margin-left: 4px;
 }
 </style>

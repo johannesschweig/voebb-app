@@ -9,7 +9,7 @@
                 <tr v-for='row in data.details'>
                     <template v-for='(value, key) in row'>
                         <td> {{ key }} </td>
-                        <td> {{ value }} </td>
+                        <td> {{ sanitizeString(key, value) }} </td>
                     </template>
                 </tr>
             </tbody>
@@ -62,7 +62,7 @@
 
 <script>
 import MediumIcon from './icons/MediumIcon.vue'
-import { shortenLibraryName } from '../utils/string.js'
+import { shortenLibraryName, sanitizeDetail  } from '../utils/string.js'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -89,6 +89,9 @@ export default {
         // get only availabilities from preferred libraries
         getNotPreferred(availabilities) {
             return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
+        },
+        sanitizeString(key, value) {
+            return sanitizeDetail(key, value)
         }
     }
 }
