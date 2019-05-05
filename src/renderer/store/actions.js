@@ -1,5 +1,4 @@
 import { search, getEntryDetails } from '../utils/requests.js'
-import { readFileAsync, writeFileAsync } from '../utils/file.js'
 import { getCurrentDateString } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
 
@@ -46,7 +45,6 @@ export default {
             let bookmarks = getters.bookmarksList.filter(b => b != payload.identifier)
             // update user storage
             setUserData('bookmarks', bookmarks)
-            commit('addBookmark', res)
             commit('removeBookmark', payload.identifier)
         } else {
             // fetch all bookmarks details, availability
@@ -67,7 +65,29 @@ export default {
     },
     // search for term
     search({ commit }, term) {
+        let loading = {
+            component: 'searchResults',
+            data: {
+                status: 'loading',
+                msg: ''
+            }
+        }
+        let done = {
+            component: 'searchResults',
+            data: {
+                status: '',
+                msg: ''
+            }
+        }
+        commit('setLoading', loading)
         search(term, false).then(res => {
+            if (res.length == 0) {
+                done.data.status = 'returnedEmpty',
+                done.data.msg = `Oops! We can\'t find anything for "${term}"`
+            } else {
+                done.data.status = 'done'
+            }
+            commit('setLoading', done)
             // reset preview
             commit('setPreviewData', { details: [], availability: [] })
             commit('setSearchResults', res)

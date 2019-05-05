@@ -35,6 +35,8 @@
 * MediumIcons for
     - E-Learning
     - Mehrteiliges Werk
+    - Schallplatte
+    - Noten
 * split settings-libraries into a view component ("Your preferred libraries are:...") and a edit component: checkboxes
 * details preview blacklist
     - Link zur Onleihe

@@ -23,7 +23,22 @@ const state = {
         ]
     },
     // list of preferred libraries
-    libraries: []
+    libraries: [],
+    // loading state of components
+    loading: {
+        searchResults: {
+            status: 'initial', // status of the component: either initial, loading, done, error
+            msg: 'You have not searched for anything yet.' // message to the user
+        },
+        preview: {
+            status: 'initial',
+            msg: ''
+        },
+        bookmarks: {
+            status: 'initial',
+            msg: ''
+        }
+    }
 }
 
 export default new Vuex.Store({

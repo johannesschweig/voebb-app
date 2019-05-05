@@ -30,5 +30,9 @@ export default {
     // updates the store for preferred libraries
     setLibraries(state, libraries) {
         state.libraries = libraries
+    },
+    // 
+    setLoading(state, payload) {
+        state.loading[payload.component] = payload.data
     }
 }

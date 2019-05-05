@@ -1,6 +1,6 @@
 <template>
     <div class='container'>
-        <table v-if='results.length != 0'>
+        <table v-if='loading.status == "done" && results.length != 0'>
             <tbody>
                 <tr v-for='row in results' @click.left='fetchDetails(row.identifier)'>
                     <td>
@@ -34,7 +34,7 @@
         <span
             v-else
             class='placeholder'>
-            No results
+            {{ loading.msg }}
         </span>
     </div>
 </template>
@@ -55,7 +55,8 @@ export default {
     },
     computed: {
         ...mapState({
-            results: state => state.searchResults
+            results: state => state.searchResults,
+            loading: state => state.loading.searchResults
         }),
         ...mapGetters([
             'bookmarksList'
