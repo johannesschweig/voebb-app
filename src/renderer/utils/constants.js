@@ -144,3 +144,10 @@ export const mediumIcons = [
         icon: 'fas fa-video'
     }
 ]
+
+// states for loading data
+export const INITIAL = 'initial'
+export const LOADING = 'loading'
+export const TOO_MANY_HITS = 'tooManyHits'
+export const NO_HITS = 'noHits'
+export const DONE = 'done'

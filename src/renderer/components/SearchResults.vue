@@ -1,5 +1,5 @@
 <template>
-    <div class='container'>
+    <div :class='["container", { "fill-space": previewIsInitial()}]'>
         <table v-if='loading.status == "done" && results.length != 0'>
             <tbody>
                 <tr v-for='row in results' @click.left='fetchDetails(row.identifier)'>
@@ -31,6 +31,7 @@
                 </tr>
             </tbody>
         </table>
+        <LoadingCircle v-else-if='isLoading()'/>
         <span
             v-else
             class='placeholder'>
@@ -43,28 +44,41 @@
 import BookmarkIcon from './icons/BookmarkIcon.vue'
 import MediumIcon from './icons/MediumIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
+import LoadingCircle from './icons/LoadingCircle.vue'
 import AvailableIcon from './icons/AvailableIcon.vue'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import { INITIAL, LOADING } from '../utils/constants.js'
 
 export default {
     components: {
         AvailableIcon,
         BookmarkIcon,
         LinkIcon,
+        LoadingCircle,
         MediumIcon
     },
     computed: {
         ...mapState({
             results: state => state.searchResults,
-            loading: state => state.loading.searchResults
+            loading: state => state.loading.searchResults,
+            previewStatus: state => state.loading.preview.status
         }),
         ...mapGetters([
             'bookmarksList'
-        ])
+        ]),
     },
-    methods: mapActions([
-        'fetchDetails'
-    ])
+    methods: {
+        ...mapActions([
+            'fetchDetails'
+        ]),
+        // if the component is currently loading new data
+        isLoading() {
+            return this.loading.status == LOADING
+        },
+        previewIsInitial() {
+            return this.previewStatus == INITIAL
+        }
+    }
 }
 </script>
 
@@ -73,6 +87,10 @@ export default {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
     margin-right: 16px;
+}
+
+.fill-space {
+    grid-column: 1 / 3;
 }
 
 table {

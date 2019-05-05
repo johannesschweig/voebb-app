@@ -1,13 +1,13 @@
 const https = require('https')
-const qs = require('querystring')
 
 // returns a promise of a http request
 export default function req(options, data = '', header = '') {
     return new Promise((resolve, reject) => {
-        const req = https.request(options,
-            (res) => {
+        const req = https.request(options, (res) => {
                 let body = ''
-                res.on('data', (chunk) => (body += chunk.toString()))
+                res.on('data', chunk => {
+                    body += chunk.toString()
+                })
                 res.on('error', reject)
                 res.on('end', () => {
                     if (res.statusCode >= 200 && res.statusCode <= 299) {

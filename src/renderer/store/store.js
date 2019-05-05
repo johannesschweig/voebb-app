@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import mutations from './mutations.js'
 import actions from './actions.js'
 import getters from './getters.js'
+import { INITIAL } from '../utils/constants.js'
 
 Vue.use(Vuex)
 
@@ -27,15 +28,17 @@ const state = {
     // loading state of components
     loading: {
         searchResults: {
-            status: 'initial', // status of the component: either initial, loading, done, error
-            msg: 'You have not searched for anything yet.' // message to the user
+            // status of the component: either initial, loading, done, error
+            status: INITIAL, 
+            // message to the user
+            msg: 'You have not searched for anything yet.'
         },
         preview: {
-            status: 'initial',
+            status: INITIAL,
             msg: ''
         },
         bookmarks: {
-            status: 'initial',
+            status: INITIAL,
             msg: ''
         }
     }

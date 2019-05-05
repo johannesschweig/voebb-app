@@ -1,6 +1,8 @@
 import { search, getEntryDetails } from '../utils/requests.js'
 import { getCurrentDateString } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
+import { LOADING, TOO_MANY_HITS, NO_HITS, DONE } from '../utils/constants.js'
+import { getLoadingObject } from '../utils/utils.js'
 
 // actions
 export default {
@@ -59,33 +61,40 @@ export default {
     },
     // fake search for testing purposes
     fakeSearch ({ commit }) {
+        // clear search results and preview data
+        commit('clearSearchResults')
+        commit('clearPreviewData')
+        // prepare loading objects
+        let loading = getLoadingObject('searchResults', LOADING)
+        commit('setLoading', loading)
+        let done = getLoadingObject('searchResults', DONE)
         search('', true).then(res => {
+            commit('setLoading', done)
             commit('setSearchResults', res)
         })
     },
     // search for term
     search({ commit }, term) {
-        let loading = {
-            component: 'searchResults',
-            data: {
-                status: 'loading',
-                msg: ''
-            }
-        }
-        let done = {
-            component: 'searchResults',
-            data: {
-                status: '',
-                msg: ''
-            }
-        }
+        // clear search results and preview data
+        commit('clearSearchResults')
+        commit('clearPreviewData')
+        // prepare loading objects
+        let loading = getLoadingObject('searchResults', LOADING)
         commit('setLoading', loading)
+        let done = getLoadingObject('searchResults')
+
+        // start search
         search(term, false).then(res => {
-            if (res.length == 0) {
-                done.data.status = 'returnedEmpty',
-                done.data.msg = `Oops! We can\'t find anything for "${term}"`
-            } else {
-                done.data.status = 'done'
+            // check result and update loading state
+            if (typeof res == 'string') {
+                done.data.status = res
+                if (res == NO_HITS) { // no hits
+                    done.data.msg = `Sorry! We can\'t find anything for "${term}"`
+                } else if (res == TOO_MANY_HITS) { // too many hits
+                    done.data.msg  = `There were too many hits for "${term}". Try adjusting your search.`
+                }
+            } else { // all fine
+                done.data.status = DONE
             }
             commit('setLoading', done)
             // reset preview
@@ -95,13 +104,29 @@ export default {
     },
     // fetch details data on instance
     fetchDetails({ commit }, identifier) {
+        // clear preview data
+        commit('clearPreviewData')
+        // prepare loading objects
+        let loading = getLoadingObject('preview', LOADING)
+        commit('setLoading', loading)
+        let done = getLoadingObject('preview', DONE)
+        // fetch details
         getEntryDetails(identifier).then(res => {
+            commit('setLoading', done)
             commit('setPreviewData', res)
         })
     },
     // fake fetch details for testing purposes
     fakeFetchDetails({ commit }) {
+        // clear preview data
+        commit('clearPreviewData')
+        // prepare loading objects
+        let loading = getLoadingObject('preview', LOADING)
+        commit('setLoading', loading)
+        let done = getLoadingObject('preview', DONE)
+        // fetch details
         getEntryDetails('', true).then(res => {
+            commit('setLoading', done)
             commit('setPreviewData', res)
         })
     },

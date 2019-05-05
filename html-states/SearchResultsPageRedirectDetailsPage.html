@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+	<style type="text/css">
+		@import url(css/aDISStandard.css);
+	</style>
+	<script src="js/aDISMain.min.js" type="text/javascript"></script>
+	<script src="js/fckeditor/fckeditor.js" type="text/javascript"></script>
+	<title> Wir bringen Medien in Bewegung </title>
+<!--
+(c) Software: aDIS/BMS und aDIS/Archiv von aStec angewandte Systemtechnik - www.astec.de
+HTML-/CSS: Formulare, Tabellen, Inhalte, etc. werden automatisiert durch aDIS/BMS und aDIS/Archiv generiert
+HTML-/CSS: Framework basiert lose auf Contao 2 (c) Leo Feyer www.contao.org
+HTML-/CSS: Anpassungen im aDIS-Rahmen: Nina Gerling
+Projekt: VOEBB, OPAC02, de
+Letztes Update: 21.07.2017 - 13:30
+//-->
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-language" content="de" />
+<meta name="language" content="de" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<meta name="description" content="Recherche in 2,7 Millionen Titeln der &ouml;ffentlichen Bibliotheken des Landes Berlin, Bestellung, Kontoverwaltung, Online-Ausleihe von E-Books, E-Audios und E-Videos" />
+<link rel="stylesheet" href="/aDISWeb_kopac/css/kopac_style.css" type="text/css" />
+<link rel="stylesheet" href="/aDISWeb_vob/css/kopac_diff.css" type="text/css" />
+<link rel="shortcut icon" type="image/x-icon" href="/aDISWeb_vob/images/favicon.ico" />
+<script type="text/javascript" src="/aDISWeb_vob/js/cookies.js"></script>
+<script type="text/javascript" src="/aDISWeb_vob/js/efa_fontsize.js"></script>
+</head>
+
+<body class="dreier deutsch">
+<script type="text/javascript"><!--
+
+
+
+
+function startIdleTimer() {
+  if (typeof idleId != 'undefined')
+    clearTimeout(idleId)
+  idleId = window.setTimeout("to('"+ idleLink + "')", idleTime);
+}			
+function to(link) {
+  location.href=link;
+}
+
+
+
+
+
+function setupHandlers()  {
+  document.onmousedown = docOnEvent;		
+  document.onkeydown = docOnEvent;	
+  document.onkeypress = docOnEvent;
+  document.onhelp = cancelF1;
+
+  initFormElements();
+  initIframes();
+  initScrollPos();
+}
+function getDimensions()  {
+  document.forms[0].scrDim.value = screen.width + ";" + screen.height;
+  if (window.innerWidth)
+    document.forms[0].winDim.value = window.innerWidth + ";" + window.innerHeight;
+  else
+    document.forms[0].winDim.value = document.body.offsetWidth + ";" + document.body.offsetHeight;
+  node = document.getElementById("img_content");
+  if (node != undefined)
+    document.forms[0].imgDim.value = node.offsetWidth + ";" + node.offsetHeight;
+}
+
+
+
+
+
+	window.onpopstate = function (e) {
+	  if(e.state != null && e.state.action){
+	  var button = document.getElementById("Toolbar_0");
+      	if(button) button.click();
+      }
+    }
+    if(history.pushState && history.state == null){
+		history.pushState({ action : 1 }, "", null);
+		history.pushState({ action : 2 }, "", null);
+	}
+
+
+
+
+
+
+aDIS.onLoad = function (e)
+{
+
+  idleTime=360000000;
+  idleLink="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Timeout";
+  startIdleTimer();
+
+
+  if (!e) var e = window.event;
+  document.forms[0].scriptEnabled.value=true;
+  if (self.specialOnLoad != undefined)
+    specialOnLoad(e);
+  setupHandlers();
+  getDimensions();
+
+}
+
+aDIS.addListener('load', window, aDIS.onLoad);
+
+
+// --></script>
+
+<div class="aDISMaske">
+<form method="post" name="Form0" action="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667" onsubmit="return formOnSubmit();">
+<input type="hidden" name="service" value="direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Form.form"/>
+<input type="hidden" name="sp" value="S0"/>
+<input type="hidden" name="Form0" value="focus,keyCode,stz,source,selected,requestCount,scriptEnabled,scrollPos,scrDim,winDim,imgDim,$Textfield,$FormConditional,textButton,$FormConditional$0,$FormConditional$1,textButton$0,textButton$1,textButton$2,textButton$3,textButton$4,textButton$5,textButton$6,textButton$7,$FormConditional$2,textButton$8,$Toolbar,$Toolbar$0"/>
+<input type="hidden" name="focus" value=""/>
+<input type="hidden" name="keyCode" value="0"/>
+<input type="hidden" name="stz" value=""/>
+<input type="hidden" name="source" value=""/>
+<input type="hidden" name="selected" value=""/>
+<input type="hidden" name="requestCount" value="3"/>
+<input type="hidden" name="scriptEnabled" value="T"/>
+<input type="hidden" name="scrollPos" value="0"/>
+<input type="hidden" name="scrDim" value=""/>
+<input type="hidden" name="winDim" value=""/>
+<input type="hidden" name="imgDim" value=""/>
+<input type="hidden" name="$FormConditional" value="T"/>
+<input type="hidden" name="$FormConditional$0" value="F"/>
+<input type="hidden" name="$FormConditional$1" value="T"/>
+<input type="hidden" name="$FormConditional$2" value="T"/>
+
+
+
+
+
+		
+	
+
+
+
+	
+<script type="text/javascript">
+// <![CDATA[
+  if (efa_fontSize) efa_fontSize.efaInit();
+// ]]>
+</script>
+
+<div id="wrapper">
+  <div id="wrapper_inside">
+
+    <div id="header" role="banner">
+      <div class="inside">
+
+          <ul id="sprunglinks">
+            <li><a class="sprung mobview" href="#">Zur Desktop-Ansicht</a></li>
+            <li><a class="sprung" href="#main">Zum Hauptinhalt</a></li>
+            <li><a class="sprung" href="#left">Zur Navigation</a></li>
+            <li><a class="sprung" href="#right">Zu weiteren Bedienelementen</a></li>
+          </ul>
+          <p id="logo"><img src="/aDISWeb_vob/images/voebb_logo.svg" height="93" width="317" alt="Verbund der &ouml;ffentlichen Bibliotheken Berlins" /></p>
+
+         <script type="text/javascript">
+          // <![CDATA[
+            if (efa_fontSize) document.write(efa_fontSize.allLinks);
+          // ]]>
+          </script>
+
+          <div class="block" id="spruch">
+
+<span>
+Wir bringen Medien in Bewegung
+</span>
+ </div>
+
+      </div>
+    </div>
+
+    <div id="container">
+      <div id="container_inside">
+
+        <div id="left">
+          <div class="inside">
+
+            <h1 class="invisible">Navigation</h1>
+
+            <div class="block" id="navbox">
+            <div id="R20">
+<span class="bnzeig">
+
+</span>
+
+
+<span class="mmzeig">
+Sie sind nicht angemeldet.
+</span>
+</div>
+
+            </div>
+
+            <div class="mod_navigation block" id="unav" role="navigation">
+<div class="tree_div">
+<ul class="tree_ul">
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SH&amp;requestCount=3" class="tree_leaf_a">Startseite</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SL1&amp;requestCount=3" class="tree_leaf_a">Anmelden</a></li>
+<li class="tree_leaf_li">
+<span class="tree_disabled">Abmelden</span>
+</li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SAX&amp;requestCount=3" class="tree_leaf_a">Aktuelles</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SBK&amp;requestCount=3" class="tree_leaf_a">Mein Konto</a></li>
+<li class="tree_branch_li_exp">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SS1&amp;requestCount=3" class="tree_branch_a">Suche</a><div class="tree_divsub">
+<ul class="tree_ulsub">
+<li class="tree_leaf_li_sel">
+<strong><span class="tree_strong">Schnellsuche</span></strong></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SS6&amp;requestCount=3" class="tree_leaf_a">Erweiterte Suche</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SS5&amp;requestCount=3" class="tree_leaf_a">Suche in Kommentaren</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SAP&amp;requestCount=3" class="tree_leaf_a">Meine Suchen</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SAT&amp;requestCount=3" class="tree_leaf_a">Thementipps</a></li>
+</ul></div>
+</li>
+<li class="tree_branch_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SF1&amp;requestCount=3" class="tree_branch_a">Fernleihe</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SW2&amp;requestCount=3" class="tree_leaf_a">Digitale Angebote</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SF3&amp;requestCount=3" class="tree_leaf_a">Aufs&#228;tze im GBV</a></li>
+<li class="tree_branch_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SK2&amp;requestCount=3" class="tree_branch_a">Kontakt</a></li>
+<li class="tree_leaf_li">
+<a href="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SW1&amp;requestCount=3" class="tree_leaf_a">Informationen</a></li>
+</ul></div>
+
+ </div>
+            <!-- incl=includeBOEB.html -->            <p class="block" id="boeb">
+              <a href="http://service.berlin.de/stadtbibliotheken/" rel="external" onclick="window.open(this.href); return false;">Zu 
+              den Berliner &Ouml;ffentlichen Bibliotheken  <span class="invisible">(Link �ffnet in neuem Fenster)</span>
+              </a>
+            </p>
+<!-- stop -->
+
+          </div>
+        </div>
+
+        <div id="right">
+          <div class="inside">
+
+            <h1 class="invisible">Weitere Bedienelemente</h1>
+            <p class="sprung"><a href="#main">Zum Hauptinhalt</a></p>
+
+            <div class="block">
+              
+              
+              <div id="R03"><p>
+<span style="   width:89%;">
+Gesucht wurde mit: "Freie Suche = felix felka" im Verbund. Treffer: 1
+</span>
+</p>
+</div>
+<div id="R14">
+    <div class="treffer_anzeigen">
+      <fieldset>
+      <legend>Treffer-Direktwahl</legend>
+      <label for="ZISTRZ_1">Treffer-Nr.</label>
+<input type="text" name="$Textfield" fld="ZISTRZ_1" onkeypress="checkNumeric(event,this);" id="ZISTRZ_1" class="text" maxlength="10"/> <input class="buttong"  type="submit" name="Submit" value="OK" /> 
+      <div class="clear"></div>
+      <br class="klar"/></fieldset>
+    </div>
+</div>
+
+              
+              
+              
+              <div id="R12">
+    <h2 class="invisible">Wichtige Aktionen:</h2>
+  <div class="aktion custom">
+   <p>
+
+
+<input type="submit" name="textButton" value="Einzelbestellung" class="wichtig" fld="$$GFBO_8"/>
+
+
+
+ </p></div>
+</div>
+<div id="R30">  
+  <h2 class="invisible">Medieninfos:</h2>
+  <div class="medieninfos">
+<div class="html_div" style="width:100%; height:100%;"><div class="aDISListe">
+<div ID=R001 style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"><img src="/aDISWeb/app;jsessionid=A3E0F3B974FC3C5927BA7E1E9E01B667?service=aDISAsset/POOLOP00vb@@@@@@_44033D00_369D3380/ZLA2_SPALTR_1&sp=S%24OTJPG_1&sp=S47256735&sp=Stext%2Fjavascript" height="202"><br/>

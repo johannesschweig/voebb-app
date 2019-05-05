@@ -43,6 +43,10 @@
 * include all results pages, not just the first
 * remove libraries from previews in the case of e resources
 * last updated label: constantly updating time diff ("2 minutes ago")
+* sanitize details
+    - remove tab character
+* put all reused strings in constants file
+* investigate long load times
 
 # DONE
 * create bookmarks page

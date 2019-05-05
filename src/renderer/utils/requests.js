@@ -1,5 +1,5 @@
 import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions } from './requestOptions.js'
-import { detailsBlacklist } from './constants.js'
+import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
 import req from './httpPromise.js'
 const $ = require('cheerio')
 
@@ -47,7 +47,6 @@ function extractResult(html) {
     for (let i = 0; i < rows.length; i++) {
         data.push(extractFields(rows[i]))
     }
-    // console.log(data)
     return data
 }
 
@@ -62,15 +61,27 @@ export function search(term, mocked=false) {
             .then(res => {
                 // retrieve session from landing page
                 session = getSession(res)
-                console.log('session', session)
+                console.log('Session', session)
                 // open search page
                 return req(searchPageOptions(session))
             })
             .then(res => {
-                console.log('searchPage successfull')
+                console.log('SearchPage successfull')
                 // open search results page with search term
                 return req(resultsPageOptions(session), resultsPageData(searchTerm))
             }).then(res => {
+                // check for no hits or too many hits
+                let rzero = $('#R01', res)
+                if (rzero.length != 0) {
+                    // no hits
+                    if (rzero.html().includes('Ihre Suche im Verbund erzielte keinen Treffer')) {
+                        console.log('No hits for', term)
+                        return NO_HITS
+                    } else if (rzero.html().includes('Zuviele Treffer')) {
+                        console.log('Too many hits for', term)
+                        return TOO_MANY_HITS
+                    }
+                }
                 // redirected to entry details page
                 if ($('.rList > li', res).length == 0 && $('.gi tr', res).length > 0) {
                     let results = extractEntryDetails(res)
@@ -93,7 +104,7 @@ export function search(term, mocked=false) {
                 } else {
                     // extract results from html
                     let results = extractResult(res)
-                    console.log('resultsPage successfull:', results.length, 'results')
+                    console.log('ResultsPage successfull:', results.length, 'results')
                     return results
                 }
             })

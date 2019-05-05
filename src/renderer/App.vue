@@ -28,7 +28,7 @@ export default {
         // read in bookmarks from file
         // this.$store.dispatch('readUserData')
         // TODO remove before deployment
-        // this.$store.dispatch('fakeSearch')
+        this.$store.dispatch('fakeSearch')
         // this.$store.dispatch('fakeFetchDetails')
         // this.$store.dispatch('search', 'felix und felka')
     }
@@ -47,7 +47,7 @@ i {
 }
 
 .placeholder {
-    font-size: 12px;
+    font-size: 14px;
     opacity: .5;
     font-style: italic;
 }
