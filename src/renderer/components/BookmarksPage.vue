@@ -37,10 +37,11 @@
                 <button @click='refetchExisting'><i class="fas fa-sync-alt"></i></button>
             </div>
         </div>
+        <LoadingCircle v-else-if='isLoading()'/>
         <span
             v-else
             class='placeholder'>
-            You have not added any entries to your bookmarks yet.
+            {{ loading.msg }}
         </span>
     </div>
 </template>
@@ -50,14 +51,17 @@ import { getEntryDetails } from '../utils/requests.js'
 import { shortenLibraryName } from '../utils/string.js'
 import AvailableIcon from './icons/AvailableIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
+import LoadingCircle from './icons/LoadingCircle.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { LOADING } from '../utils/constants.js'
 
 export default {
     computed: {
         ...mapState({
             data: state => state.bookmarks.data,
-            lastUpdated: state => state.bookmarks.lastUpdated
+            lastUpdated: state => state.bookmarks.lastUpdated,
+            loading: state => state.loading.bookmarks
         }),
         ...mapGetters([
             'detailsAvailable',
@@ -67,6 +71,7 @@ export default {
     components: {
         AvailableIcon,
         LinkIcon,
+        LoadingCircle,
         RemoveIcon
     },
     methods: {
@@ -85,6 +90,10 @@ export default {
         // get only availabilities from preferred libraries
         getPreferred(availabilities) {
             return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
+        },
+        // return true if the component is currently fetching data
+        isLoading() {
+            return this.loading.status == LOADING
         }
     }
 }

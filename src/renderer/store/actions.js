@@ -20,6 +20,7 @@ export default {
         })
         // read bookmarks
         getUserData('bookmarks').then(data => {
+            commit('setLoading', getLoadingObject('bookmarks', LOADING))
             // no bookmarks
             if (Object.keys(data).length == 0) {
                 throw new Error('handled')
@@ -32,16 +33,18 @@ export default {
             })
             return Promise.all(promises)
         }).then(res => {
+            commit('setLoading', getLoadingObject('bookmarks', DONE))
             commit('setBookmarks', res)
             commit('setLastUpdated', getCurrentDateString())
         }).catch(error => {
+            commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet.'))
             console.log('Bookmarks user file not available')
         })
     },
     // toggles a bookmark: removes or adds it
     // active: if the bookmark is active or not
     // identifier: of the instance
-    toggleBookmark ({ commit, getters }, payload) {
+    toggleBookmark ({ state, commit, getters }, payload) {
         if (payload.active) {
             // update bookmarks file
             let bookmarks = getters.bookmarksList.filter(b => b != payload.identifier)
@@ -50,12 +53,14 @@ export default {
             commit('removeBookmark', payload.identifier)
         } else {
             // fetch all bookmarks details, availability
+            commit('setLoading', getLoadingObject('bookmarks', LOADING))
             getEntryDetails(payload.identifier)
                 .then(res => {
                     let bookmarks = getters.bookmarksList.concat([payload.identifier])
                     // update user storage
                     setUserData('bookmarks', bookmarks)
                     commit('addBookmark', res)
+                    commit('setLoading', getLoadingObject('bookmarks', DONE))
                 })
         }
     },

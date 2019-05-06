@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 // initial state
 const state = {
-    currentPage: 'SearchPage',
+    currentPage: 'BookmarksPage',
     searchResults: [
         // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
     ],
@@ -39,7 +39,7 @@ const state = {
         },
         bookmarks: {
             status: INITIAL,
-            msg: ''
+            msg: 'You have not added any bookmarks yet.'
         }
     }
 }
