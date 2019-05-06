@@ -3,7 +3,7 @@
     :href='"https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=S" + identifier'
     target='_blank'
     >
-    <i class="fas fa-external-link-square-alt"></i>
+    <i class="fas fa-lg fa-external-link-square-alt"></i>
 </a>
 </template>
 

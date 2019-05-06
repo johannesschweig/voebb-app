@@ -2,19 +2,19 @@
     <div :class='["container", { "fill-space": previewIsInitial()}]'>
         <table v-if='loading.status == "done" && results.length != 0'>
             <tbody>
-                <tr v-for='row in results' @click.left='fetchDetails(row.identifier)'>
-                    <td>
-                        <img :src='row.img'/>
-                    </td>
-                    <td>
+                <tr v-for='row in results'>
+                    <td
+                        class='fetch'
+                        @click.left='fetchDetails(row.identifier)'>
+                        <img :src='row.hasOwnProperty("img") ? row.img : ""' />
                         <div class='info'>
-                            <div class='title'>
-                                <MediumIcon :medium='row.medium'/>
-                                {{ row.title }} ({{ row.medium }})
-                            </div>
-                            <div class='subtitle'>
-                                {{ row.name }}  -  {{ row.year }}
-                            </div>
+                          <div class='title'>
+                              <MediumIcon :medium='row.medium'/>
+                              {{ row.title }} ({{ row.medium }})
+                          </div>
+                          <div class='subtitle'>
+                              {{ row.name }}  -  {{ row.year }}
+                          </div>
                         </div>
                     </td>
                     <td class='availability'>
@@ -118,24 +118,33 @@ th {
 
 tr {
     height: 50px;
-    cursor: pointer;
 }
-tr:hover,
-tr:focus {
+
+.fetch {
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #CCC;
+    border-collapse: collapse;
+    padding: 8px;
+}
+
+.fetch:hover,
+.fetch:focus {
     background-color: #F0F0F0;
 }
 
 
-tr:active {
+.fetch:active {
     background-color: #E1E1E1;
 }
 
 .info {
-    padding: 8px;
+    padding-top: 4px;
 }
 
 .title {
-    padding-bottom: 8px;
+    padding-bottom: 4px;
 }
 
 .subtitle {
@@ -144,14 +153,26 @@ tr:active {
 }
 
 .availability {
-    padding: 0 8px;
+    padding: 0 8px 0 16px;
+    border-width: 1px 0 1px 1px;
+    border-style: solid;
+    border-color: #CCC;
+    border-collapse: collapse
 }
 
 .link {
     padding: 0 16px 0 8px;
+    border-width: 1px 1px 1px 0;
+    border-style: solid;
+    border-color: #CCC;
+    border-collapse: collapse
+
 }
 
 img {
-    padding: 8px 8px 8px 0;
+    padding-right: 16px;
+    float: left;
+    min-width: 90px;
+    min-height: 50px;
 }
 </style>

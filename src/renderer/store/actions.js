@@ -44,9 +44,9 @@ export default {
     // toggles a bookmark: removes or adds it
     // active: if the bookmark is active or not
     // identifier: of the instance
-    toggleBookmark ({ commit, getters }, payload) {
+    toggleBookmark ({ commit, dispatch, getters }, payload) {
         if (payload.active) {
-             removeBookmark(payload.identifier)           
+             dispatch('removeBookmark', payload.identifier)
         } else {
             // fetch all bookmarks details, availability
             commit('setLoading', getLoadingObject('bookmarks', LOADING))
@@ -151,7 +151,6 @@ export default {
         setUserData('bookmarks', bookmarks)
         commit('removeBookmark', identifier)
         console.log('Removed bookmark', identifier)
-
    },
    // updates the store and user settings for preferred libraries
    setLibraries({ commit }, libraries) {

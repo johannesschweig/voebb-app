@@ -1,15 +1,15 @@
 <template>
     <i
         v-if="avail == 'ist verfügbar' || avail.toLowerCase().startsWith('verfügbar')"
-        class='far fa-check-circle'
+        class='far fa-lg fa-check-circle'
     ></i>
     <i
         v-else-if='avail == "ist zur Zeit nicht verfügbar"'
-        class='fas fa-times'
+        class='fas fa-lg fa-times'
     ></i>
     <i
         v-else-if='avail == "siehe Vollanzeige" || avail == ""'
-        class='fas fa-question'
+        class='fas fa-lg fa-question'
     ></i>
     <div
         class='wait'

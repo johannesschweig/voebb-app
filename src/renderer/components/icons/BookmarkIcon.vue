@@ -1,7 +1,7 @@
 <template>
     <i
-        :class="['fa-bookmark', { 'fas': active, 'far': !active }]"
-        @click.left.prevent="toggleBookmark( {'active': active, 'identifier': identifier} )" >
+        :class="['fa-bookmark', 'fa-lg', { 'fas': active, 'far': !active }]"
+        @click.left="toggleBookmark( {'active': active, 'identifier': identifier} )" >
     </i>
 </template>
 
@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style scoped>
+i {
+  cursor: pointer;
+}
+
 i:hover,
 i:active,
 i:focus {

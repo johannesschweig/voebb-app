@@ -1,12 +1,7 @@
 # BACKLOG
-* create loading feedback for search, bookmarks and preview
-* search results: differentiate between no results and too many results
 * add application icon
 
 # TODO
-* create error feedback
-    - too many results
-    - no results at all
 * create search filters
     - year (minimum)
     - ISBN
@@ -47,6 +42,7 @@
     - remove tab character
 * put all reused strings in constants file
 * investigate long load times
+* remove duplicate medium references in title searchresults
 
 # DONE
 * create bookmarks page
@@ -59,4 +55,5 @@
     - place at the bottom of the bookmarks and make more subtle
 * details preview: remove dashes and whitespace from isbn
 * search field: width 300px
-
+* create loading feedback for search, bookmarks and preview
+* search results: differentiate between no results and too many results
