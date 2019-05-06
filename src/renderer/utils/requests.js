@@ -189,6 +189,8 @@ export function getEntryDetails(identifier, mocked=false) {
         var fs = require('fs')
         var path = require('path')
         var html = fs.readFileSync(path.join(__dirname, '..', 'details.html'), { encoding: 'utf8' })
-        return Promise.resolve(extractEntryDetails(html))
+        let results = extractEntryDetails(html)
+        results.identifier = 'AK12594954'
+        return Promise.resolve(results)
     }
 }
