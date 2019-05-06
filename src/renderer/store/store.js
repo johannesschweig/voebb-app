@@ -14,6 +14,7 @@ const state = {
         // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
     ],
     preview: {
+        // identifier: 
         details: [],
         availability: []
     },

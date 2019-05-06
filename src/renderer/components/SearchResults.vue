@@ -2,7 +2,9 @@
     <div :class='["container", { "fill-space": previewIsInitial()}]'>
         <table v-if='loading.status == "done" && results.length != 0'>
             <tbody>
-                <tr v-for='row in results'>
+                <tr
+                    v-for='row in results'
+                    :class='{ "active-row": row.identifier == activeRow}'>
                     <td
                         class='fetch'
                         @click.left='fetchDetails(row.identifier)'>
@@ -61,7 +63,8 @@ export default {
         ...mapState({
             results: state => state.searchResults,
             loading: state => state.loading.searchResults,
-            previewStatus: state => state.loading.preview.status
+            previewStatus: state => state.loading.preview.status,
+            activeRow: state => state.preview.identifier
         }),
         ...mapGetters([
             'bookmarksList'
@@ -118,6 +121,10 @@ th {
 
 tr {
     height: 50px;
+}
+
+.active-row {
+    background-color: aliceblue;
 }
 
 .fetch {
