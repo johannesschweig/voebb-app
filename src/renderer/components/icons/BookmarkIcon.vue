@@ -1,7 +1,7 @@
 <template>
     <i
         :class="['fa-bookmark', { 'fas': active, 'far': !active }]"
-        @click="toggleBookmark( {'active': active, 'identifier': identifier} )" >
+        @click.left.prevent="toggleBookmark( {'active': active, 'identifier': identifier} )" >
     </i>
 </template>
 

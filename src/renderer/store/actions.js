@@ -1,7 +1,7 @@
 import { search, getEntryDetails } from '../utils/requests.js'
 import { getCurrentDateString } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
-import { LOADING, TOO_MANY_HITS, NO_HITS, DONE } from '../utils/constants.js'
+import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE } from '../utils/constants.js'
 import { getLoadingObject } from '../utils/utils.js'
 
 // actions
@@ -44,13 +44,9 @@ export default {
     // toggles a bookmark: removes or adds it
     // active: if the bookmark is active or not
     // identifier: of the instance
-    toggleBookmark ({ state, commit, getters }, payload) {
+    toggleBookmark ({ commit, getters }, payload) {
         if (payload.active) {
-            // update bookmarks file
-            let bookmarks = getters.bookmarksList.filter(b => b != payload.identifier)
-            // update user storage
-            setUserData('bookmarks', bookmarks)
-            commit('removeBookmark', payload.identifier)
+             removeBookmark(payload.identifier)           
         } else {
             // fetch all bookmarks details, availability
             commit('setLoading', getLoadingObject('bookmarks', LOADING))
@@ -60,7 +56,9 @@ export default {
                     // update user storage
                     setUserData('bookmarks', bookmarks)
                     commit('addBookmark', res)
+                    commit('setLastUpdated', getCurrentDateString())
                     commit('setLoading', getLoadingObject('bookmarks', DONE))
+                    console.log('Added bookmark', payload.identifier)
                 })
         }
     },
@@ -143,10 +141,17 @@ export default {
     },
    // removes bookmark
    removeBookmark({ commit, getters }, identifier) {
-        // update user storage
+        // update bookmarks file
         let bookmarks = getters.bookmarksList.filter(b => b != identifier)
+        // check if last bookmark
+        if (bookmarks.length == 0) {
+            commit('setLoading', getLoadingObject('bookmarks', INITIAL, 'You have not added any bookmarks yet.'))
+        }
+        // update user storage
         setUserData('bookmarks', bookmarks)
         commit('removeBookmark', identifier)
+        console.log('Removed bookmark', identifier)
+
    },
    // updates the store and user settings for preferred libraries
    setLibraries({ commit }, libraries) {
