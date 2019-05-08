@@ -1,0 +1,52 @@
+17:28:34.580 INFO - Selenium build info: version: '3.0.1', revision: '1969d75'
+17:28:34.580 INFO - Launching a standalone Selenium Server
+2019-05-08 17:28:34.592:INFO::main: Logging initialized @165ms
+17:28:34.632 INFO - Driver provider org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities [{ensureCleanSession=true, browserName=internet explorer, version=, platform=WINDOWS}] does not match the current platform LINUX
+17:28:34.632 INFO - Driver provider org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities [{browserName=MicrosoftEdge, version=, platform=WINDOWS}] does not match the current platform LINUX
+17:28:34.632 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+17:28:34.632 INFO - Driver provider com.opera.core.systems.OperaDriver registration is skipped:
+Unable to create new instances on this machine.
+17:28:34.633 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+17:28:34.633 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+17:28:34.633 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform LINUX
+2019-05-08 17:28:34.658:INFO:osjs.Server:main: jetty-9.2.15.v20160210
+2019-05-08 17:28:34.673:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@5f375618{/,null,AVAILABLE}
+2019-05-08 17:28:34.682:INFO:osjs.ServerConnector:main: Started ServerConnector@77714b0{HTTP/1.1}{0.0.0.0:4444}
+2019-05-08 17:28:34.682:INFO:osjs.Server:main: Started @255ms
+17:28:34.682 INFO - Selenium Server is up and running
+17:28:35.284 INFO - SessionCleaner initialized with insideBrowserTimeout 0 and clientGoneTimeout 1800000 polling every 180000
+17:28:35.300 INFO - Executing: [new session: Capabilities [{acceptSslCerts=true, name=Test, browserName=chrome, platform=ANY}]])
+17:28:35.310 INFO - Creating a new session for Capabilities [{acceptSslCerts=true, name=Test, browserName=chrome, platform=ANY}]
+Starting ChromeDriver 73.0.3683.20 (8e2b610813e167eee3619ac4ce6e42e3ec622017) on port 10330
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+17:28:35.693 INFO - Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
+17:28:36.024 INFO - Detected dialect: OSS
+17:28:36.037 INFO - Done: [new session: Capabilities [{acceptSslCerts=true, name=Test, browserName=chrome, platform=ANY}]]
+17:28:36.046 INFO - Executing: [get: http://www.google.com])
+17:28:36.604 INFO - Done: [get: http://www.google.com]
+17:28:36.609 INFO - Executing: [find elements: By.cssSelector: body])
+17:28:36.630 INFO - Done: [find elements: By.cssSelector: body]
+17:28:36.634 INFO - Executing: [is displayed: 0 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: body]])
+17:28:36.648 INFO - Done: [is displayed: 0 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: body]]
+17:28:36.653 INFO - Executing: [get title])
+17:28:36.659 INFO - Done: [get title]
+17:28:36.668 INFO - Executing: [find element: By.cssSelector: input[type=text]])
+17:28:36.692 INFO - Done: [find element: By.cssSelector: input[type=text]]
+17:28:36.694 INFO - Executing: [is displayed: 1 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: input[type=text]]])
+17:28:36.706 INFO - Done: [is displayed: 1 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: input[type=text]]]
+17:28:36.709 INFO - Executing: [find element: By.cssSelector: input[type=text]])
+17:28:36.717 INFO - Done: [find element: By.cssSelector: input[type=text]]
+17:28:36.728 INFO - Executing: [send keys: 1 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: input[type=text]], [r, e, m, b, r, a, n, d, t,  , v, a, n,  , r, i, j, n]])
+17:28:36.825 INFO - Done: [send keys: 1 [[ChromeDriver: chrome on LINUX (02c95a12e78246b5471adcf3f3beb26f)] -> css selector: input[type=text]], [r, e, m, b, r, a, n, d, t,  , v, a, n,  , r, i, j, n]]
+17:28:36.828 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+17:28:36.841 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+17:28:37.347 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+17:28:37.367 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+17:28:37.873 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+17:28:37.883 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+17:28:37.890 INFO - Executing: [delete session: d9dd38c5-4322-42a2-9e1b-767ade96a497])
+17:28:37.957 INFO - Done: [delete session: d9dd38c5-4322-42a2-9e1b-767ade96a497]

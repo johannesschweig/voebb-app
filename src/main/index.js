@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow, shell } from 'electron'
+import { path } from 'change-case';
 
 /**
  * Set `__static` path to static files in production

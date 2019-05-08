@@ -4,7 +4,8 @@
         <template v-for='lib in allLibraries'>
             <input type='checkbox'
                 :value='lib'
-                v-model='libs'/>
+                v-model='libs'
+                :class="{'checked': libs.indexOf(lib) != -1}"/>
             {{ getShortLibrary(lib) }}
             <br />
         </template>

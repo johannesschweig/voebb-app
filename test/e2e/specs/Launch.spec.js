@@ -1,8 +1,8 @@
 import utils from '../utils'
 
 describe('Launch', function () {
-  beforeEach(utils.beforeEach)
-  afterEach(utils.afterEach)
+  before(utils.before)
+  after(utils.after)
 
   it('shows the proper application title', function () {
     return this.app.client

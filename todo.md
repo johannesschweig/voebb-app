@@ -1,5 +1,9 @@
 # BACKLOG
 * add application icon
+* enable auto-updating
+* add unit tests (jest)
+* add e2e tests (nighwatch)
+* add linting
 
 # TODO
 * create search filters
@@ -18,10 +22,6 @@
 * remove electron warnings
 * make it easier to tick libraries (by districts)
 * change application name
-* enable auto-updating
-* add unit tests
-* add e2e tests
-* add linting
 * fix 403 forbidden and 404 errors for retrieving images
 * resort preview headers (title > person > summary > pages/language/isbn/year ...)
 * searchresults: active preview should be highlighted
@@ -43,6 +43,7 @@
 * put all reused strings in constants file
 * investigate long load times
 * remove duplicate medium references in title searchresults
+* create loading feedback for BookmarksIcon
 
 # DONE
 * create bookmarks page
