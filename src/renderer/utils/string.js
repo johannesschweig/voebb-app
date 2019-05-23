@@ -29,7 +29,6 @@ export function sanitizeDetail(key, value) {
     switch(key) {
         // remove dashes from isbn
         case 'ISBN': return value.replace(/-/g, '')
-        break
         default: return value
     }
 }

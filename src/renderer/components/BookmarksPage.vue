@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import { getEntryDetails } from '../utils/requests.js'
 import { shortenLibraryName } from '../utils/string.js'
 import AvailableIcon from './icons/AvailableIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'

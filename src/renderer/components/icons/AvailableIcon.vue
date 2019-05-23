@@ -14,7 +14,7 @@
     <div
         class='wait'
         v-else-if="avail.toLowerCase().startsWith('ausgeliehen')">
-        <i class="far fa-clock"></i>
+        <i class='far fa-clock'></i>
         <div class='days'> {{ getDaysDue(avail) }}</div>
     </div>
     <span

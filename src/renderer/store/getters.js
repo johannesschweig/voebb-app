@@ -5,7 +5,7 @@ export default {
     bookmarksList: state => {
       return state.bookmarks.data.map(obj => obj.identifier)
     },
-    // returns true if details are available for the bookmaks
+    // returns true if details are available for the bookmarks
     detailsAvailable: state => {
         // no bookmarks at all
         if (state.bookmarks.data.length == 0) {

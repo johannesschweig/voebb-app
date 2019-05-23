@@ -92,13 +92,13 @@ export function search(term, mocked=false) {
 
                     return {
                         details: {
-                                'title': Object.values(results.details[3])[0],
-                                'name': Object.values(results.details[2])[0],
-                                'medium': Object.values(results.details[0])[0].slice(1, -1),
-                                'year': Object.values(results.details[4])[0],
-                                'img': null,
-                                'identifier': id,
-                                'avail': ''
+                            'title': Object.values(results.details[3])[0],
+                            'name': Object.values(results.details[2])[0],
+                            'medium': Object.values(results.details[0])[0].slice(1, -1),
+                            'year': Object.values(results.details[4])[0],
+                            'img': null,
+                            'identifier': id,
+                            'avail': ''
                         }
                     }
                 } else {

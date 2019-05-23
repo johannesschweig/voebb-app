@@ -2,9 +2,9 @@
     <div>
         <div class='text'>Select your preferred libraries:</div>
         <template v-for='lib in allLibraries'>
-        <input type='checkbox'
-            :value='lib'
-            v-model='libs'/>
+            <input type='checkbox'
+                :value='lib'
+                v-model='libs'/>
             {{ getShortLibrary(lib) }}
             <br />
         </template>
