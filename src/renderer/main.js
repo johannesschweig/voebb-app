@@ -10,10 +10,10 @@ console.log('User storage in', require('electron-json-storage').getDefaultDataPa
 
 // register shortcut to open dev tools
 remote.globalShortcut.register('CommandOrControl+Shift+I', () => {
-    remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
+  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
 })
 window.addEventListener('beforeunload', () => {
-    remote.globalShortcut.unregisterAll()
+  remote.globalShortcut.unregisterAll()
 })
 
 /* eslint-disable no-new */

@@ -22,7 +22,7 @@ export default {
       path: electron,
       args: ['dist/electron/main.js'],
       startTimeout: 11000,
-      waitTimeout: 11000, 
+      waitTimeout: 11000,
       env: {
         NODE_ENV: 'development'
       }
@@ -35,15 +35,15 @@ export default {
     fs.writeFileSync(bookmarksPath, str)
   },
   // read bookmarks settings file
-  readBookmarks() {
-    return fs.readFileSync(bookmarksPath , 'utf-8')
+  readBookmarks () {
+    return fs.readFileSync(bookmarksPath, 'utf-8')
   },
   // write string to libraries settings file
   writeLibraries (str) {
     fs.writeFileSync(librariesPath, str)
   },
   // read bookmarks settings file
-  readLibraries() {
+  readLibraries () {
     return fs.readFileSync(librariesPath, 'utf-8')
   }
 }

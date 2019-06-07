@@ -3,12 +3,12 @@ import RemoveIcon from '@/components/icons/RemoveIcon'
 
 describe('RemoveIcon.vue', () => {
   it('renders', () => {
-      const wrapper = shallowMount(RemoveIcon, {
-        propsData: {
-          identifier: 'foo'
-        }
-      })
+    const wrapper = shallowMount(RemoveIcon, {
+      propsData: {
+        identifier: 'foo'
+      }
+    })
 
-      expect(wrapper.find('i').attributes('class')).toEqual('fas fa-trash')
+    expect(wrapper.find('i').attributes('class')).toEqual('fas fa-trash')
   })
 })

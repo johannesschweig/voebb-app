@@ -9,9 +9,9 @@
 import { mapActions } from 'vuex'
 
 export default {
-    methods: mapActions([
-        'search'
-    ])
+  methods: mapActions([
+    'search'
+  ])
 }
 </script>
 

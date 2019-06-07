@@ -1,8 +1,6 @@
 var assert = require('assert')
 const app = require('./spectron-helper.js')()
 
-
-
 // A simple test to verify a visible window is opened with a title
 app.start().then(function () {
   // Check if the window is visible

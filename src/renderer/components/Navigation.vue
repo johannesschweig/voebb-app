@@ -19,9 +19,9 @@
 import NavigationItem from './NavigationItem.vue'
 
 export default {
-    components: {
-        NavigationItem
-    },
+  components: {
+    NavigationItem
+  }
 }
 </script>
 

@@ -11,26 +11,26 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-    props: {
-        page: {
-            type: String,
-            required: true
-        },
-        label: {
-            type: String,
-            required: true
-        },
-        icon: {
-            type: String,
-            required: true
-        }
+  props: {
+    page: {
+      type: String,
+      required: true
     },
-    computed: mapState({
-        'currentPage': state => state.currentPage
-    }),
-    methods: mapActions([
-        'switchPage'
-    ])
+    label: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String,
+      required: true
+    }
+  },
+  computed: mapState({
+    'currentPage': state => state.currentPage
+  }),
+  methods: mapActions([
+    'switchPage'
+  ])
 
 }
 </script>

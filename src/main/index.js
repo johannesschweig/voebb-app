@@ -1,7 +1,6 @@
 'use strict'
 
 import { app, BrowserWindow, shell } from 'electron'
-import { path } from 'change-case';
 
 /**
  * Set `__static` path to static files in production
@@ -15,7 +14,6 @@ let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
-
 
 function createWindow () {
   /**
@@ -36,10 +34,10 @@ function createWindow () {
     mainWindow = null
   })
 
-  mainWindow.webContents.on('new-window', function(event, url){
-    event.preventDefault();
-    shell.openExternal(url);
-});
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault()
+    shell.openExternal(url)
+  })
 }
 
 app.on('ready', createWindow)

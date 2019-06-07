@@ -1,23 +1,24 @@
 const fs = require('fs')
+const path = require('path')
 
 // reads in a file asynchronously
-export function readFileAsync(path) {
-    return new Promise(function(resolve, reject){
-        fs.readFile(__dirname + path, 'utf8', (err, contents) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(contents.trim().split('\n'))
-            }
-        })
+export function readFileAsync (filePath) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(path.join(__dirname, filePath), 'utf8', (err, contents) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(contents.trim().split('\n'))
+      }
     })
+  })
 }
 
 // writes data to file asynchronously
-export function writeFileAsync(path, data) {
-    fs.writeFile(__dirname + path, data, function(err, contents) {
-        if(err) {
-            return console.log(err)
-        }
-    })
+export function writeFileAsync (filePath, data) {
+  fs.writeFile(path.join(__dirname, filePath), data, function (err) {
+    if (err) {
+      return console.log(err)
+    }
+  })
 }

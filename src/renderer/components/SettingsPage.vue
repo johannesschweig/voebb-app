@@ -13,36 +13,36 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import { allLibraries } from '../utils/constants.js'
 import { shortenLibraryName } from '../utils/string.js'
 
 export default {
-    data () {
-        return {
-            allLibraries: allLibraries,
-        }
-    },
-    computed: {
-        // list of preferred libraries
-        libs: {
-            set(val) {
-                this.setLibraries(val)
-            },
-            get() {
-                return this.$store.state.libraries
-            }
-        }
-    },
-    methods: {
-        // get short name for library
-        getShortLibrary(lib) {
-            return shortenLibraryName(lib)
-        },
-        ...mapActions([
-            'setLibraries'
-        ])
+  data () {
+    return {
+      allLibraries: allLibraries
     }
+  },
+  computed: {
+    // list of preferred libraries
+    libs: {
+      set (val) {
+        this.setLibraries(val)
+      },
+      get () {
+        return this.$store.state.libraries
+      }
+    }
+  },
+  methods: {
+    // get short name for library
+    getShortLibrary (lib) {
+      return shortenLibraryName(lib)
+    },
+    ...mapActions([
+      'setLibraries'
+    ])
+  }
 }
 </script>
 

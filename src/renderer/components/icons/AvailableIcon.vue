@@ -26,23 +26,23 @@
 
 <script>
 export default {
-    props: {
-        avail: {
-            type: String,
-            required: true
-        }
-    },
-    methods: {
-        // computes the days due until the book is available
-        getDaysDue(avail) {
-            let start = avail.indexOf(':') + 2
-            let date = avail.substr(start)
-            let parts = date.split('.')
-            let date2 = new Date(parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0'))
-            let days = Math.round(Math.abs((new Date().getTime() - date2.getTime())/(24*60*60*1000)));
-            return '(' + days + ')'
-        }
+  props: {
+    avail: {
+      type: String,
+      required: true
     }
+  },
+  methods: {
+    // computes the days due until the book is available
+    getDaysDue (avail) {
+      let start = avail.indexOf(':') + 2
+      let date = avail.substr(start)
+      let parts = date.split('.')
+      let date2 = new Date(parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0'))
+      let days = Math.round(Math.abs((new Date().getTime() - date2.getTime()) / (24 * 60 * 60 * 1000)))
+      return '(' + days + ')'
+    }
+  }
 }
 </script>
 

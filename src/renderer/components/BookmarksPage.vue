@@ -52,49 +52,49 @@ import AvailableIcon from './icons/AvailableIcon.vue'
 import LinkIcon from './icons/LinkIcon.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { LOADING } from '../utils/constants.js'
 
 export default {
-    computed: {
-        ...mapState({
-            data: state => state.bookmarks.data,
-            lastUpdated: state => state.bookmarks.lastUpdated,
-            loading: state => state.loading.bookmarks
-        }),
-        ...mapGetters([
-            'detailsAvailable',
-            'getPreferredLibraries'
-        ]),
+  computed: {
+    ...mapState({
+      data: state => state.bookmarks.data,
+      lastUpdated: state => state.bookmarks.lastUpdated,
+      loading: state => state.loading.bookmarks
+    }),
+    ...mapGetters([
+      'detailsAvailable',
+      'getPreferredLibraries'
+    ])
+  },
+  components: {
+    AvailableIcon,
+    LinkIcon,
+    LoadingCircle,
+    RemoveIcon
+  },
+  methods: {
+    // get property (e.g. title, person) from array of objects
+    getProperty (arr, prop) {
+      return arr.filter(e => Object.keys(e)[0] === prop)[0][prop]
     },
-    components: {
-        AvailableIcon,
-        LinkIcon,
-        LoadingCircle,
-        RemoveIcon
+    // returns a shorter name for the library
+    getShortLibrary (library) {
+      return shortenLibraryName(library)
     },
-    methods: {
-        // get property (e.g. title, person) from array of objects
-        getProperty(arr, prop) {
-            return arr.filter(e => Object.keys(e)[0] == prop)[0][prop]
-        },
-        // returns a shorter name for the library
-        getShortLibrary(library) {
-            return shortenLibraryName(library)
-        },
-        // refresh the existing bookmarks
-        refetchExisting() {
-            this.$store.dispatch('readUserData')
-        },
-        // get only availabilities from preferred libraries
-        getPreferred(availabilities) {
-            return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
-        },
-        // return true if the component is currently fetching data
-        isLoading() {
-            return this.loading.status == LOADING
-        }
+    // refresh the existing bookmarks
+    refetchExisting () {
+      this.$store.dispatch('readUserData')
+    },
+    // get only availabilities from preferred libraries
+    getPreferred (availabilities) {
+      return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
+    },
+    // return true if the component is currently fetching data
+    isLoading () {
+      return this.loading.status === LOADING
     }
+  }
 }
 </script>
 

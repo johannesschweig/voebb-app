@@ -9,12 +9,12 @@
 
 <script>
 export default {
-    props: {
-        identifier: {
-            type: String,
-            required: true
-        }
+  props: {
+    identifier: {
+      type: String,
+      required: true
     }
+  }
 }
 </script>
 

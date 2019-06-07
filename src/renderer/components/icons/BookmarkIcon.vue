@@ -9,19 +9,19 @@
 import { mapActions } from 'vuex'
 
 export default {
-    props: {
-        active: {
-            type: Boolean,
-            required: true
-        },
-        identifier: {
-            type: String,
-            required: true
-        }
+  props: {
+    active: {
+      type: Boolean,
+      required: true
     },
-    methods: mapActions([
-        'toggleBookmark'
-    ])
+    identifier: {
+      type: String,
+      required: true
+    }
+  },
+  methods: mapActions([
+    'toggleBookmark'
+  ])
 }
 </script>
 

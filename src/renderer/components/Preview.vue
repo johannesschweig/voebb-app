@@ -65,50 +65,50 @@
 <script>
 import MediumIcon from './icons/MediumIcon.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
-import { shortenLibraryName, sanitizeDetail  } from '../utils/string.js'
+import { shortenLibraryName, sanitizeDetail } from '../utils/string.js'
 import { mapState, mapGetters } from 'vuex'
 import { LOADING, DONE } from '../utils/constants.js'
 
 export default {
-    components: {
-        LoadingCircle,
-        MediumIcon
+  components: {
+    LoadingCircle,
+    MediumIcon
+  },
+  computed: {
+    ...mapState({
+      data: state => state.preview,
+      loading: state => state.loading.preview
+    }),
+    ...mapGetters([
+      'getPreferredLibraries'
+    ])
+  },
+  methods: {
+    // returns a shorter name for the library
+    getShortLibrary (library) {
+      return shortenLibraryName(library)
     },
-    computed: {
-        ...mapState({
-            data: state => state.preview,
-            loading: state => state.loading.preview
-        }),
-        ...mapGetters([
-            'getPreferredLibraries'
-        ])
+    // get only availabilities from preferred libraries
+    getPreferred (availabilities) {
+      return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
     },
-    methods: {
-        // returns a shorter name for the library
-        getShortLibrary(library) {
-            return shortenLibraryName(library)
-        },
-        // get only availabilities from preferred libraries
-        getPreferred(availabilities) {
-            return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
-        },
-        // get only availabilities from preferred libraries
-        getNotPreferred(availabilities) {
-            return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
-        },
-        // removes unncessary infos from strings
-        sanitizeString(key, value) {
-            return sanitizeDetail(key, value)
-        },
-        // returns true if the component is currently fetching data
-        isLoading() {
-            return this.loading.status == LOADING
-        },
-        // returns true if the component has finished fetching data
-        isDone() {
-            return this.loading.status == DONE
-        }
+    // get only availabilities from preferred libraries
+    getNotPreferred (availabilities) {
+      return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
+    },
+    // removes unncessary infos from strings
+    sanitizeString (key, value) {
+      return sanitizeDetail(key, value)
+    },
+    // returns true if the component is currently fetching data
+    isLoading () {
+      return this.loading.status === LOADING
+    },
+    // returns true if the component has finished fetching data
+    isDone () {
+      return this.loading.status === DONE
     }
+  }
 }
 </script>
 

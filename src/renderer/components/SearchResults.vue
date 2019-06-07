@@ -52,36 +52,36 @@ import { mapActions, mapState, mapGetters } from 'vuex'
 import { INITIAL, LOADING } from '../utils/constants.js'
 
 export default {
-    components: {
-        AvailableIcon,
-        BookmarkIcon,
-        LinkIcon,
-        LoadingCircle,
-        MediumIcon
+  components: {
+    AvailableIcon,
+    BookmarkIcon,
+    LinkIcon,
+    LoadingCircle,
+    MediumIcon
+  },
+  computed: {
+    ...mapState({
+      results: state => state.searchResults,
+      loading: state => state.loading.searchResults,
+      previewStatus: state => state.loading.preview.status,
+      activeRow: state => state.preview.identifier
+    }),
+    ...mapGetters([
+      'bookmarksList'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'fetchDetails'
+    ]),
+    // if the component is currently loading new data
+    isLoading () {
+      return this.loading.status === LOADING
     },
-    computed: {
-        ...mapState({
-            results: state => state.searchResults,
-            loading: state => state.loading.searchResults,
-            previewStatus: state => state.loading.preview.status,
-            activeRow: state => state.preview.identifier
-        }),
-        ...mapGetters([
-            'bookmarksList'
-        ]),
-    },
-    methods: {
-        ...mapActions([
-            'fetchDetails'
-        ]),
-        // if the component is currently loading new data
-        isLoading() {
-            return this.loading.status == LOADING
-        },
-        previewIsInitial() {
-            return this.previewStatus == INITIAL
-        }
+    previewIsInitial () {
+      return this.previewStatus === INITIAL
     }
+  }
 }
 </script>
 

@@ -8,17 +8,17 @@
 <script>
 
 export default {
-    props: {
-        identifier: {
-            type: String,
-            required: true
-        }
-    },
-    methods: {
-        clicked() {
-            this.$store.dispatch('removeBookmark', this.identifier)
-        }
+  props: {
+    identifier: {
+      type: String,
+      required: true
     }
+  },
+  methods: {
+    clicked () {
+      this.$store.dispatch('removeBookmark', this.identifier)
+    }
+  }
 }
 </script>
 

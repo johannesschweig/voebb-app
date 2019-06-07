@@ -2,10 +2,10 @@ import { shallowMount } from '@vue/test-utils'
 import AvailableIcon from '@/components/icons/AvailableIcon'
 
 // returns a string of the date in two days in the format dd.mm.yyyy
-function getDateString() {
-    let date = new Date(new Date().getTime()+(2*24*60*60*1000))
-    date = date.toLocaleDateString('en-US').split('/')
-    return date[1] + '.' + date[0] + '.' + date[2]
+function getDateString () {
+  let date = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000))
+  date = date.toLocaleDateString('en-US').split('/')
+  return date[1] + '.' + date[0] + '.' + date[2]
 }
 
 describe('AvailableIcon.vue', () => {
@@ -59,6 +59,4 @@ describe('AvailableIcon.vue', () => {
 
     expect(wrapper.find('span').text()).toEqual('foo')
   })
-
 })
-

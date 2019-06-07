@@ -9,46 +9,46 @@ Vue.use(Vuex)
 
 // initial state
 const state = {
-    currentPage: 'SearchPage',
-    searchResults: [
-        // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
-    ],
+  currentPage: 'SearchPage',
+  searchResults: [
+    // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
+  ],
+  preview: {
+    // identifier:
+    details: [],
+    availability: []
+  },
+  bookmarks: {
+    lastUpdated: '',
+    data: [
+      // { identifier: 'AK123', details: [..], availability: [...]}
+    ]
+  },
+  // list of preferred libraries
+  libraries: [],
+  // loading state of components
+  loading: {
+    searchResults: {
+      // status of the component: either initial, loading, done, error
+      status: INITIAL,
+      // message to the user
+      msg: 'You have not searched for anything yet.'
+    },
     preview: {
-        // identifier: 
-        details: [],
-        availability: []
+      status: INITIAL,
+      msg: ''
     },
     bookmarks: {
-        lastUpdated: '',
-        data: [
-            // { identifier: 'AK123', details: [..], availability: [...]}
-        ]
-    },
-    // list of preferred libraries
-    libraries: [],
-    // loading state of components
-    loading: {
-        searchResults: {
-            // status of the component: either initial, loading, done, error
-            status: INITIAL, 
-            // message to the user
-            msg: 'You have not searched for anything yet.'
-        },
-        preview: {
-            status: INITIAL,
-            msg: ''
-        },
-        bookmarks: {
-            status: INITIAL,
-            msg: 'You have not added any bookmarks yet.'
-        }
+      status: INITIAL,
+      msg: 'You have not added any bookmarks yet.'
     }
+  }
 }
 
 export default new Vuex.Store({
-    state,
-    getters,
-    // setters,
-    actions,
-    mutations
+  state,
+  getters,
+  // setters,
+  actions,
+  mutations
 })

@@ -12,11 +12,11 @@ import SearchField from './SearchField.vue'
 import SearchResults from './SearchResults.vue'
 
 export default {
-    components: {
-        Preview,
-        SearchField,
-        SearchResults
-    }
+  components: {
+    Preview,
+    SearchField,
+    SearchResults
+  }
 }
 </script>
 
