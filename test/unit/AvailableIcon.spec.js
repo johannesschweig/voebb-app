@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import AvailableIcon from '@/components/icons/AvailableIcon'
 
-// returns a string of the date in two days in the format dd.mm.yyyy
+// returns a string of the date in two days in the format d.m.yyyy (e.g. 13.6.2019)
 function getDateString () {
   let date = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000))
   date = date.toLocaleDateString('en-US').split('/')
