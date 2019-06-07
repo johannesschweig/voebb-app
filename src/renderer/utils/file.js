@@ -1,24 +1,29 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
+import os from 'os'
 
-// reads in a file asynchronously
-export function readFileAsync (filePath) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path.join(__dirname, filePath), 'utf8', (err, contents) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(contents.trim().split('\n'))
+// exports the user's bookmarks to a text file
+export function exportBookmarksFile (data) {
+  // gather output
+  let output = 'My VOEBB Bookmarks\n\n'
+  let whitelist = ['Medienart', 'Verfasser', 'Titel', 'Veröffentlichung', 'ISBN', 'Person']
+  data.forEach(bookmark => {
+    bookmark.details.forEach(detail => {
+      let key = Object.keys(detail)[0]
+      // only whitelisted details or short details allowed
+      if (whitelist.indexOf(key) !== -1) {
+        output += key + ': ' + detail[key] + '\n'
       }
     })
+    output += 'id: ' + bookmark.identifier + '\n\n'
   })
-}
-
-// writes data to file asynchronously
-export function writeFileAsync (filePath, data) {
-  fs.writeFile(path.join(__dirname, filePath), data, function (err) {
+  output += 'Exported on ' + new Date()
+  // write file
+  let filePath = path.join(os.homedir(), 'bookmarks-export.txt')
+  fs.writeFile(filePath, output, {'flag': 'wx'}, (err) => {
     if (err) {
-      return console.log(err)
+      return alert('There is already a file named "bookmarks-export" in your home directory. Remove it before proceeding.')
     }
+    return alert('Exported your bookmarks to\n' + filePath)
   })
 }
