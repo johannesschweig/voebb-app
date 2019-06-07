@@ -1,6 +1,7 @@
 <template>
     <div class='container'>
         <div v-if='detailsAvailable'>
+            <button @click='exportBookmarks'>Export bookmarks</button>
             <table v-if='data.length != 0'>
                 <tbody>
                     <tr v-for='instance in data'>
@@ -54,6 +55,7 @@ import LoadingCircle from './icons/LoadingCircle.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
 import { mapState, mapGetters } from 'vuex'
 import { LOADING } from '../utils/constants.js'
+import { exportBookmarksFile } from '../utils/file.js'
 
 export default {
   computed: {
@@ -93,6 +95,10 @@ export default {
     // return true if the component is currently fetching data
     isLoading () {
       return this.loading.status === LOADING
+    },
+    // exports the bookmarks to a text file
+    exportBookmarks () {
+      exportBookmarksFile(this.data)
     }
   }
 }
