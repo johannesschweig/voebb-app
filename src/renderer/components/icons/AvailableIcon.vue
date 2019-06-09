@@ -41,9 +41,9 @@ export default {
       let date2 = new Date(parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0'))
       let now = new Date()
       // getTimezoneOffset(): -120
-      now = new Date(now.getTime() + (-now.getTimezoneOffset()) * 60 * 60 * 1000)
+      now = new Date(now.getTime() - now.getTimezoneOffset() * 60 * 1000)
       now.setUTCHours(0, 0, 0, 0)
-      let days = Math.round(Math.abs((now.getTime() - date2.getTime()) / (24 * 60 * 60 * 1000)))
+      let days = Math.round(date2.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)
       return '(' + days + ')'
     }
   }
