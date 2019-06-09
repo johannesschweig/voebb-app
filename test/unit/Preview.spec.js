@@ -1,71 +1,29 @@
 import { shallowMount } from '@vue/test-utils'
 import Preview from '@/components/Preview'
 import LoadingCircle from '@/components/icons/LoadingCircle'
-import { LOADING, DONE } from '@/utils/constants'
+import { LOADING } from '@/utils/constants'
 
 const msg = 'foo'
-const library = 'library'
+const title = 'title'
 
 describe('Preview.vue', () => {
-  it('displays loading msg', () => {
+  it('renders', () => {
     const wrapper = shallowMount(Preview, {
+      // FIXME: stub for router view is not available
+      stubs: ['router-link', 'router-view'],
       computed: {
-        data: () => ({ details: [] }),
-        loading: () => ({ msg })
+        data: () => ({
+          details: { Medienart: 'foo' },
+          identifier: '123'
+        }),
+        getCurrentWrapper: () => 'foo',
+        getActiveTitle: () => title
       }
     })
 
-    expect(wrapper.find('span').text()).toEqual(msg)
-  })
-
-  it('displays details table', () => {
-    const wrapper = shallowMount(Preview, {
-      computed: {
-        data: () => ({ details: [
-          { 'foo': 'bar' },
-          { 'foo2': 'bar2' }
-        ]}),
-        loading: () => ({ })
-      }
-    })
-
-    expect(wrapper.findAll('td').at(0).text()).toEqual('foo')
-    expect(wrapper.findAll('td').at(1).text()).toEqual('bar')
-    expect(wrapper.findAll('td').at(2).text()).toEqual('foo2')
-    expect(wrapper.findAll('td').at(3).text()).toEqual('bar2')
-  })
-
-  it('displays availability table', () => {
-    const wrapper = shallowMount(Preview, {
-      computed: {
-        data: () => ({ details: [],
-          availability: [
-            { library, place: 'place', signature: 'sig', orderStatus: 'os', status: 'status' },
-            { library: 'another library', place: 'another place', signature: 'another signature', orderStatus: 'another os', status: 'another status' }
-          ] }),
-        loading: () => ({ status: DONE, msg }),
-        getPreferredLibraries: () => library
-      }
-    })
-
-    expect(wrapper.findAll('td').at(0).text()).toEqual(library)
-    expect(wrapper.findAll('td').at(1).text()).toEqual('place')
-    expect(wrapper.findAll('td').at(2).text()).toEqual('sig')
-    expect(wrapper.findAll('td').at(3).text()).toEqual('os')
-    expect(wrapper.findAll('td').at(4).text()).toEqual('status')
-    // s modifier for regex to match also newline characters
-    expect(wrapper.find('div.placeholder').text()).toMatch(/Available in:.*another library,/s)
-  })
-
-  it('displays placeholder if availabilities are empty', () => {
-    const wrapper = shallowMount(Preview, {
-      computed: {
-        data: () => ({ details: [], availability: [] }),
-        loading: () => ({ status: DONE, msg })
-      }
-    })
-
-    expect(wrapper.findAll('span.placeholder').at(1).text()).toEqual('Not available in any libraries.')
+    expect(wrapper.find('h1').text()).toEqual(title)
+    expect(wrapper.find('.navigation').findAll('router-link-stub').at(0).text()).toEqual('Details')
+    expect(wrapper.find('.navigation').findAll('router-link-stub').at(1).text()).toEqual('Copies')
   })
 
   it('displays loading circle if loading', () => {
@@ -77,5 +35,21 @@ describe('Preview.vue', () => {
     })
 
     expect(wrapper.find(LoadingCircle).exists()).toBeTruthy()
+  })
+
+  it('does not display navigation if e resource', () => {
+    const wrapper = shallowMount(Preview, {
+      stubs: ['router-link', 'router-view'],
+      computed: {
+        data: () => ({
+          details: { Medienart: 'E-' },
+          identifier: '123'
+        }),
+        getCurrentWrapper: () => 'foo',
+        getActiveTitle: () => 'bar'
+      }
+    })
+
+    expect(wrapper.find('.navigation').exists()).toBeFalsy()
   })
 })

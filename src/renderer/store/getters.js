@@ -24,6 +24,21 @@ export default {
     } else {
       return state.libraries
     }
+  },
+  // get title of active card
+  getActiveTitle: state => {
+    var r = ''
+    if (state.preview.hasOwnProperty('identifier')) {
+      if (state.searchResults.length) {
+        r = state.searchResults.filter(e => e.identifier === state.preview.identifier)
+      }
+      if (r.length === 0 && state.bookmarks.data.length) {
+        r = state.bookmarks.data.filter(e => e.identifier === state.preview.identifier)
+        r = r[0].details['Titel']
+      } else {
+        r = r[0].title
+      }
+    }
+    return r
   }
-
 }

@@ -2,7 +2,7 @@
 
 > An electron-vue project
 
-#### Build Setup
+### Build Setup
 
 ``` bash
 # install dependencies
@@ -19,6 +19,12 @@ npm run build
 npm run lint
 
 ```
+
+## Tests
+### Unit tests
+Run unit tests with `npm run unit`. Run individual tests (e.g. SettingsPage) with `npm run unit SettingsPage`. Exclude tests with `npm run unit -- --testPathIgnorePatterns file.spec.js`.
+### E2E tests
+Run e2e tests with `npm run e2e`. Individual tests can be ran by adding a `-g` parameter in the npm script in the `package.json` (e.g. `...mocha test/e2e -g Search`).
 
 ---
 

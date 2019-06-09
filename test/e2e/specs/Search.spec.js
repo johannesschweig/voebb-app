@@ -1,13 +1,5 @@
 import utils from '../utils'
 
-// FIXME: getProperty not supported by spectron
-// get class from html tag
-function getClass (html) {
-  let start = html.indexOf('class') + 7
-  let end = html.indexOf('"', start)
-  return html.substring(start, end)
-}
-
 describe('Search', function () {
   before(function () {
     // reset bookmarks
@@ -26,8 +18,8 @@ describe('Search', function () {
       .element('//input')
       .click()
       .keys('sams taschenbier\uE007')
-      .waitForExist('table')
-      .elements('//tr')
+      .waitForExist('.card')
+      .elements('.card')
       .then(res => {
         expect(res.value.length).to.equal(22)
       })
@@ -35,33 +27,33 @@ describe('Search', function () {
 
   it('displays preview', function () {
     return this.app.client
-      .element('//tr/td')
+      // click first card
+      .element('.card:nth-child(1)')
       .click()
-      .waitForExist('.details')
-      .element('.active-row .fetch .info .title')
+      // wait for preview
+      .waitForExist('.container > .grid')
+      .element('h1')
       .getText()
       .then(text => {
-        expect(text).to.equal('Das Sams : die große Hörspielbox (CD)')
+        expect(text).to.equal('Das Sams : die große Hörspielbox')
       })
   })
 
   // FIXME: replace pause with wait* function
   it('bookmarking is possible', function () {
     return this.app.client
-      .element('.active-row td:nth-child(3) .fa-bookmark')
+      // click bookmark
+      .element('.container > .grid > div > svg')
       .click()
-      .pause(2500)
-      .element('.active-row td:nth-child(3) .fa-bookmark').getHTML()
-      .then(html => {
-        expect(getClass(html)).to.equal('fa-bookmark fa-lg fas')
-      })
-    // switch to bookmarks
-      .element('//span[text() = "Bookmarks"]')
+      .waitForExist('.container > .grid > div > svg.active')
+      // switch to bookmarks
+      .element('a[label="Bookmarks"]')
       .click()
-      .element('//table/tbody/tr[1]/td[1]/div[1]')
+      .waitForExist('#app > div:nth-child(2) > h1')
+      .element('.title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Das Sams : die große Hörspielbox / Paul Maar')
+        expect(text).to.equal('Das Sams : die große Hörspielbox / Paul Maar (CD)')
       })
   })
 

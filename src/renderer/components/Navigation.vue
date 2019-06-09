@@ -1,17 +1,18 @@
 <template>
     <div class='container'>
         <NavigationItem
-            page='SearchPage'
+            wrapper='SearchWrapper'
             label='Search'
-            icon='fas fa-search' />
+            icon='SearchIcon' />
         <NavigationItem
-            page='BookmarksPage'
+            wrapper='BookmarksWrapper'
             label='Bookmarks'
-            icon='fas fa-bookmark' />
+            icon='BookmarkIcon' />
+        <div></div>
         <NavigationItem
-            page='SettingsPage'
+            wrapper='SettingsPage'
             label='Settings'
-            icon='fas fa-cog' />
+            icon='SettingsIcon' />
     </div>
 </template>
 
@@ -26,9 +27,14 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
-    display: flex;
-    margin-bottom: 12px;
+    display: grid;
+    grid-template-rows: 60px 60px 1fr 60px;
+    background-color: var(--color-2);
+    height: 100%;
+    position: fixed;
+    z-index: 9;
 }
 
 

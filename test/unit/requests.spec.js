@@ -1,17 +1,6 @@
 import { getEntryDetails, search } from '@/utils/requests'
 import { TOO_MANY_HITS, NO_HITS } from '@/utils/constants.js'
 
-// checks if array of objects has an object with prop
-function hasProp (arr, prop) {
-  let exists = false
-  arr.forEach(e => {
-    if (e.hasOwnProperty(prop)) {
-      exists = true
-    }
-  })
-  return exists
-}
-
 // properties of results
 const props = ['title', 'name', 'medium', 'year', 'img', 'identifier', 'avail']
 
@@ -22,8 +11,8 @@ describe('requests.js', () => {
         expect(res.hasOwnProperty('details')).toBeTruthy()
         expect(res.hasOwnProperty('identifier')).toBeTruthy()
         expect(res.hasOwnProperty('availability')).toBeTruthy()
-        expect(hasProp(res.details, 'Titel')).toBeTruthy()
-        expect(hasProp(res.details, 'Person')).toBeTruthy()
+        expect(res.details['Titel']).toBeTruthy()
+        expect(res.details['Person']).toBeTruthy()
       })
   })
 

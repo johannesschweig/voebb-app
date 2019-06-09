@@ -23,7 +23,7 @@ export default {
       commit('setLoading', getLoadingObject('bookmarks', LOADING))
       // no bookmarks
       if (Object.keys(data).length === 0) {
-        throw new Error('handled')
+        throw 'Bookmarks file missing'
       }
       console.log('Fetched user data for key', 'bookmarks', data.length, 'entries')
       // fetch all bookmarks details, availability
@@ -32,14 +32,23 @@ export default {
         promises.push(getEntryDetails(bookmark))
       })
       return Promise.all(promises)
-    }).then(res => {
-      commit('setLoading', getLoadingObject('bookmarks', DONE))
-      commit('setBookmarks', res)
-      commit('setLastUpdated', getCurrentDateString())
-    }).catch(() => {
-      commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet.'))
-      console.log('Bookmarks user file not available')
     })
+      .then(res => {
+        commit('setLoading', getLoadingObject('bookmarks', DONE))
+        commit('setBookmarks', res)
+        commit('setLastUpdated', getCurrentDateString())
+      }).catch(err => {
+        if (err === 'Bookmarks file missing') {
+          commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet'))
+          console.log('Bookmarks user file not available')
+        } else if (err === 'Request timeout') {
+          commit('setLoading', getLoadingObject('bookmarks', DONE, 'Request timed out. Retry again.'))
+          console.log('Request timeout')
+        } else {
+          console.log('Error detected')
+          throw err
+        }
+      })
   },
   // toggles a bookmark: removes or adds it
   // active: if the bookmark is active or not
@@ -132,12 +141,6 @@ export default {
       commit('setLoading', done)
       commit('setPreviewData', res)
     })
-  },
-  // switch page from search to bookmarks
-  switchPage ({ state, commit }, page) {
-    if (state.currentPage !== page) {
-      commit('setPage', page)
-    }
   },
   // removes bookmark
   removeBookmark ({ commit, getters }, identifier) {

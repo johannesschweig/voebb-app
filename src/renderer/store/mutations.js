@@ -31,10 +31,6 @@ export default {
     // reset loading status
     state.loading.preview.status = INITIAL
   },
-  // sets the current page
-  setPage (state, page) {
-    state.currentPage = page
-  },
   setBookmarks (state, results) {
     state.bookmarks.data = results
   },

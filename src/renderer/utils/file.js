@@ -8,13 +8,12 @@ export function exportBookmarksFile (data) {
   let output = 'My VOEBB Bookmarks\n\n'
   let whitelist = ['Medienart', 'Verfasser', 'Titel', 'Veröffentlichung', 'ISBN', 'Person']
   data.forEach(bookmark => {
-    bookmark.details.forEach(detail => {
-      let key = Object.keys(detail)[0]
+    for (var key in bookmark.details) {
       // only whitelisted details or short details allowed
-      if (whitelist.indexOf(key) !== -1) {
-        output += key + ': ' + detail[key] + '\n'
+      if (bookmark.details.hasOwnProperty(key) && whitelist.indexOf(key) !== -1) {
+        output += key + ': ' + bookmark.details[key] + '\n'
       }
-    })
+    }
     output += 'id: ' + bookmark.identifier + '\n\n'
   })
   output += 'Exported on ' + new Date()

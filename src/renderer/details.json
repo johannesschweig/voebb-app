@@ -1,0 +1,71 @@
+{
+  "details": {
+    "Medienart": "Buch",
+    "Art/Inhalt": "Biografie",
+    "Titel": "E. T. A. Hoffmann : das Leben eines skeptischen Phantasten / Rüdiger Safranski",
+    "Person": "Safranski, Rüdiger [Verfasser/in]",
+    "Veröffentlichung": "München [u.a.]: Hanser, 1984",
+    "Umfang / Dauer": "533  Seiten : Ill. ; 21 cm",
+    "Sprache": "Deutsch",
+    "ISBN": "3-446-13822-6"
+  },
+  "availability": [
+    {
+      "library": "Mitte: Philipp - Schaeffer - Bibliothek",
+      "place": "Romane",
+      "signature": "Lit 259 Hoffmann,E.",
+      "orderStatus": "Buch - Bestellwunsch möglich",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "Mitte: Hansabibliothek",
+      "place": "Freihand",
+      "signature": "Lit 259 Hoffmann",
+      "orderStatus": "Buch - Bestellwunsch möglich",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "Steglitz - Zehlendorf: Ingeborg Drewitz Bibliothek",
+      "place": "Freihand",
+      "signature": "Lit 259 Hoffmann, E.T.A.",
+      "orderStatus": "Buch - Bestellwunsch möglich",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "Steglitz - Zehlendorf: Gottfried Benn Bibliothek",
+      "place": "Freihand",
+      "signature": "Lit 259 Hoffmann,E.",
+      "orderStatus": "Buch - Bestellwunsch möglich",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "ZLB: Amerika-Gedenkbibliothek (AGB)",
+      "place": "Magazin AGB",
+      "signature": "108/000 078 411",
+      "orderStatus": "Standardausleihe aus dem Magazin - Magazin, bestellbar",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "ZLB: Amerika-Gedenkbibliothek (AGB)",
+      "place": "Freihand",
+      "signature": "L 235 Hoff 315 i",
+      "orderStatus": "Standardausleihe - Bestellwunsch möglich",
+      "status": "Verfügbar"
+    },
+    {
+      "library": "ZLB: Amerika-Gedenkbibliothek (AGB)",
+      "place": "Freihand",
+      "signature": "L 235 Hoff 315 m",
+      "orderStatus": "Standardausleihe aus dem Magazin - Vormerkung möglich",
+      "status": "Ausgeliehen - Fällig am: 8.7.2019"
+    },
+    {
+      "library": "ZLB: Berlin-Sammlungen",
+      "place": "Lesesaal",
+      "signature": "B 252 Hoff 13",
+      "orderStatus": "nicht entleihbar (Freihand) - Präsenzbestand",
+      "status": "Verfügbar"
+    }
+  ],
+  "identifier": "AK02020127"
+}

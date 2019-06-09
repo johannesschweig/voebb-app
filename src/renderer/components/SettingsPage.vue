@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='container'>
         <div class='text'>Select your preferred libraries:</div>
         <template v-for='lib in allLibraries'>
             <input type='checkbox'

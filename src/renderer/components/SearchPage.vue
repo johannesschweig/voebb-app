@@ -1,19 +1,17 @@
 <template>
-    <div class='root'>
+    <div
+        class='root' >
         <SearchField />
         <SearchResults />
-        <Preview />
     </div>
 </template>
 
 <script>
-import Preview from './Preview.vue'
 import SearchField from './SearchField.vue'
 import SearchResults from './SearchResults.vue'
 
 export default {
   components: {
-    Preview,
     SearchField,
     SearchResults
   }
@@ -23,7 +21,11 @@ export default {
 <style scoped>
 .root {
     display: grid;
-    grid-template: 62px 1fr / 2fr 1fr;
-    grid-column-gap: 24px;
+    grid-template: 108px 1fr / 100vw 100vw;
+    overflow-x: hidden;
+}
+
+.root > div:nth-child(1) {
+    padding-bottom: 24px;
 }
 </style>

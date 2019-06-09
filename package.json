@@ -1,6 +1,6 @@
 {
   "name": "voebb-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Johannes Schweig <j.schweig@posteo.de>",
   "description": "An electron-vue project",
   "license": null,
@@ -18,7 +18,6 @@
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
-    "postinstall": "npm run lint:fix",
     "unit": "vue-cli-service test:unit"
   },
   "build": {
@@ -52,7 +51,8 @@
       "icon": "build/icons/icon.ico"
     },
     "linux": {
-      "icon": "build/icons"
+      "category": "Utility",
+      "target": [ "AppImage" ]
     }
   },
   "dependencies": {
@@ -106,10 +106,10 @@
     "eslint-plugin-vue": "^5.0.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
-    "mocha": "^6.1.4",
     "inject-loader": "^4.0.1",
     "jest": "^24.8.0",
     "mini-css-extract-plugin": "0.4.0",
+    "mocha": "^6.1.4",
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "node-sass": "^4.9.2",
@@ -122,6 +122,7 @@
     "vue-jest": "^3.0.4",
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",
+    "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",

@@ -65,7 +65,7 @@ export function search (term, mocked = false) {
         // open search page
         return req(searchPageOptions(session))
       })
-      .then(res => {
+      .then(() => {
         console.log('SearchPage successfull')
         // open search results page with search term
         return req(resultsPageOptions(session), resultsPageData(searchTerm))
@@ -83,19 +83,19 @@ export function search (term, mocked = false) {
           }
         }
         // redirected to entry details page
-        if ($('.rList > li', res).length === 0 && $('.gi tr', res).length > 0) {
+        if ($('.rList > li', res).length === 0 && $('.gi > tbody > tr', res).length > 0) {
           let results = extractEntryDetails(res)
           // extract identifier
           let id = $('.gi tr:nth-of-type(1) td a', res).attr('href')
           id = id.substring(id.lastIndexOf('=') + 2)
-          console.log('Redirected to entry details page of', Object.values(results.details[3])[0])
+          console.log('Redirected to entry details page of', results.details['Titel'])
 
           return {
             details: {
-              'title': Object.values(results.details[3])[0],
-              'name': Object.values(results.details[2])[0],
-              'medium': Object.values(results.details[0])[0].slice(1, -1),
-              'year': Object.values(results.details[4])[0],
+              'title': results.details['Titel'],
+              'name': results.details['Verfasser'],
+              'medium': results.details['Medienart'],
+              'year': results.details['Veröffentlichung'],
               'img': null,
               'identifier': id,
               'avail': ''
@@ -122,21 +122,21 @@ export function search (term, mocked = false) {
   }
 }
 
-function extractAvailability (row) {
+function extractAvailability (row, header) {
   // library
-  let library = $('td:nth-of-type(1) a', row).text().trim()
+  let library = $('td:nth-of-type(' + header[0] + ') a', row).text().trim()
   // if there is no a link
   if (!library) {
-    library = $('td:nth-of-type(1)', row).text().trim()
+    library = $('td:nth-of-type(' + header[0] + ')', row).text().trim()
   }
   // place
-  let place = $('td:nth-of-type(2)', row).text().trim()
+  let place = $('td:nth-of-type(' + header[1] + ')', row).text().trim()
   // signature
-  let signature = $('td:nth-of-type(3)', row).text().trim()
+  let signature = $('td:nth-of-type(' + header[2] + ')', row).text().trim()
   // orderStatus
-  let orderStatus = $('td:nth-of-type(4)', row).text().trim()
+  let orderStatus = $('td:nth-of-type(' + header[3] + ')', row).text().trim()
   // status
-  let status = $('td:nth-of-type(5)', row).text().trim()
+  let status = $('td:nth-of-type(' + header[4] + ')', row).text().trim()
   return {
     'library': library,
     'place': place,
@@ -149,22 +149,41 @@ function extractAvailability (row) {
 // extracts the details from an entry html
 function extractEntryDetails (html) {
   // extract details
-  /// blacklist of unnecessary tags
-  let details = []
+  let details = {}
   let rows = $('.gi tr', html)
   for (let i = 0; i < rows.length; i++) {
     let left = $('.spaltelinks', rows[i]).text().trim()
     let right = $('.spalterechts', rows[i]).text().trim()
+    if (right[0] === '[' && right.slice(-1) === ']') {
+      right = right.slice(1, -1)
+    }
+    // blacklist of unnecessary tags
     if (!detailsBlacklist.includes(left)) {
-      details.push({ [left]: right })
+      details[left] = right
     }
   }
 
   // extract availability
   var avail = []
+  // check presence and order of columns
+  let header = [0, 0, 0, 0, 0]
+  for (let i = 1; i <= $('th[scope="col"]', html).length; i++) {
+    switch ($('th[scope="col"]:nth-child(' + i + ')', html).text()) {
+      case 'Bibliothek': header[0] = i
+        break
+      case 'Standort': header[1] = i
+        break
+      case 'Signatur': header[2] = i
+        break
+      case 'Bestellmöglichkeit': header[3] = i
+        break
+      case 'Status': header[4] = i
+        break
+    }
+  }
   rows = $('#R08 tbody tr', html)
   for (let i = 0; i < rows.length; i++) {
-    avail.push(extractAvailability(rows[i]))
+    avail.push(extractAvailability(rows[i], header))
   }
   return {
     'details': details,
@@ -176,7 +195,7 @@ function extractEntryDetails (html) {
 // mocked: if the search should return fake/mocked result
 export function getEntryDetails (identifier, mocked = false) {
   if (!mocked) {
-    return req(resultPageOptions(identifier))//, resultPageData, resultPageHeader)
+    return req(resultPageOptions(identifier))
       .then(res => {
         return res
       }).then(res => {
@@ -188,9 +207,7 @@ export function getEntryDetails (identifier, mocked = false) {
     // reads a prepared html file and extracts the data
     var fs = require('fs')
     var path = require('path')
-    var html = fs.readFileSync(path.join(__dirname, '..', 'details.html'), { encoding: 'utf8' })
-    let results = extractEntryDetails(html)
-    results.identifier = 'AK12594954'
-    return Promise.resolve(results)
+    let results = fs.readFileSync(path.join(__dirname, '..', 'details.json'), { encoding: 'utf8' })
+    return Promise.resolve(JSON.parse(results))
   }
 }

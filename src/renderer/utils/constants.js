@@ -1,3 +1,113 @@
+// navigation strings
+export const PAGE = 'Page'
+export const SEARCH_WRAPPER = 'SearchWrapper'
+export const BOOKMARKS_WRAPPER = 'BookmarksWrapper'
+export const SETTINGS_PAGE = 'SettingsPage'
+export const PREVIEW = 'Preview'
+export const DETAILS = 'Details'
+export const COPIES = 'Copies'
+
+// states for loading data
+export const INITIAL = 'initial'
+export const LOADING = 'loading'
+export const TOO_MANY_HITS = 'tooManyHits'
+export const NO_HITS = 'noHits'
+export const DONE = 'done'
+
+export const detailsBlacklist = [
+  '',
+  'Anmerkungen',
+  'Land',
+  'Gesamtwerk',
+  'Schlagwortkette',
+  'Verbundsystematik',
+  'Weitere Titel',
+  'Nummer',
+  'Inhaltsverzeichnis',
+  'Sprache Original',
+  'FSK/USK',
+  'Physische Beschreibung',
+  'Bevorzugter Titel',
+  'Ausgabe',
+  'Freie Schlagwörter',
+  'Sammelrezension',
+  'Erläuterungen',
+  'URL',
+  'Link zur Onleihe'
+]
+
+// contains the medium - font awesome class mappings
+export const mediumIcons = [
+  {
+    name: 'DVD',
+    icon: 'fas fa-film'
+  },
+  {
+    name: 'CD',
+    icon: 'fas fa-compact-disc'
+  },
+  {
+    name: 'Buch',
+    icon: 'fas fa-book'
+  },
+  {
+    name: 'Band',
+    icon: 'fas fa-book'
+  },
+  {
+    name: 'E-Audio',
+    icon: 'far fa-file-audio'
+  },
+  {
+    name: 'MP3',
+    icon: 'far fa-file-audio'
+  },
+  {
+    name: 'E-Book',
+    icon: 'fas fa-atlas'
+  },
+  {
+    name: 'Video',
+    icon: 'fas fa-video'
+  },
+  {
+    name: 'E-Learning',
+    icon: 'fas fa-atlas'
+  },
+  {
+    name: 'Mehrteiliges Werk',
+    icon: ''
+  },
+  {
+    name: 'Schallplatte',
+    icon: 'fas fa-compact-disc'
+  },
+  {
+    name: 'Noten',
+    icon: 'fab fa-itunes-note'
+  },
+  {
+    name: 'Stücktitel/Band',
+    icon: 'fas fa-book'
+  },
+  {
+    name: 'E-Ressource',
+    icon: 'fas fa-atlas'
+  },
+  {
+    name: 'Zeitschrift',
+    icon: 'far fa-newspaper'
+  },
+  {
+    name: 'Medienkombination',
+    icon: ''
+  },
+  {
+    name: 'konventionelles Spiel',
+    icon: 'fas fa-dice'
+  }
+]
+
 export const allLibraries = [
   'Charlottenburg-Wilmersdorf: Adolf-Reichwein-Bibliothek',
   'Charlottenburg-Wilmersdorf: Dietrich-Bonhoeffer-Bibliothek',
@@ -87,67 +197,3 @@ export const allLibraries = [
   'ZLB: Berliner Stadtbibliothek  (BStB)',
   'ZLB: Kinder- und Jugendbibliothek mit Lernzentrum'
 ]
-
-export const detailsBlacklist = [
-  '',
-  'Anmerkungen',
-  'Land',
-  'Gesamtwerk',
-  'Schlagwortkette',
-  'Verbundsystematik',
-  'Weitere Titel',
-  'Nummer',
-  'Inhaltsverzeichnis',
-  'Sprache Original',
-  'FSK/USK',
-  'Physische Beschreibung',
-  'Bevorzugter Titel',
-  'Ausgabe',
-  'Freie Schlagwörter',
-  'Sammelrezension',
-  'Erläuterungen',
-  'URL'
-]
-
-// contains the medium - font awesome class mappings
-export const mediumIcons = [
-  {
-    name: 'DVD',
-    icon: 'fas fa-film'
-  },
-  {
-    name: 'CD',
-    icon: 'fas fa-compact-disc'
-  },
-  {
-    name: 'Buch',
-    icon: 'fas fa-book'
-  },
-  {
-    name: 'Band',
-    icon: 'fas fa-book'
-  },
-  {
-    name: 'E-Audio',
-    icon: 'far fa-file-audio'
-  },
-  {
-    name: 'MP3',
-    icon: 'far fa-file-audio'
-  },
-  {
-    name: 'E-Book',
-    icon: 'fas fa-atlas'
-  },
-  {
-    name: 'Video',
-    icon: 'fas fa-video'
-  }
-]
-
-// states for loading data
-export const INITIAL = 'initial'
-export const LOADING = 'loading'
-export const TOO_MANY_HITS = 'tooManyHits'
-export const NO_HITS = 'noHits'
-export const DONE = 'done'

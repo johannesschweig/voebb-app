@@ -4,7 +4,10 @@ const storage = require('electron-json-storage')
 export const getUserData = (key) => {
   return new Promise((resolve, reject) => {
     storage.get(key, (error, data) => {
-      if (error) reject(error)
+      if (error) {
+        console.log('Error while reading user file', key, error)
+        reject(error)
+      }
       resolve(data)
     })
   })

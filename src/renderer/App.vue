@@ -2,7 +2,7 @@
     <div id='app'>
         <Navigation />
         <keep-alive>
-            <component :is='currentPage' />
+            <router-view />
         </keep-alive>
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     SettingsPage
   },
   computed: mapState({
-    'currentPage': state => state.currentPage
+    'currentPage': state => state.navigation.currentPage
   }),
   created () {
     // read in bookmarks from file
@@ -30,16 +30,18 @@ export default {
     // TODO remove before deployment
     // this.$store.dispatch('fakeSearch')
     // this.$store.dispatch('fakeFetchDetails')
+    // this.$store.dispatch('fetchDetails', 'AK02020127')
     // this.$store.dispatch('search', 'felix und felka')
   }
 }
 </script>
 
 <style>
-#app {
-    font-family: Lato, sans-serif;
-    color: #3e3e3e;
-    padding: 8px 16px;
+:root {
+  --color-1: #f9f9f9;
+  --color-2: #bcbab8;
+  --color-3: #808080;
+  --color-4: #333333;
 }
 
 i {
@@ -48,8 +50,39 @@ i {
 
 .placeholder {
     font-size: 14px;
+    font-weight: 300;
     opacity: .5;
     font-style: italic;
 }
 
+h1 {
+    font-size: 30px;
+    margin: 0;
+    color: var(--color-4);
+    padding-bottom: 16px;
+}
+
+
+.active-card {
+    background-color: var(--color-2);
+}
+
 </style>
+
+<style scoped>
+#app {
+    font-family: Lato, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    position: fixed;
+}
+
+#app div:nth-child(2) {
+    position: absolute;
+    left: 84px;
+    top: 16px;
+    margin-bottom: 16px;
+}
+</style>
+

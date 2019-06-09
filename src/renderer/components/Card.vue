@@ -1,0 +1,123 @@
+<template>
+    <router-link
+        :to='"/" + wrapper + "Wrapper/Preview"'
+        :class='["card", wrapper.toLowerCase(), { "not-available": wrapper === "Bookmarks" && row.availability !== "available" }]'
+        tag='div'
+        @click.left.native='fetchDetails(row.identifier)' >
+        <img
+            v-if='wrapper === "Search"'
+            :src='row.img ? row.img : ""' />
+        <div class='info'>
+            <div class='title'>
+                <MediumIcon :medium='row.medium'/>
+                {{ row.title }} ({{ row.medium }})
+            </div>
+            <div class='subtitle'>
+                {{ row.name }} - {{ row.year }}
+            </div>
+        </div>
+        <BookmarkButtonIcon
+            v-if='wrapper === "Search"'
+            :identifier='row.identifier' />
+        <span v-else>
+            {{ row.availability }}
+        </span>
+    </router-link>
+</template>
+
+<script>
+import BookmarkButtonIcon from './icons/BookmarkButtonIcon.vue'
+import MediumIcon from './icons/MediumIcon.vue'
+import { mapActions } from 'vuex'
+
+export default {
+  components: {
+    BookmarkButtonIcon,
+    MediumIcon
+  },
+  props: {
+    row: {
+      type: Object,
+      required: true
+    },
+    wrapper: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions([
+      'fetchDetails'
+    ])
+  }
+}
+</script>
+
+<style scoped>
+.card {
+    background-color: #FFF;
+    margin-bottom: 16px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    cursor: pointer;
+    display: grid;
+    grid-column-gap: 16px;
+}
+
+.card.not-available {
+    color: var(--color-3);
+}
+
+.card.search {
+    grid-template-columns: 90px 1fr 60px;
+}
+
+.card.bookmarks {
+    grid-template-columns: 1fr 140px;
+}
+
+.card:hover,
+.card:active {
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
+}
+
+.search .info {
+    grid-column: 2 / 3;
+}
+
+.bookmarks .info {
+    grid-column: 1 / 2;
+}
+
+.info {
+    padding-top: 4px;
+}
+
+.title {
+    padding-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #808080;
+}
+
+img {
+    padding-right: 16px;
+    min-width: 90px;
+    min-height: 50px;
+    grid-column: 1 / 2;
+}
+
+svg {
+    grid-column: 3 / 4;
+    padding: 24px;
+    grid-row: 1 / 3;
+}
+
+span {
+    grid-column: 2 / 3;
+    padding: 24px;
+    grid-row: 1 / 3;
+}
+</style>

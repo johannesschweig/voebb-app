@@ -3,12 +3,17 @@
     :href='"https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=S" + identifier'
     target='_blank'
     >
-        <i class="fas fa-lg fa-external-link-square-alt"></i>
+        <LinkIcon />
     </a>
 </template>
 
 <script>
+import LinkIcon from '../../assets/link.svg'
+
 export default {
+  components: {
+    LinkIcon
+  },
   props: {
     identifier: {
       type: String,
@@ -19,14 +24,13 @@ export default {
 </script>
 
 <style scoped>
-i {
-    color: #3e3e3e;
-    opacity: .7;
+svg * {
+    stroke: var(--color-3);
 }
 
-i:hover,
-i:focus,
-i:active {
-    opacity: 1;
+svg:hover *,
+svg:focus *,
+svg:active * {
+    stroke: var(--color-4);
 }
 </style>

@@ -18,7 +18,7 @@ function request (options, data, header) {
         }
       })
     })
-    req.setTimeout(3000)
+    req.setTimeout(5000)
     req.on('timeout', () => reject(timeout))
     req.on('error', reject)
     // if header present, set header
@@ -45,7 +45,7 @@ export default function req (options, data = '', header = '') {
             console.log('Restart request (3rd time)')
             request(options, data, header)
               .then(res => resolve(res))
-              .catch(() => reject(new Error('Request timeout (3rd time)')))
+              .catch(() => reject('Request timeout'))
           })
       })
   })

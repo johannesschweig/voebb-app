@@ -1,22 +1,22 @@
 <template>
-    <div
-        :class="{ 'active': currentPage === page }"
-        @click='switchPage(page)' >
-        <i :class='icon'></i>
-        <span>{{ label }}</span>
-    </div>
+    <router-link :to='"/" + wrapper'>
+        <component :is='icon' />
+    </router-link>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import BookmarkIcon from '../assets/bookmark.svg'
+import SearchIcon from '../assets/search.svg'
+import SettingsIcon from '../assets/settings.svg'
 
 export default {
+  components: {
+    BookmarkIcon,
+    SearchIcon,
+    SettingsIcon
+  },
   props: {
-    page: {
-      type: String,
-      required: true
-    },
-    label: {
+    wrapper: {
       type: String,
       required: true
     },
@@ -24,42 +24,24 @@ export default {
       type: String,
       required: true
     }
-  },
-  computed: mapState({
-    'currentPage': state => state.currentPage
-  }),
-  methods: mapActions([
-    'switchPage'
-  ])
-
+  }
 }
 </script>
 
 <style scoped>
-div {
-    opacity: .5;
+svg {
+    width: 32px;
+    padding: 14px;
     cursor: pointer;
-    padding: 8px 4px 4px 4px;
-    margin: 0 32px 0 0;
 }
 
-div:hover,
-div.active {
-    opacity: 1;
+svg * {
+    stroke: var(--color-3);
 }
 
-div.active,
-div.active {
-    border-width: 0 0 2px 0;
-    border-style: solid;
-    border-color: #3e3e3e;
+svg:hover *,
+a.router-link-active svg *{
+    stroke: var(--color-4);
 }
 
-span{
-    font-size: 18px;
-}
-
-i {
-    padding-right: 2px;
-}
 </style>

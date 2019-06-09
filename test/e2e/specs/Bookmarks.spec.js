@@ -3,6 +3,7 @@ import utils from '../utils'
 describe('Bookmarks', function () {
   // add fake bookmarks
   before(function () {
+    // initialize with two fake bookmarks
     utils.writeBookmarks('["AK12009789", "AK12015560"]')
   })
   before(utils.before)
@@ -18,36 +19,39 @@ describe('Bookmarks', function () {
       .element('//input')
       .click()
       .keys('goethe italien tagebuch\uE007')
-      .waitForExist('table')
-      .element('tr:nth-child(1) td:nth-child(3) .fas')
-      .isExisting()
-      .element('tr:nth-child(2) td:nth-child(3) .fas')
-      .isExisting()
-      .element('tr:nth-child(3) td:nth-child(3) .far')
-      .isExisting()
+      // first element is bookmarked
+      .waitForExist('.card:nth-child(1) svg.active')
   })
 
   it('bookmarks can be removed', function () {
     return this.app.client
-    // remove first bookmark on search results page
-      .element('tr:nth-child(1) td:nth-child(3) .fa-bookmark')
+      // unbookmark first card
+      .element('.card:nth-child(1) svg.active')
       .click()
-      .element('tr:nth-child(1) td:nth-child(3) .far')
-      .isExisting()
-    // switch to bookmarks
-      .element('//span[text() = "Bookmarks"]')
+      .waitForExist('.card:nth-child(1) svg:not(.active)')
+      // switch to bookmarks
+      .element('a[label="Bookmarks"]')
       .click()
-    // check first entry
-      .element('//table/tbody/tr[1]/td[1]/div[1]')
+      // check first entry
+      .waitForExist('#app > div:nth-child(2) > h1')
+      .element('#app > div:nth-child(2) > div > div.card.bookmarks > div > div.title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Tagebuch der italienischen Reise 1786 / Johann Wolfgang von Goethe. Notizen und Briefe aus Italien / Johann Wolfgang Goethe. Mit Skizzen und Zeichn. des Autors. Hrsg. und erl. von Christoph Michel')
+        expect(text).to.equal('Tagebuch der italienischen Reise 1786 / Johann Wolfgang von Goethe. Notizen und Briefe aus Italien / Johann Wolfgang Goethe. Mit Skizzen und Zeichn. des Autors. Hrsg. und erl. von Christoph Michel (Band)')
       })
-    // remove it
-      .element('//table/tbody/tr[1]/td[1]/div[2]/i')
+      // switch to preview
+      .element('#app > div:nth-child(2) > div > div.card.bookmarks')
       .click()
-      .waitForExist('span.placeholder')
-      .element('span.placeholder')
+      .waitForExist('div.grid')
+      // unbookmark
+      .element('#app > div:nth-child(2) > div > div:nth-child(1) > svg')
+      .click()
+      // go back to search page
+      .element('#app > div:nth-child(2) > div > div:nth-child(1) > a:nth-child(1)')
+      .click()
+      .waitForExist('#app > .container:nth-child(2):not(.slide-right-leave-active) > span.placeholder')
+      // placeholder should be displayed
+      .element('.container > span.placeholder')
       .getText()
       .then(text => {
         expect(text.trim()).to.equal('You have not added any bookmarks yet.')

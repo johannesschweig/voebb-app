@@ -1,15 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import LinkIcon from '@/components/icons/LinkIcon'
+import LinkButtonIcon from '@/components/icons/LinkButtonIcon'
 
-describe('LinkIcon.vue', () => {
+describe('LinkButtonIcon.vue', () => {
   it('renders', () => {
-    const wrapper = shallowMount(LinkIcon, {
+    const wrapper = shallowMount(LinkButtonIcon, {
       propsData: {
         identifier: 'foo'
       }
     })
 
     expect(wrapper.find('a').attributes('href')).toEqual('https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=Sfoo')
-    expect(wrapper.find('i').attributes('class')).toEqual('fas fa-lg fa-external-link-square-alt')
+    expect(wrapper.find('linkicon-stub').exists()).toBeTruthy()
   })
 })

@@ -1,77 +1,53 @@
 <template>
     <div class='container'>
-        <!-- cover image -->
-        <!-- table with details -->
-        <table
-            v-if='data.details.length != 0'
-            class='details'>
-            <tbody>
-                <tr v-for='row in data.details'>
-                    <template v-for='(value, key) in row'>
-                        <td> {{ key }} </td>
-                        <td> {{ sanitizeString(key, value) }} </td>
-                    </template>
-                </tr>
-            </tbody>
-        </table>
-        <span
-            v-else
-            class='placeholder'>
-            {{ loading.msg }}
-        </span>
-        <!-- table with availability info-->
-        <div v-if='isDone()'>
-            <table
-                v-if='getPreferred(data.availability).length != 0 '
-                class='availability'>
-                <thead>
-                    <tr>
-                        <th>Library</th>
-                        <th>Place</th>
-                        <th>Signature</th>
-                        <th>Order status</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for='instance in getPreferred(data.availability)'>
-                        <td> {{ getShortLibrary(instance.library) }}</td>
-                        <td> {{ instance.place }}</td>
-                        <td> {{ instance.signature }}</td>
-                        <td> {{ instance.orderStatus }}</td>
-                        <td> {{ instance.status }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div
-                v-if='getNotPreferred(data.availability).length != 0'
-                class='placeholder'>
-                <span>Available in:</span>
-                <br />
-                <template v-for='instance in getNotPreferred(data.availability)'>
-                    {{ getShortLibrary(instance.library) }},
-                </template>
+        <div
+            v-if='data.identifier'
+            class='grid'>
+            <div>
+                <router-link :to='"/" + getCurrentWrapper + "/Page"'>
+                    <BackArrowIcon />
+                </router-link>
+                <h1>{{ getActiveTitle }}</h1>
+                <BookmarkButtonIcon :identifier='data.identifier' />
+                <LinkButtonIcon :identifier='data.identifier' />
             </div>
-            <span
-                v-if='data.availability.length == 0'
-                class='placeholder'>
-                Not available in any libraries.
-            </span>
+            <div
+                v-if='data.details["Medienart"].slice(0,2) !== "E-"'
+                class='navigation' >
+                <router-link
+                    :to='"/" + getCurrentWrapper + "/Preview/Details"'
+                    tag='span' >
+                    Details
+                </router-link>
+                <router-link
+                    :to='"/" + getCurrentWrapper + "/Preview/Copies"'
+                    tag='span' >
+                    Copies
+                </router-link>
+            </div>
+            <keep-alive>
+                <router-view />
+            </keep-alive>
         </div>
-        <LoadingCircle v-if='isLoading()'/>
+        <LoadingCircle v-else-if='isLoading()'/>
     </div>
 </template>
 
 <script>
+import BookmarkButtonIcon from './icons/BookmarkButtonIcon.vue'
+import BackArrowIcon from '../assets/back-arrow.svg'
 import MediumIcon from './icons/MediumIcon.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
-import { shortenLibraryName, sanitizeDetail } from '../utils/string.js'
+import LinkButtonIcon from './icons/LinkButtonIcon.vue'
 import { mapState, mapGetters } from 'vuex'
-import { LOADING, DONE } from '../utils/constants.js'
+import { LOADING } from '../utils/constants.js'
 
 export default {
   components: {
+    BookmarkButtonIcon,
+    BackArrowIcon,
     LoadingCircle,
+    LinkButtonIcon,
     MediumIcon
   },
   computed: {
@@ -80,33 +56,17 @@ export default {
       loading: state => state.loading.preview
     }),
     ...mapGetters([
-      'getPreferredLibraries'
-    ])
+      'getActiveTitle'
+    ]),
+    getCurrentWrapper () {
+      let path = this.$route.path.slice(1)
+      return path.slice(0, path.indexOf('/'))
+    }
   },
   methods: {
-    // returns a shorter name for the library
-    getShortLibrary (library) {
-      return shortenLibraryName(library)
-    },
-    // get only availabilities from preferred libraries
-    getPreferred (availabilities) {
-      return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
-    },
-    // get only availabilities from preferred libraries
-    getNotPreferred (availabilities) {
-      return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
-    },
-    // removes unncessary infos from strings
-    sanitizeString (key, value) {
-      return sanitizeDetail(key, value)
-    },
     // returns true if the component is currently fetching data
     isLoading () {
       return this.loading.status === LOADING
-    },
-    // returns true if the component has finished fetching data
-    isDone () {
-      return this.loading.status === DONE
     }
   }
 }
@@ -114,45 +74,67 @@ export default {
 
 <style scoped>
 .container {
-    grid-row: 2 / 3;
+    position: absolute;
+    left: 84px;
+    top: 16px;
+    width: calc(100vw - 84px - 16px);
+}
+
+.grid {
+    grid-row: 1 / 3;
     grid-column: 2 / 3;
 }
 
-.title {
-}
-
-.details {
+.grid div:nth-child(1) {
     margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 32px 1fr 32px 32px;
+    grid-column-gap: 12px;
 }
 
-.details tbody tr td:first-child{
-    font-weight: bold;
+.grid svg {
+    cursor: pointer;
 }
 
-.availability {
-    margin-bottom: 16px;
+.container svg * {
+    stroke: var(--color-3);
 }
 
-.availability,
-.availability th,
-.availability td {
-    border-width: 1px 0;
-    border-style: solid;
-    border-color: #CCC;
-    border-collapse: collapse;
+.container svg:hover *,
+.container svg:active * {
+    stroke: var(--color-4);
 }
 
-.details,
-.details th,
-.details td {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #CCC;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 8px;
+h1 {
+    display: inline;
+    font-weight: 300;
     vertical-align: top;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.navigation {
+    margin-bottom: 24px;
+}
+
+.navigation span {
+    font-size: 18px;
+    padding: 2px 9px;
+    color: var(--color-3);
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+span:hover,
+span:active {
+    color: var(--color-4);
+}
+
+span.router-link-active {
+    border-width: 0 0 1px 0; 
+    border-color: var(--color-4);
+    border-style: solid;
+    color: var(--color-4);
 }
 </style>
