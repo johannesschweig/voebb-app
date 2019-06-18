@@ -108,7 +108,9 @@ export function search (term, mocked = false) {
           return results
         }
       })
-      .catch((err) => { console.log(err) })
+      .catch((err) => {
+        console.log(err)
+      })
   } else {
     // reads a prepared html file and extracts the data
     // var fs = require('fs')

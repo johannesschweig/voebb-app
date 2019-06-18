@@ -16,10 +16,12 @@ function roundTwo (num) {
 }
 
 export async function benchmark () {
-  // time: 3-5s 18.06.2019 14:40
+  // time: 3-5s 18.06.2019 14:00 office
+  // time: 2-8s 18.06.2019 22:00 home
   let terms = ['vuillard', 'biene maja', 'karlson vom dach', '1945', 'gespür für schnee', 'kochen und backen']
   let timeDiffs = []
   for (const term of terms) {
+    console.log('starting with', term)
     timeDiffs.push(await aSearch(term))
   }
   // calculate stats
