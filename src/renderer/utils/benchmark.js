@@ -18,6 +18,7 @@ function roundTwo (num) {
 export async function benchmark () {
   // time: 3-5s 18.06.2019 14:00 office
   // time: 2-8s 18.06.2019 22:00 home
+  // 3.81 ( 2.68 - 5.25 ) 19.06.2019 23:00 home
   let terms = ['vuillard', 'biene maja', 'karlson vom dach', '1945', 'gespür für schnee', 'kochen und backen']
   let timeDiffs = []
   for (const term of terms) {
