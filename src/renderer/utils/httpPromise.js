@@ -1,3 +1,4 @@
+import { CustomError } from '../utils/utils.js'
 const https = require('https')
 const timeout = new Error('Request timeout')
 
@@ -18,7 +19,7 @@ function request (options, data, header) {
         }
       })
     })
-    req.setTimeout(5000)
+    req.setTimeout(8000)
     req.on('timeout', () => reject(timeout))
     req.on('error', reject)
     // if header present, set header
@@ -45,7 +46,7 @@ export default function req (options, data = '', header = '') {
             console.log('Restart request (3rd time)')
             request(options, data, header)
               .then(res => resolve(res))
-              .catch(() => reject('Request timeout'))
+              .catch(() => reject(new CustomError('Request timeout')))
           })
       })
   })

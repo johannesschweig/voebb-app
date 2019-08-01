@@ -1,11 +1,11 @@
 <template>
     <div v-if='isDone()'>
         <table
-            v-if='getPreferred(data.availability).length != 0 '
+            v-if='getPreferred(data.copies).length != 0 '
             class='availability'>
             <tbody>
                 <tr
-                    v-for='instance in getPreferred(data.availability)' 
+                    v-for='instance in getPreferred(data.copies)' 
                     :class='{"not-available": instance.status !== "Verfügbar"}' >
                     <td>
                         <LibraryIcon />
@@ -28,16 +28,16 @@
             </tbody>
         </table>
         <div
-            v-if='getNotPreferred(data.availability).length != 0'
+            v-if='getNotPreferred(data.copies).length != 0'
             class='placeholder'>
             <span>Available in:</span>
             <br />
             <span>
-                {{ getNotPreferred(data.availability).map(e => getShortLibrary(e.library)).join(', ') }}
+                {{ getNotPreferred(data.copies).map(e => getShortLibrary(e.library)).join(', ') }}
             </span>
         </div>
         <span
-            v-if='data.availability.length == 0'
+            v-if='data.copies.length == 0'
             class='placeholder'>
             Not available in any libraries.
         </span>
@@ -73,13 +73,14 @@ export default {
     getShortLibrary (library) {
       return shortenLibraryName(library)
     },
-    // get only availabilities from preferred libraries
-    getPreferred (availabilities) {
-      return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
+    // get only copies from preferred libraries
+    getPreferred (copies) {
+      console.log('xxx', copies)
+      return copies.filter(obj => this.getPreferredLibraries.includes(obj.library))
     },
     // get only availabilities from preferred libraries
-    getNotPreferred (availabilities) {
-      return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
+    getNotPreferred (copies) {
+      return copies.filter(obj => !this.getPreferredLibraries.includes(obj.library))
     },
     // returns true if the component has finished fetching data
     isDone () {

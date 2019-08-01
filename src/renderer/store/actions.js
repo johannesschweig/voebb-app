@@ -1,13 +1,13 @@
 import { search, getEntryDetails } from '../utils/requests.js'
-import { getCurrentDateString } from '../utils/string.js'
+import { getCurrentDateString, getAvailability } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
 import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE } from '../utils/constants.js'
-import { getLoadingObject } from '../utils/utils.js'
+import { getLoadingObject, CustomError } from '../utils/utils.js'
 
 // actions
 export default {
   // read user data (bookmarks, preferred libraries)
-  readUserData ({ commit }) {
+  readUserData ({ commit, getters }) {
     // read libraries
     getUserData('libraries').then(data => {
       if (Object.keys(data).length === 0) {
@@ -23,40 +23,49 @@ export default {
       commit('setLoading', getLoadingObject('bookmarks', LOADING))
       // no bookmarks
       if (Object.keys(data).length === 0) {
-        throw 'Bookmarks file missing'
+        throw new CustomError('Bookmarks file missing')
       }
       console.log('Fetched user data for key', 'bookmarks', data.length, 'entries')
-      // fetch all bookmarks details, availability
+      // fetch all bookmarks details, copies, availability
       let promises = []
       data.map(bookmark => {
         promises.push(getEntryDetails(bookmark))
       })
       return Promise.all(promises)
-    })
-      .then(res => {
-        commit('setLoading', getLoadingObject('bookmarks', DONE))
-        commit('setBookmarks', res)
-        commit('setLastUpdated', getCurrentDateString())
-      }).catch(err => {
-        if (err === 'Bookmarks file missing') {
-          commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet'))
-          console.log('Bookmarks user file not available')
-        } else if (err === 'Request timeout') {
-          commit('setLoading', getLoadingObject('bookmarks', DONE, 'Request timed out. Retry again.'))
-          console.log('Request timeout')
-        } else {
-          console.log('Error detected')
-          throw err
+    }).then(res => {
+      commit('setLoading', getLoadingObject('bookmarks', DONE))
+      // get availability
+      let results = res.map(result => ({
+        ...result,
+        availability: getAvailability(result.copies, getters.getPreferredLibraries)
+      }))
+      commit('setBookmarks', results)
+      commit('setLastUpdated', getCurrentDateString())
+    }).catch(err => {
+      if (err instanceof CustomError) {
+        switch (err.message) {
+          case 'Bookmarks file missing':
+            commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet'))
+            console.log('Bookmarks user file not available')
+            break
+          case 'Request timeout':
+            commit('setLoading', getLoadingObject('bookmarks', DONE, 'Request timed out. Retry again.'))
+            console.log('Request timeout')
+            break
         }
-      })
+      } else {
+        console.log('Error detected')
+        throw err
+      }
+    })
   },
   // toggles a bookmark: removes or adds it
-  // active: if the bookmark is active or not
+  // active: if the bookmark icon is filled or not
   // identifier: of the instance
   toggleBookmark ({ commit, dispatch, getters }, payload) {
     if (payload.active) {
       dispatch('removeBookmark', payload.identifier)
-    } else {
+    } else if (getters.bookmarksList.indexOf(payload.identifier) === -1) {
       // fetch all bookmarks details, availability
       commit('setLoading', getLoadingObject('bookmarks', LOADING))
       getEntryDetails(payload.identifier)
@@ -64,11 +73,18 @@ export default {
           let bookmarks = getters.bookmarksList.concat([payload.identifier])
           // update user storage
           setUserData('bookmarks', bookmarks)
-          commit('addBookmark', res)
+          // get availability
+          let results = {
+            ...res,
+            availability: getAvailability(res.copies, getters.getPreferredLibraries)
+          }
+          commit('addBookmark', results)
           commit('setLastUpdated', getCurrentDateString())
           commit('setLoading', getLoadingObject('bookmarks', DONE))
           console.log('Added bookmark', payload.identifier)
         })
+    } else {
+      console.log('Bookmark already in the list of bookmarks.')
     }
   },
   // fake search for testing purposes

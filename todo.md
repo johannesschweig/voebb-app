@@ -1,4 +1,10 @@
 # BACKLOG
+* Sorting in search: Year/Recency (Ascending/Descending), Title, Relevance (default)
+* Sorting in bookmarks: Year/Recency (Ascending/Descending), Title, Availability (default)
+* Show cover in preview
+* include all results pages, not just the first
+* While searching if requesting new search provide more feedback
+* Remove search results if deleting all in the searchfield
 * timeout handling is shitty (a lot of bookmarks require long timeout, search requires short one)
 
 # TODO
@@ -30,7 +36,6 @@
   - Mehrteiliges Werk (empty) https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=SAK15876158
   - Medienkombination (empty)
 * split settings-libraries into a view component ("Your preferred libraries are:...") and a edit component: checkboxes
-* include all results pages, not just the first
 * last updated label: constantly updating time diff ("2 minutes ago")
 * sanitize details
   - remove tab character
@@ -58,6 +63,7 @@
   - obsolete
 
 # DONE
+* bookmarks should not be added twice
 * remove libraries from previews in the case of e resources (https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=SAK34118922)
 * MediumIcons for
   - E-Learning

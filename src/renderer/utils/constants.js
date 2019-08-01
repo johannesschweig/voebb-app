@@ -75,10 +75,6 @@ export const mediumIcons = [
     icon: 'fas fa-atlas'
   },
   {
-    name: 'Mehrteiliges Werk',
-    icon: ''
-  },
-  {
     name: 'Schallplatte',
     icon: 'fas fa-compact-disc'
   },
@@ -97,10 +93,6 @@ export const mediumIcons = [
   {
     name: 'Zeitschrift',
     icon: 'far fa-newspaper'
-  },
-  {
-    name: 'Medienkombination',
-    icon: ''
   },
   {
     name: 'konventionelles Spiel',

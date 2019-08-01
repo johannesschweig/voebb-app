@@ -40,5 +40,11 @@ export default {
       }
     }
     return r
+  },
+  // returns sorted list of bookmarks with data
+  getSortedBookmarks: state => {
+    return state.bookmarks.data.sort((a, b) => {
+      return a.availability.days > b.availability.days
+    })
   }
 }

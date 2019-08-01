@@ -63,22 +63,31 @@ export function getDaysDue (avail) {
   return Math.round(date2.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)
 }
 
-// returns an availability message for each entry ('available', 'x more days')
-export function getAvailabilityMessage (availabilities, preferred) {
-  // get only availabilities from preferred libraries
-  let avail = availabilities.filter(obj => preferred.includes(obj.library))
+// returns an availability object for ('available', 'x more days')
+export function getAvailability (copies, preferredLibraries) {
+  // show only copies from preferred libraries
+  let avail = copies.filter(obj => preferredLibraries.includes(obj.library))
   let available = avail.filter(obj => {
     return obj.status.toLowerCase().startsWith('verfügbar') || obj.status === 'ist verfügbar'
   }).length > 0
   if (available) {
-    return 'available'
+    return {
+      days: 0,
+      message: 'available'
+    }
   } else {
     let notAvail = ['Nicht im Regal', 'Reserviert', 'Ausgeliehen', 'siehe Vollanzeige']
     avail = avail.filter(obj => notAvail.indexOf(obj.status) === -1)
     if (avail.length === 0) {
-      return 'not available'
+      return {
+        days: Number.MAX_SAFE_INTEGER,
+        message: 'not available'
+      }
     }
     let dd = avail.map(obj => getDaysDue(obj.status))
-    return `${Math.min(...dd)} days left`
+    return {
+      days: Math.min(...dd),
+      message: `${Math.min(...dd)} days left`
+    }
   }
 }

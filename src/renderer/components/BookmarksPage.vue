@@ -5,14 +5,14 @@
             v-if='detailsAvailable'
             class='list' >
             <Card
-                v-for='row in data'
+                v-for='row in getSortedBookmarks'
                 :key='row.identifier'
                 :row='{
                     title: row.details["Titel"],
                     medium: row.details["Medienart"],
                     name: row.details["Verfasser"] || row.details["Person"],
                     year: row.details["Veröffentlichung"],
-                    availability: getAvailability(row.availability), 
+                    availability: row.availability.message,
                     identifier: row.identifier
                   }'
                 wrapper='Bookmarks' />
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { getAvailabilityMessage } from '../utils/string.js'
 import Card from './Card.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
 import { mapState, mapGetters } from 'vuex'
@@ -46,27 +45,22 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.bookmarks.data,
       lastUpdated: state => state.bookmarks.lastUpdated,
       loading: state => state.loading.bookmarks
     }),
     ...mapGetters([
       'detailsAvailable',
-      'getPreferredLibraries'
+      'getSortedBookmarks'
     ])
   },
   methods: {
-    // returns an availability message for each entry ('available', 'x more days')
-    getAvailability (avail) {
-      return getAvailabilityMessage(avail, this.getPreferredLibraries)
-    },
     // return true if the component is currently fetching data
     isLoading () {
       return this.loading.status === LOADING
     },
     // exports the bookmarks to a text file
     exportBookmarks () {
-      exportBookmarksFile(this.data)
+      exportBookmarksFile(this.getSortedBookmarks)
     }
   }
 }

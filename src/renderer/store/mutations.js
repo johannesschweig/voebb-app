@@ -26,7 +26,8 @@ export default {
   clearPreviewData (state) {
     state.preview = {
       details: [],
-      availability: []
+      copies: [],
+      availability: {}
     }
     // reset loading status
     state.loading.preview.status = INITIAL

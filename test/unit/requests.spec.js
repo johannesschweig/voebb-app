@@ -2,7 +2,7 @@ import { getEntryDetails, search } from '@/utils/requests'
 import { TOO_MANY_HITS, NO_HITS } from '@/utils/constants.js'
 
 // properties of results
-const props = ['title', 'name', 'medium', 'year', 'img', 'identifier', 'avail']
+const props = ['title', 'name', 'medium', 'year', 'img', 'identifier']
 
 describe('requests.js', () => {
   it('retrieves details data for entry', () => {
@@ -10,7 +10,7 @@ describe('requests.js', () => {
       .then(res => {
         expect(res.hasOwnProperty('details')).toBeTruthy()
         expect(res.hasOwnProperty('identifier')).toBeTruthy()
-        expect(res.hasOwnProperty('availability')).toBeTruthy()
+        expect(res.hasOwnProperty('copies')).toBeTruthy()
         expect(res.details['Titel']).toBeTruthy()
         expect(res.details['Person']).toBeTruthy()
       })

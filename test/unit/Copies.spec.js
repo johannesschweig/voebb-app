@@ -20,7 +20,7 @@ describe('Copies.vue', () => {
     const wrapper = shallowMount(Copies, {
       computed: {
         data: () => ({
-          availability: []
+          copies: []
         })
       },
       methods: {
@@ -37,7 +37,7 @@ describe('Copies.vue', () => {
     const wrapper = shallowMount(Copies, {
       computed: {
         data: () => ({
-          availability: []
+          copies: []
         })
       },
       methods: {

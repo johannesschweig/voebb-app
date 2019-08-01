@@ -1,4 +1,4 @@
-import { getCurrentDateString, shortenLibraryName, sanitizeDetail, getDaysDue, getAvailabilityMessage } from '@/utils/string.js'
+import { getCurrentDateString, shortenLibraryName, sanitizeDetail, getDaysDue, getAvailability } from '@/utils/string.js'
 
 const pref = ['foo']
 
@@ -15,7 +15,10 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: 'available'
+    expected: {
+      days: 0,
+      message: 'available'
+    }
   },
   {
     avail: [
@@ -32,7 +35,10 @@ const values = [
         library: 'bar'
       }
     ],
-    expected: 'not available'
+    expected: {
+      days: Number.MAX_SAFE_INTEGER,
+      message: 'not available'
+    }
   },
   {
     avail: [
@@ -41,7 +47,10 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: '4 days left'
+    expected: {
+      days: 4,
+      message: '4 days left'
+    }
   },
   {
     avail: [
@@ -50,7 +59,10 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: '-99 days left'
+    expected: {
+      days: -99,
+      message: '-99 days left'
+    }
   },
   {
     avail: [
@@ -63,7 +75,11 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: '12 days left'
+    expected: {
+      days: 12,
+      message: '12 days left'
+    }
+
   },
   {
     avail: [
@@ -72,7 +88,10 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: '7 days left'
+    expected: {
+      days: 7,
+      message: '7 days left'
+    }
   },
   {
     avail: [
@@ -81,7 +100,10 @@ const values = [
         library: 'foo'
       }
     ],
-    expected: '-99 days left'
+    expected: {
+      days: -99,
+      message: '-99 days left'
+    }
   }
 ]
 
@@ -109,7 +131,7 @@ describe('string.js', () => {
 
   it('returns correct availability message', () => {
     for (let i = 0; i < values.length; i++) {
-      expect(getAvailabilityMessage(values[i].avail, pref)).toEqual(values[i].expected)
+      expect(getAvailability(values[i].avail, pref)).toEqual(values[i].expected)
     }
   })
 })

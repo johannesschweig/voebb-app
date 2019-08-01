@@ -14,7 +14,7 @@ describe('BookmarksPage.vue', () => {
           status: INITIAL,
           msg
         }),
-        detailsAvailable: () => false
+        detailsAvailable: () => false,
       }
     })
 
@@ -26,7 +26,8 @@ describe('BookmarksPage.vue', () => {
       computed: {
         data: () => [],
         lastUpdated: () => lastUpdated,
-        detailsAvailable: () => true
+        detailsAvailable: () => true,
+        getSortedBookmarks: () => []
       }
     })
 
