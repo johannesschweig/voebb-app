@@ -1,13 +1,15 @@
 <template>
     <div class='container'>
-        <template v-if='loading.status == "done" && results.length != 0'>
+        <template v-if='resultsAvailable'>
             <Card
-                v-for='row in results'
+                v-for='row in getSortedSearchData'
                 :key='row.identifier'
                 :row='row'
                 wrapper='Search' />
         </template>
-        <LoadingCircle v-else-if='isLoading()'/>
+        <LoadingCircle
+          v-else-if='isLoading()'
+          :msg='loading.msg' />
         <span
             v-else
             class='placeholder'>
@@ -19,7 +21,7 @@
 <script>
 import Card from './Card.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { LOADING } from '../utils/constants.js'
 
 export default {
@@ -29,9 +31,13 @@ export default {
   },
   computed: {
     ...mapState({
-      results: state => state.searchResults,
-      loading: state => state.loading.searchResults
-    })
+      loading: state => state.search.loading,
+      data: state => state.search.data
+    }),
+    ...mapGetters([
+      'resultsAvailable',
+      'getSortedSearchData'
+    ])
   },
   methods: {
     // if the component is currently loading new data
@@ -45,8 +51,5 @@ export default {
 <style scoped>
 .container {
     grid-row: 2 / 3;
-    grid-column: 1 / 2;
-    margin-right: 16px;
-    width: calc(100vw - 84px - 32px);
 }
 </style>

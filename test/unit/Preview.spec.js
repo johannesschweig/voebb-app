@@ -13,15 +13,20 @@ describe('Preview.vue', () => {
       stubs: ['router-link', 'router-view'],
       computed: {
         data: () => ({
-          details: { Medienart: 'foo' },
+          details: {
+            Medienart: 'foo',
+            Titel: title,
+            img: 'img'
+          },
           identifier: '123'
         }),
-        getCurrentWrapper: () => 'foo',
-        getActiveTitle: () => title
+        getCurrentWrapper: () => 'foo'
       }
     })
 
     expect(wrapper.find('h1').text()).toEqual(title)
+    expect(wrapper.find('img').attributes('src')).toEqual('img')
+    expect(wrapper.find('div.no-image').exists()).toBeFalsy()
     expect(wrapper.find('.navigation').findAll('router-link-stub').at(0).text()).toEqual('Details')
     expect(wrapper.find('.navigation').findAll('router-link-stub').at(1).text()).toEqual('Copies')
   })
@@ -45,11 +50,13 @@ describe('Preview.vue', () => {
           details: { Medienart: 'E-' },
           identifier: '123'
         }),
-        getCurrentWrapper: () => 'foo',
-        getActiveTitle: () => 'bar'
+        getCurrentWrapper: () => 'foo'
       }
     })
 
     expect(wrapper.find('.navigation').exists()).toBeFalsy()
+    // no image
+    expect(wrapper.find('img').exists()).toBeFalsy()
+    expect(wrapper.find('div.no-image').exists()).toBeTruthy()
   })
 })

@@ -1,25 +1,36 @@
 <template>
     <div v-if='isDone()'>
         <table
-            v-if='getPreferred(data.availability).length != 0 '
+            v-if='getPreferred(data.copies).length != 0 '
             class='availability'>
             <tbody>
                 <tr
-                    v-for='instance in getPreferred(data.availability)' 
-                    :class='{"not-available": instance.status !== "Verfügbar"}' >
+                    v-for='instance in getPreferred(data.copies)' 
+                    :class='{"not-available": !instance.status.toLowerCase().startsWith("verfügbar") }' >
                     <td>
                         <LibraryIcon />
                         {{ getShortLibrary(instance.library) }}
-                        <template v-if='instance.status === "Verfügbar"'>
-                            ({{ instance.place }})
+                    </td>
+                    <td v-if='instance.status.toLowerCase().startsWith("verfügbar")'>
+                        <template v-if='instance.signature'>
+                          <SignatureIcon />
+                          {{ instance.signature }}
+                          ({{ instance.place }})
+                        </template>
+                        <template v-else>
+                          {{ instance.place }}
                         </template>
                     </td>
-                    <td v-if='instance.status.startsWith("Verfügbar")'>
-                        <SignatureIcon />
-                        {{ instance.signature }}
+                    <td v-else-if='instance.status.toLowerCase().startsWith("ausgeliehen -")'>
+                        <template v-if='getDaysDueString(instance.status) <= 0'>
+                           {{ -getDaysDueString(instance.status) }} days overdue
+                        </template>
+                        <template v-else-if='getDaysDueString(instance.status) > 0'>
+                            {{ getDaysDueString(instance.status) }} days left
+                        </template>
                     </td>
-                    <td v-else-if='instance.status.startsWith("Ausgeliehen -")'>
-                        {{ getDaysDueString(instance.status) }} days left
+                    <td v-else-if='instance.status === "Nicht im Regal"'>
+                      lost
                     </td>
                     <td v-else>
                         {{ instance.status }}
@@ -28,16 +39,16 @@
             </tbody>
         </table>
         <div
-            v-if='getNotPreferred(data.availability).length != 0'
+            v-if='getNotPreferred(data.copies).length != 0'
             class='placeholder'>
             <span>Available in:</span>
             <br />
             <span>
-                {{ getNotPreferred(data.availability).map(e => getShortLibrary(e.library)).join(', ') }}
+                {{ getNotPreferred(data.copies).map(e => getShortLibrary(e.library)).join(', ') }}
             </span>
         </div>
         <span
-            v-if='data.availability.length == 0'
+            v-if='data.copies.length == 0'
             class='placeholder'>
             Not available in any libraries.
         </span>
@@ -58,8 +69,8 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.preview,
-      loading: state => state.loading.preview
+      data: state => state.preview.data,
+      loading: state => state.preview.loading
     }),
     ...mapGetters([
       'getPreferredLibraries'
@@ -73,13 +84,13 @@ export default {
     getShortLibrary (library) {
       return shortenLibraryName(library)
     },
-    // get only availabilities from preferred libraries
-    getPreferred (availabilities) {
-      return availabilities.filter(obj => this.getPreferredLibraries.includes(obj.library))
+    // get only copies from preferred libraries
+    getPreferred (copies) {
+      return copies.filter(obj => this.getPreferredLibraries.includes(obj.library))
     },
     // get only availabilities from preferred libraries
-    getNotPreferred (availabilities) {
-      return availabilities.filter(obj => !this.getPreferredLibraries.includes(obj.library))
+    getNotPreferred (copies) {
+      return copies.filter(obj => !this.getPreferredLibraries.includes(obj.library))
     },
     // returns true if the component has finished fetching data
     isDone () {
@@ -103,6 +114,8 @@ td {
 svg {
     transform: scale(0.5);
     vertical-align: middle;
+    /* hack so scaled svg does not occupy the same space as unscaled svg */
+    margin: -4px;
 }
 
 svg * {

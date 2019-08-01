@@ -1,16 +1,14 @@
 <template>
     <router-link
         :to='"/" + wrapper + "Wrapper/Preview"'
-        :class='["card", wrapper.toLowerCase(), { "not-available": wrapper === "Bookmarks" && row.availability !== "available" }]'
+        :class='["card", wrapper.toLowerCase(), { "not-available": wrapper === "Bookmarks" && row.availability.message !== "available" }]'
         tag='div'
         @click.left.native='fetchDetails(row.identifier)' >
-        <img
-            v-if='wrapper === "Search"'
-            :src='row.img ? row.img : ""' />
+        <img :src='row.img ? row.img : ""' />
         <div class='info'>
             <div class='title'>
                 <MediumIcon :medium='row.medium'/>
-                {{ row.title }} ({{ row.medium }})
+                {{ sanitizeString('Titel', row.title) }} ({{ row.medium }})
             </div>
             <div class='subtitle'>
                 {{ row.name }} - {{ row.year }}
@@ -20,7 +18,7 @@
             v-if='wrapper === "Search"'
             :identifier='row.identifier' />
         <span v-else>
-            {{ row.availability }}
+            {{ row.availability.message }}
         </span>
     </router-link>
 </template>
@@ -29,6 +27,7 @@
 import BookmarkButtonIcon from './icons/BookmarkButtonIcon.vue'
 import MediumIcon from './icons/MediumIcon.vue'
 import { mapActions } from 'vuex'
+import { sanitizeDetail } from '../utils/string.js'
 
 export default {
   components: {
@@ -48,7 +47,11 @@ export default {
   methods: {
     ...mapActions([
       'fetchDetails'
-    ])
+    ]),
+    // removes unncessary infos from strings
+    sanitizeString (key, value) {
+      return sanitizeDetail(key, value)
+    }
   }
 }
 </script>
@@ -68,12 +71,16 @@ export default {
     color: var(--color-3);
 }
 
+.card.card.not-available img{
+    opacity: .7;
+}
+
 .card.search {
     grid-template-columns: 90px 1fr 60px;
 }
 
 .card.bookmarks {
-    grid-template-columns: 1fr 140px;
+    grid-template-columns: 90px 1fr 155px;
 }
 
 .card:hover,
@@ -81,15 +88,8 @@ export default {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
 }
 
-.search .info {
-    grid-column: 2 / 3;
-}
-
-.bookmarks .info {
-    grid-column: 1 / 2;
-}
-
 .info {
+    grid-column: 2 / 3;
     padding-top: 4px;
 }
 
@@ -103,21 +103,17 @@ export default {
 }
 
 img {
+    width: 100%;
     padding-right: 16px;
     min-width: 90px;
     min-height: 50px;
     grid-column: 1 / 2;
 }
 
-svg {
+svg,
+span {
     grid-column: 3 / 4;
     padding: 24px;
-    grid-row: 1 / 3;
-}
-
-span {
-    grid-column: 2 / 3;
-    padding: 24px;
-    grid-row: 1 / 3;
+    text-align: right;
 }
 </style>

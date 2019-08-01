@@ -1,18 +1,23 @@
 <template>
     <div class='container'>
         <h1>Bookmarks</h1>
-        <div
-            v-if='detailsAvailable'
-            class='list' >
+        <Sorter
+          v-if='multipleBookmarksAvailable'
+          class='sorter'
+          :sorting='sorterSorting'
+          :criterions='BOOKMARKS_PAGE_CRITERIONS'
+          @set-sorting='(criterion) => setSorting({ page: BOOKMARKS, criterion })' />
+        <div v-if='detailsAvailable' >
             <Card
-                v-for='row in data'
+                v-for='row in getSortedBookmarksData'
                 :key='row.identifier'
                 :row='{
                     title: row.details["Titel"],
                     medium: row.details["Medienart"],
                     name: row.details["Verfasser"] || row.details["Person"],
                     year: row.details["Veröffentlichung"],
-                    availability: getAvailability(row.availability), 
+                    img: row.details.img,
+                    availability: row.availability,
                     identifier: row.identifier
                   }'
                 wrapper='Bookmarks' />
@@ -22,7 +27,9 @@
                 <button @click='exportBookmarks'>Export bookmarks</button>
             </div>
         </div>
-        <LoadingCircle v-else-if='isLoading()'/>
+        <LoadingCircle
+          v-else-if='loading.status === LOADING'
+          :msg='loading.msg' />
         <span
             v-else
             class='placeholder'>
@@ -32,41 +39,45 @@
 </template>
 
 <script>
-import { getAvailabilityMessage } from '../utils/string.js'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import Card from './Card.vue'
+import Sorter from './Sorter.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
-import { mapState, mapGetters } from 'vuex'
-import { LOADING } from '../utils/constants.js'
+import { LOADING, BOOKMARKS_PAGE_CRITERIONS, BOOKMARKS } from '../utils/constants.js'
 import { exportBookmarksFile } from '../utils/file.js'
 
 export default {
   components: {
     Card,
-    LoadingCircle
+    LoadingCircle,
+    Sorter
+  },
+  data () {
+    return {
+      BOOKMARKS_PAGE_CRITERIONS,
+      BOOKMARKS,
+      LOADING
+    }
   },
   computed: {
     ...mapState({
-      data: state => state.bookmarks.data,
       lastUpdated: state => state.bookmarks.lastUpdated,
-      loading: state => state.loading.bookmarks
+      loading: state => state.bookmarks.loading,
+      sorterSorting: state => state.bookmarks.sorting
     }),
     ...mapGetters([
       'detailsAvailable',
-      'getPreferredLibraries'
+      'getSortedBookmarksData',
+      'multipleBookmarksAvailable'
     ])
   },
   methods: {
-    // returns an availability message for each entry ('available', 'x more days')
-    getAvailability (avail) {
-      return getAvailabilityMessage(avail, this.getPreferredLibraries)
-    },
-    // return true if the component is currently fetching data
-    isLoading () {
-      return this.loading.status === LOADING
-    },
+    ...mapActions([
+      'setSorting'
+    ]),
     // exports the bookmarks to a text file
     exportBookmarks () {
-      exportBookmarksFile(this.data)
+      exportBookmarksFile(this.getSortedBookmarks)
     }
   }
 }
@@ -74,14 +85,11 @@ export default {
 
 <style scoped>
 .container {
-    width: calc(100vw - 84px - 16px);
-    position: absolute;
-    left: 84px;
-    top: 16px;
+    width: calc(100vw - 84px - 32px);
 }
 
-.list {
-  margin-right: 16px;
+.container > .sorter {
+    float: right;
 }
 
 .last-updated {
@@ -94,5 +102,13 @@ export default {
 
 i {
     padding-right: 2px;
+}
+
+h1 {
+  display: inline-block;
+}
+
+.container > span.placeholder {
+  display: block;
 }
 </style>

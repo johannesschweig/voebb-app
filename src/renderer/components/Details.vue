@@ -3,7 +3,9 @@
         v-if='data.details.length != 0'
         class='table'>
         <tbody>
-            <tr v-for='(value, key) in data.details'>
+            <tr
+              v-for='(value, key) in getDetails'
+              :key='key' >
                     <td> {{ key }} </td>
                     <td> {{ sanitizeString(key, value) }} </td>
             </tr>
@@ -23,9 +25,18 @@ import { sanitizeDetail } from '../utils/string.js'
 export default {
   computed: {
     ...mapState({
-      data: state => state.preview,
-      loading: state => state.loading.preview
-    })
+      data: state => state.preview.data,
+      loading: state => state.preview.loading
+    }),
+    // return details object without img
+    getDetails () {
+      return Object.keys(this.data.details)
+        .filter(key => key !== 'img')
+        .reduce((value, key) => {
+          value[key] = this.data.details[key]
+          return value
+        }, {})
+    }
   },
   methods: {
     // removes unncessary infos from strings

@@ -27,11 +27,11 @@ export default {
   created () {
     // read in bookmarks from file
     this.$store.dispatch('readUserData')
-    // TODO remove before deployment
+    // this.$store.dispatch('fakeReadUserData')
     // this.$store.dispatch('fakeSearch')
     // this.$store.dispatch('fakeFetchDetails')
-    // this.$store.dispatch('fetchDetails', 'AK02020127')
-    // this.$store.dispatch('search', 'felix und felka')
+    // this.$store.dispatch('search', 'koppetsch')
+    // this.$store.dispatch('search', 'sams taschenbier')
   }
 }
 </script>
@@ -78,7 +78,8 @@ h1 {
     position: fixed;
 }
 
-#app div:nth-child(2) {
+#app > div:nth-child(2),
+#app > div:nth-child(3) {
     position: absolute;
     left: 84px;
     top: 16px;

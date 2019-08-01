@@ -6,7 +6,10 @@ const row = {
   medium: 'medium',
   name: 'name',
   year: 'year',
-  availability: 'available',
+  availability: {
+    days: 0,
+    message: 'available'
+  },
   identifier: 'identifier'
 }
 const img = 'img'
@@ -26,7 +29,7 @@ describe('Card.vue', () => {
       }
     })
 
-    expect(wrapper.find('.card').exists()).toBeTruthy()
+    expect(wrapper.find('.card.search').exists()).toBeTruthy()
     expect(wrapper.find('img').attributes('src')).toEqual(img)
     expect(wrapper.find('.title').text()).toEqual(`${row.title} (${row.medium})`)
     expect(wrapper.find('.subtitle').text()).toEqual(`${row.name} - ${row.year}`)
@@ -43,10 +46,11 @@ describe('Card.vue', () => {
       }
     })
 
-    expect(wrapper.find('.card').exists()).toBeTruthy()
+    expect(wrapper.find('.card.bookmarks').exists()).toBeTruthy()
+    expect(wrapper.find('img').attributes('src')).toEqual('')
     expect(wrapper.find('.title').text()).toEqual(`${row.title} (${row.medium})`)
     expect(wrapper.find('.subtitle').text()).toEqual(`${row.name} - ${row.year}`)
-    expect(wrapper.find('span').text()).toEqual(row.availability)
+    expect(wrapper.find('span').text()).toEqual(row.availability.message)
   })
 
   it('correct class if not available', () => {
@@ -54,7 +58,9 @@ describe('Card.vue', () => {
       propsData: {
         row: {
           ...row,
-          availability: 'foo'
+          availability: {
+            days: 8
+          }
         },
         wrapper: 'Bookmarks'
       },

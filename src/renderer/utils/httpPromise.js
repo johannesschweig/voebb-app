@@ -1,8 +1,7 @@
 const https = require('https')
-const timeout = new Error('Request timeout')
 
 // returns a promise of a http request
-function request (options, data, header) {
+export default function req (options, data = '', header = '') {
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let body = ''
@@ -18,9 +17,10 @@ function request (options, data, header) {
         }
       })
     })
-    req.setTimeout(5000)
-    req.on('timeout', () => reject(timeout))
-    req.on('error', reject)
+    req.on('error', err => {
+      console.log(err)
+      reject(new Error('Request failed with error', err))
+    })
     // if header present, set header
     if (header !== '') {
       // iterate over key-value pairs and set header
@@ -30,23 +30,5 @@ function request (options, data, header) {
     }
     req.write(data, 'binary')
     req.end()
-  })
-}
-
-export default function req (options, data = '', header = '') {
-  return new Promise((resolve, reject) => {
-    request(options, data, header)
-      .then(res => resolve(res))
-      .catch(() => {
-        console.log('Restart request (2nd time)')
-        request(options, data, header)
-          .then(res => resolve(res))
-          .catch(() => {
-            console.log('Restart request (3rd time)')
-            request(options, data, header)
-              .then(res => resolve(res))
-              .catch(() => reject('Request timeout'))
-          })
-      })
   })
 }

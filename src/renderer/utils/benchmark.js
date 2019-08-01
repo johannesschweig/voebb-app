@@ -20,6 +20,7 @@ export async function benchmark () {
   // time: 2-8s 18.06.2019 22:00 home
   // 3.81 ( 2.68 - 5.25 ) 19.06.2019 23:00 home
   // 4.6 ( 2.71 - 7.27 ) 22.06.2019 15:00 home
+  // 10.75 ( 12.343, 13.529, 2.774, 4.503, 5.213, 26.137 ) 09.08.2019 home
   let terms = ['vuillard', 'biene maja', 'karlson vom dach', '1945', 'gespür für schnee', 'kochen und backen']
   let timeDiffs = []
   for (const term of terms) {

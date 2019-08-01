@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de"><head>
+	<style type="text/css">
+		@import url(css/aDISStandard.css);
+	</style>
+	<script src="AK12009789_files/aDISMain.js" type="text/javascript"></script>
+	<script src="AK12009789_files/fckeditor.js" type="text/javascript"></script>
+	<title> Wir bringen Medien in Bewegung </title>
+<!--
+(c) Software: aDIS/BMS und aDIS/Archiv von aStec angewandte Systemtechnik - www.astec.de
+HTML-/CSS: Formulare, Tabellen, Inhalte, etc. werden automatisiert durch aDIS/BMS und aDIS/Archiv generiert
+HTML-/CSS: Framework basiert lose auf Contao 2 (c) Leo Feyer www.contao.org
+HTML-/CSS: Anpassungen im aDIS-Rahmen: Nina Gerling
+Projekt: VOEBB, OPAC02, de
+Letztes Update: 21.07.2017 - 13:30
+//-->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="content-script-type" content="text/javascript">
+<meta http-equiv="content-language" content="de">
+<meta name="language" content="de">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<meta name="description" content="Recherche in 2,7 Millionen Titeln der öffentlichen Bibliotheken des Landes Berlin, Bestellung, Kontoverwaltung, Online-Ausleihe von E-Books, E-Audios und E-Videos">
+<link rel="stylesheet" href="AK12009789_files/kopac_style.css" type="text/css">
+<link rel="stylesheet" href="AK12009789_files/kopac_diff.css" type="text/css">
+<link rel="shortcut icon" type="image/x-icon" href="https://voebb.de/aDISWeb_vob/images/favicon.ico">
+<script type="text/javascript" src="AK12009789_files/cookies.js"></script>
+<script type="text/javascript" src="AK12009789_files/efa_fontsize.js"></script>
+</head>
+
+<body class="dreier deutsch" style="font-size: 100%;">
+<script type="text/javascript"><!--
+
+
+
+
+function setupHandlers()  {
+  document.onmousedown = docOnEvent;		
+  document.onkeydown = docOnEvent;	
+  document.onkeypress = docOnEvent;
+  document.onhelp = cancelF1;
+
+  initFormElements();
+  initIframes();
+  initScrollPos();
+}
+function getDimensions()  {
+  document.forms[0].scrDim.value = screen.width + ";" + screen.height;
+  if (window.innerWidth)
+    document.forms[0].winDim.value = window.innerWidth + ";" + window.innerHeight;
+  else
+    document.forms[0].winDim.value = document.body.offsetWidth + ";" + document.body.offsetHeight;
+  node = document.getElementById("img_content");
+  if (node != undefined)
+    document.forms[0].imgDim.value = node.offsetWidth + ";" + node.offsetHeight;
+}
+
+
+
+
+
+	window.onpopstate = function (e) {
+	  if(e.state != null && e.state.action){
+	  var button = document.getElementById("Toolbar_0");
+      	if(button) button.click();
+      }
+    }
+    if(history.pushState && history.state == null){
+		history.pushState({ action : 1 }, "", null);
+		history.pushState({ action : 2 }, "", null);
+	}
+
+
+
+
+
+
+aDIS.onLoad = function (e)
+{
+
+  if (!e) var e = window.event;
+  document.forms[0].scriptEnabled.value=true;
+  if (self.specialOnLoad != undefined)
+    specialOnLoad(e);
+  setupHandlers();
+  getDimensions();
+
+}
+
+aDIS.addListener('load', window, aDIS.onLoad);
+
+
+// --></script>
+
+<div class="aDISMaske">
+<form method="post" name="Form0" action="/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7" onsubmit="return formOnSubmit();">
+<input type="hidden" name="service" value="direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Form.form">
+<input type="hidden" name="sp" value="S0">
+<input type="hidden" name="Form0" value="focus,keyCode,stz,source,selected,requestCount,scriptEnabled,scrollPos,scrDim,winDim,imgDim,$Textfield,$FormConditional,textButton,$FormConditional$0,$FormConditional$1,textButton$0,textButton$1,textButton$2,textButton$3,textButton$4,textButton$5,textButton$6,textButton$7,$FormConditional$2,textButton$8,$Toolbar,$Toolbar$0">
+<input type="hidden" name="focus" value="">
+<input type="hidden" name="keyCode" value="18">
+<input type="hidden" name="stz" value="">
+<input type="hidden" name="source" value="">
+<input type="hidden" name="selected" value="">
+<input type="hidden" name="requestCount" value="0">
+<input type="hidden" name="scriptEnabled" value="true">
+<input type="hidden" name="scrollPos" value="0">
+<input type="hidden" name="scrDim" value="1920;1080">
+<input type="hidden" name="winDim" value="1853;942">
+<input type="hidden" name="imgDim" value="">
+<input type="hidden" name="$FormConditional" value="T">
+<input type="hidden" name="$FormConditional$0" value="F">
+<input type="hidden" name="$FormConditional$1" value="T">
+<input type="hidden" name="$FormConditional$2" value="T">
+
+
+
+
+
+		
+	
+
+
+
+	
+<script type="text/javascript">
+// <![CDATA[
+  if (efa_fontSize) efa_fontSize.efaInit();
+// ]]>
+</script><div id="efaTest" style="position:absolute;visibility:hidden;line-height:1em;">&nbsp;</div>
+
+
+<div id="wrapper">
+  <div id="wrapper_inside">
+
+    <div id="header" role="banner">
+      <div class="inside">
+
+          <ul id="sprunglinks">
+            <li><a class="sprung mobview" href="#">Zur Desktop-Ansicht</a></li>
+            <li><a class="sprung" href="#main">Zum Hauptinhalt</a></li>
+            <li><a class="sprung" href="#left">Zur Navigation</a></li>
+            <li><a class="sprung" href="#right">Zu weiteren Bedienelementen</a></li>
+          </ul>
+          <p id="logo"><img src="AK12009789_files/voebb_logo.svg" alt="Verbund der öffentlichen Bibliotheken Berlins" width="317" height="93"></p>
+
+         <script type="text/javascript">
+          // <![CDATA[
+            if (efa_fontSize) document.write(efa_fontSize.allLinks);
+          // ]]>
+          </script><div class="block" id="fontsizer"><a href="#" onclick="efa_fontSize.setSize(-1); return false;" title="Schrift kleiner stellen"><img src="AK12009789_files/font-klein.svg" alt="Schrift kleiner stellen" width="23" height="23"></a>  <a href="#" onclick="efa_fontSize.setSize(0); return false;" title="Schrift auf Standardgröße"><img src="AK12009789_files/font-mittel.svg" alt="Schrift auf Standardgröße zurückstellen" width="23" height="23"></a>  <a href="#" onclick="efa_fontSize.setSize(1); return false;" title="Schrift größer stellen"><img src="AK12009789_files/font-gross.svg" alt="Schrift größer stellen" width="23" height="23"></a> </div>
+
+          <div class="block" id="spruch">
+
+<span>
+Wir bringen Medien in Bewegung
+</span>
+ </div>
+
+      </div>
+    </div>
+
+    <div id="container">
+      <div id="container_inside">
+
+        <div id="left">
+          <div class="inside">
+
+            <h1 class="invisible">Navigation</h1>
+
+            <div class="block" id="navbox">
+            <div id="R20">
+<span class="bnzeig">
+
+</span>
+
+
+<span class="mmzeig">
+Sie sind nicht angemeldet.
+</span>
+</div>
+
+            </div>
+
+            <div class="mod_navigation block" id="unav" role="navigation">
+<div class="tree_div">
+<ul class="tree_ul">
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SH&amp;requestCount=0" class="tree_leaf_a">Startseite</a></li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SL1&amp;requestCount=0" class="tree_leaf_a">Anmelden</a></li>
+<li class="tree_leaf_li">
+<span class="tree_disabled">Abmelden</span>
+</li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SAX&amp;requestCount=0" class="tree_leaf_a">Aktuelles</a></li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SBK&amp;requestCount=0" class="tree_leaf_a">Mein Konto</a></li>
+<li class="tree_branch_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SS1&amp;requestCount=0" class="tree_branch_a">Suche</a></li>
+<li class="tree_branch_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SF1&amp;requestCount=0" class="tree_branch_a">Fernleihe</a></li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SW2&amp;requestCount=0" class="tree_leaf_a">Digitale Angebote</a></li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SF3&amp;requestCount=0" class="tree_leaf_a">Aufsätze im GBV</a></li>
+<li class="tree_branch_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SK2&amp;requestCount=0" class="tree_branch_a">Kontakt</a></li>
+<li class="tree_leaf_li">
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/$Tree.treeNodes&amp;sp=SW1&amp;requestCount=0" class="tree_leaf_a">Informationen</a></li>
+</ul></div>
+
+ </div>
+            <!-- incl=includeBOEB.html -->            <p class="block" id="boeb">
+              <a href="http://service.berlin.de/stadtbibliotheken/" rel="external" onclick="window.open(this.href); return false;">Zu 
+              den Berliner Öffentlichen Bibliotheken  <span class="invisible">(Link �ffnet in neuem Fenster)</span>
+              </a>
+            </p>
+<!-- stop -->
+
+          </div>
+        </div>
+
+        <div id="right">
+          <div class="inside">
+
+            <h1 class="invisible">Weitere Bedienelemente</h1>
+            <p class="sprung"><a href="#main">Zum Hauptinhalt</a></p>
+
+            <div class="block">
+              
+              
+              <div id="R03"><p>
+<span style="   width:89%;">
+Gesucht wurde mit: Registereinträgen. Treffer: 1
+</span>
+</p>
+</div>
+<div id="R14">
+    <div class="treffer_anzeigen">
+      <fieldset>
+      <legend>Treffer-Direktwahl</legend>
+      <label for="ZISTRZ_1">Treffer-Nr.</label>
+<input type="text" name="$Textfield" fld="ZISTRZ_1" onkeypress="checkNumeric(event,this);" id="ZISTRZ_1" class="text" maxlength="10"> <input class="buttong" type="submit" name="Submit" value="OK"> 
+      <div class="clear"></div>
+      <br class="klar"></fieldset>
+    </div>
+</div>
+
+              
+              
+              
+              <div id="R12">
+    <h2 class="invisible">Wichtige Aktionen:</h2>
+  <div class="aktion custom">
+   <p>
+
+
+<input type="submit" name="textButton" value="Einzelbestellung" class="wichtig" fld="$$GFBO_8">
+
+
+
+ </p></div>
+</div>
+<div id="R30">  
+  <h2 class="invisible">Medieninfos:</h2>
+  <div class="medieninfos">
+<div class="html_div" style="width:100%; height:100%;"><div class="aDISListe">
+<div id="R001" style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"><img src="AK12009789_files/0Sterne.gif" alt="Null Sterne" title="ohne Bewertung" border="0"><br> ohne Bewertung</div>
+</div>
+<div id="R002" style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"><div class="aktion"><a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/ZLA2_SPALTR_1&amp;sp=S*AZISTRZ%3D%2527AB%2527&amp;requestCount=0">Medium bewerten</a></div>
+</div>
+<div id="R003" style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"></div>            </div>
+</div>
+<div id="R004" style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"><div class="aktion"><a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/ZLA2_SPALTR_1&amp;sp=S*AZISTRZ%3D%2527AN%2527&amp;requestCount=0">Medium kommentieren</a></div>
+</div>
+<div id="R005" style="margin-top:10px;" class="clearfix">
+<div style=" width:97%; float:left; overflow:hidden;"></div>            </div>
+</div>
+</div></div> <div id="OPACLI" class="aDISListe">
+ </div>
+    <br><span style="line-height:12px;">&nbsp;</span><br>
+  </div>
+</div>
+<div id="R04">
+  <h3>Darstellung ändern:</h3>
+  <div class="aktion custom">
+    <p>
+
+ 
+
+<input type="submit" name="textButton$0" value="Anzeige im Zitierformat" class="buttong" fld="$$GFBO_7">
+
+
+
+ </p>
+  </div>
+</div>
+
+            </div>
+
+            <div class="block">
+               
+               
+               
+            </div>
+            <div class="block">
+              <div id="R11">
+    <h2>Export nach:</h2>
+<p class="buttong">
+
+<input type="submit" name="textButton$1" value="BibTeX" class="buttong">
+
+<input type="submit" name="textButton$2" value="Citavi" class="buttong">
+
+<input type="submit" name="textButton$3" value="EndNote" class="buttong">
+
+<input type="submit" name="textButton$4" value="ProCite" class="buttong">
+
+<input type="submit" name="textButton$5" value="RefWorks" class="buttong">
+
+<input type="submit" name="textButton$6" value="Reference Manager" class="buttong">
+
+<input type="submit" name="textButton$7" value="Zotero" class="buttong">
+
+</p>
+</div>
+
+              
+              
+            </div>
+
+          </div>
+        </div>
+
+        <div id="main" role="main">
+          <div class="inside">
+
+            <div class="block">
+              <div class="block" id="topleiste">
+			          <p id="breadcrumb"><span class="invisible">Vorige Seiten: </span>
+<span class="navicl">
+
+
+
+
+<a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/navpath.intlink.directlink&amp;sp=S%24%24GFNV_1&amp;sp=SD%2F00&amp;requestCount=0" class="navicl" fld="$$GFNV_1" title="Startseite">Startseite</a>
+
+
+
+
+</span> &gt;
+
+<span class="txtinsert">
+Vollanzeige Katalog
+</span>
+ </p>
+
+
+                <p id="druckversion">
+
+
+<input type="submit" name="textButton$8" value="Druckversion" fld="$$GFBO_88">
+
+
+
+ </p>
+                <div class="clear"></div>
+              </div>
+
+              <h1><span class="invisible">Aktuelle Seite:</span> 
+<span class="txtinsert">
+Vollanzeige Katalog
+</span>
+</h1>
+<div class="toolbar_div">
+<ul class="toolbar_ul">
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53010E00_31758600.gif" alt="Zurück zur vorherigen Seite" id="Toolbar_0" name="$Toolbar_0" title="Zurück zur vorherigen Seite" onmouseover="self.status='Zurück zur vorherigen Seite';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar_0"><span class="toolbar_txt">Zurück</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53007B00_31169A00.gif" alt="Zurück zur Trefferliste" id="Toolbar_1" name="$Toolbar_1" title="Zurück zur Trefferliste" onmouseover="self.status='Zurück zur Trefferliste';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar_1"><span class="toolbar_txt">Trefferliste</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53011E00_31169A00.gif" alt="Zurück zur Suche" id="Toolbar_2" name="$Toolbar_2" title="Zurück zur Suche" onmouseover="self.status='Zurück zur Suche';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar_2"><span class="toolbar_txt">Neue Suche</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005801_31169A00.gif" alt="An den Anfang blättern" id="Toolbar_3" name="$Toolbar_3" disabled="disabled" title="An den Anfang blättern" onmouseover="self.status='An den Anfang blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar_3"><span class="toolbar_txt_dis">Anfang</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005901_31169A00.gif" alt="Rückwärts blättern" id="Toolbar_4" name="$Toolbar_4" disabled="disabled" title="Rückwärts blättern" onmouseover="self.status='Rückwärts blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar_4"><span class="toolbar_txt_dis">Rückwärts</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005101_31169A00.gif" alt="Vorwärts blättern" id="Toolbar_5" name="$Toolbar_5" disabled="disabled" title="Vorwärts blättern" onmouseover="self.status='Vorwärts blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar_5"><span class="toolbar_txt_dis">Vorwärts</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005601_31169A00.gif" alt="Ans Ende blättern" id="Toolbar_6" name="$Toolbar_6" disabled="disabled" title="Ans Ende blättern" onmouseover="self.status='Ans Ende blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar_6"><span class="toolbar_txt_dis">Ende</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53002400_31169A00.gif" alt="Beenden der Recherche" id="Toolbar_8" name="$Toolbar_8" title="Beenden der Recherche" onmouseover="self.status='Beenden der Recherche';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar_8"><span class="toolbar_txt">Beenden</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53001D00_31169A00.gif" alt="Hilfe zur Vollanzeige" id="Toolbar_9" name="$Toolbar_9" title="Hilfe zur Vollanzeige" onmouseover="self.status='Hilfe zur Vollanzeige';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar_9"><span class="toolbar_txt">Hilfe</span></label></li></ul><div style="clear:both"></div></div> <div class="fsgrp">
+                 
+                 
+                 <div id="R06">
+  <div class="aDISListe">
+<div class="html_div" style="width:100%; height:100%;"><div class="aDISListe">
+<table class="gi" summary="Auflistung der Kategorien des ausgew�hlten Treffers" width="100%"><colgroup><col width="25%" valign="top" align="left">
+<col width="75%" valign="top" align="left">
+</colgroup><thead><tr><th colspan="2" class="thseite">Katalogangaben</th></tr></thead><tbody><tr><th scope="row" class="spaltelinks">&nbsp;</th><td class="spalterechts"><a href="https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&amp;sp=SPROD00&amp;sp=SAK12009789">Zitierlink</a></td></tr>
+<tr><th scope="row" class="spaltelinks">Medienart</th><td class="spalterechts"><img class="icon" src="AK12009789_files/buch_rot_a.png" alt="Buch" title="Buch" width="16" height="16"> [Buch]</td></tr>
+<tr><th scope="row" class="spaltelinks">Titel </th><td class="spalterechts">Mit Goethe in Italien : Tagebuch und Briefe des Dichters aus Italien / für dt. Italienfahrer hrsg. von Julius Vogel </td></tr>
+<tr><th scope="row" class="spaltelinks">Person</th><td class="spalterechts"><a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/ZLA2_HTMLGL_1&amp;sp=SPE00014587&amp;requestCount=0">Goethe, Johann Wolfgang von [Verfasser/in] </a><br><a href="https://voebb.de/aDISWeb/app;jsessionid=5A7646061BC00EE0DAC0E48DC8D6A3B7?service=direct/1/POOLOP00vb@@@@@@_44033D00_369D3380/ZLA2_HTMLGL_1&amp;sp=SPE02025521&amp;requestCount=0">Vogel, Julius [Herausgeber/in] </a></td></tr>
+<tr><th scope="row" class="spaltelinks">Veröffentlichung</th><td class="spalterechts">Berlin: Bard, 1908 </td></tr>
+<tr><th scope="row" class="spaltelinks">Umfang / Dauer </th><td class="spalterechts">561  Seiten </td></tr>
+<tr><th scope="row" class="spaltelinks">Sprache</th><td class="spalterechts">Deutsch </td></tr>
+</tbody></table></div></div> </div>
+</div>
+
+                 
+                 <div id="R07"><div id="OPACLI" class=" class=" txtmsk"="">
+<div class="html_div" style="width:100%; height:100%;"><h1 class="spalteueber">Exemplarangaben</h1></div></div>
+</div>
+<div id="R08">	<div class="rTable_div">
+<table class="rTable_table" colcase="[, , , , , ]" coldisable="[true, true, true, true, true, true]" width="100%">
+	<colgroup>
+<col width="15%"><col width="23%"><col width="16%"><col width="15%"><col width="30%">	</colgroup>
+	<thead class="rTable_thead">
+				<tr>
+<th scope="col" class="rTable_th">Bibliothek</th><th scope="col" class="rTable_th">Standort</th><th scope="col" class="rTable_th">Signatur</th><th scope="col" class="rTable_th">Bestellmöglichkeit</th><th scope="col" class="rTable_th">Status</th>	</tr>	
+			</thead>
+			<tbody>
+
+<tr class="rTable_tr_even">
+
+<td class="rTable_td_text">
+<a href="https://www.zlb.de/" target="_blank" title="Internetseite der Bibliothek">ZLB: Außenmagazin Berliner Stadtbibliothek</a>
+</td>
+
+<td class="rTable_td_text">
+Außenmagazin EG
+</td>
+
+<td class="rTable_td_text">
+L 228/285
+</td>
+
+<td class="rTable_td_text">
+Außenmagazin in den Lesesaal - Bestellung aus dem Außenmagazin nur in den Lesesaal
+</td>
+
+<td class="rTable_td_text">
+Verfügbar
+</td>
+
+</tr>
+	</tbody>
+</table>	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+                 
+              </div>
+
+              <div class="clear"></div>
+<div class="toolbar_div">
+<ul class="toolbar_ul">
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53010E00_31758600.gif" alt="Zurück zur vorherigen Seite" id="Toolbar$0_0" name="$Toolbar$0_0" title="Zurück zur vorherigen Seite" onmouseover="self.status='Zurück zur vorherigen Seite';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar$0_0"><span class="toolbar_txt">Zurück</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53007B00_31169A00.gif" alt="Zurück zur Trefferliste" id="Toolbar$0_1" name="$Toolbar$0_1" title="Zurück zur Trefferliste" onmouseover="self.status='Zurück zur Trefferliste';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar$0_1"><span class="toolbar_txt">Trefferliste</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53011E00_31169A00.gif" alt="Zurück zur Suche" id="Toolbar$0_2" name="$Toolbar$0_2" title="Zurück zur Suche" onmouseover="self.status='Zurück zur Suche';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar$0_2"><span class="toolbar_txt">Neue Suche</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005801_31169A00.gif" alt="An den Anfang blättern" id="Toolbar$0_3" name="$Toolbar$0_3" disabled="disabled" title="An den Anfang blättern" onmouseover="self.status='An den Anfang blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar$0_3"><span class="toolbar_txt_dis">Anfang</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005901_31169A00.gif" alt="Rückwärts blättern" id="Toolbar$0_4" name="$Toolbar$0_4" disabled="disabled" title="Rückwärts blättern" onmouseover="self.status='Rückwärts blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar$0_4"><span class="toolbar_txt_dis">Rückwärts</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005101_31169A00.gif" alt="Vorwärts blättern" id="Toolbar$0_5" name="$Toolbar$0_5" disabled="disabled" title="Vorwärts blättern" onmouseover="self.status='Vorwärts blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar$0_5"><span class="toolbar_txt_dis">Vorwärts</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53005601_31169A00.gif" alt="Ans Ende blättern" id="Toolbar$0_6" name="$Toolbar$0_6" disabled="disabled" title="Ans Ende blättern" onmouseover="self.status='Ans Ende blättern';return true;" onmouseout="self.status='';" class="toolbar_img_dis"><label for="Toolbar$0_6"><span class="toolbar_txt_dis">Ende</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53002400_31169A00.gif" alt="Beenden der Recherche" id="Toolbar$0_8" name="$Toolbar$0_8" title="Beenden der Recherche" onmouseover="self.status='Beenden der Recherche';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar$0_8"><span class="toolbar_txt">Beenden</span></label></li>
+<li class="toolbar_li">
+<input type="image" src="AK12009789_files/POOLOP00vb_53001D00_31169A00.gif" alt="Hilfe zur Vollanzeige" id="Toolbar$0_9" name="$Toolbar$0_9" title="Hilfe zur Vollanzeige" onmouseover="self.status='Hilfe zur Vollanzeige';return true;" onmouseout="self.status='';" class="toolbar_img"><label for="Toolbar$0_9"><span class="toolbar_txt">Hilfe</span></label></li></ul><div style="clear:both"></div></div> </div>
+            <div class="clear"></div>
+
+          </div>
+          <div id="clear"></div>
+        </div>
+
+      </div><!-- /container_inside -->
+    </div><!-- /container -->
+
+    <div id="footer">
+      <div class="inside">
+          <a href="https://voebb.de/aDISWeb_vob/pages/impressum.html" target="_blank">Impressum</a> | 
+          <a href="https://voebb.de/aDISWeb_vob/pages/datenschutz.html" target="_blank">Datenschutz</a> |
+          <a href="https://voebb.de/aDISWeb_vob/pages/entgelt.html" target="_blank">Entgeltregelung</a> 
+
+        <p class="block" id="goingup">
+          <a href="#wrapper">Seitenanfang</a>
+        </p>
+        <div class="clear"></div>
+
+      </div>
+    </div>
+
+  </div><!-- /wrapper_inside -->
+</div><!-- /wrapper -->
+
+<script src="AK12009789_files/yaml-focusfix.js" type="text/javascript"></script>
+
+</form>
+</div>
+
+</body></html>

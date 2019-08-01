@@ -8,3 +8,8 @@ export function getLoadingObject (component, status = '', msg = '') {
     }
   }
 }
+
+// creates a custom error to catch
+export function CustomError (msg) {
+  this.message = msg
+}

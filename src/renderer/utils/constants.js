@@ -14,6 +14,19 @@ export const TOO_MANY_HITS = 'tooManyHits'
 export const NO_HITS = 'noHits'
 export const DONE = 'done'
 
+// pages
+export const SEARCH = 'Search'
+export const BOOKMARKS = 'Bookmarks'
+
+// sorting
+export const MOST_RELEVANT = 'Most relevant'
+export const NEWEST = 'Newest'
+export const TITLE_A_Z = 'Title (A-Z)'
+export const TITLE_Z_A = 'Title (Z-A)'
+export const AVAILABLE = 'Available'
+export const SEARCH_PAGE_CRITERIONS = [ MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A ]
+export const BOOKMARKS_PAGE_CRITERIONS = [ AVAILABLE, TITLE_A_Z, TITLE_Z_A, NEWEST ]
+
 export const detailsBlacklist = [
   '',
   'Anmerkungen',
@@ -43,7 +56,19 @@ export const mediumIcons = [
     icon: 'fas fa-film'
   },
   {
+    name: 'DVD-ROM',
+    icon: 'fas fa-film'
+  },
+  {
+    name: 'Blu-ray Disc',
+    icon: 'fas fa-film'
+  },
+  {
     name: 'CD',
+    icon: 'fas fa-compact-disc'
+  },
+  {
+    name: 'CD-ROM',
     icon: 'fas fa-compact-disc'
   },
   {
@@ -75,10 +100,6 @@ export const mediumIcons = [
     icon: 'fas fa-atlas'
   },
   {
-    name: 'Mehrteiliges Werk',
-    icon: ''
-  },
-  {
     name: 'Schallplatte',
     icon: 'fas fa-compact-disc'
   },
@@ -99,12 +120,12 @@ export const mediumIcons = [
     icon: 'far fa-newspaper'
   },
   {
-    name: 'Medienkombination',
-    icon: ''
-  },
-  {
     name: 'konventionelles Spiel',
     icon: 'fas fa-dice'
+  },
+  {
+    name: 'Karte/Plan',
+    icon: 'fas fa-map-marked-alt'
   }
 ]
 

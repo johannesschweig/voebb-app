@@ -31,6 +31,22 @@ export function sanitizeDetail (key, value) {
   switch (key) {
     // remove dashes from isbn
     case 'ISBN': return value.replace(/-/g, '')
+    // remove everthing after special character
+    case 'Titel':
+      let specialChars = [';', '[', '(']
+      let stop = []
+      // find earliest stopping special character
+      specialChars.forEach(char => {
+        if (value.indexOf(char) !== -1) {
+          stop.push(value.indexOf(char))
+        }
+      })
+      // shorten string
+      if (stop.length === 0) {
+        return value
+      } else {
+        return value.slice(0, Math.min(...stop))
+      }
     default: return value
   }
 }
@@ -63,22 +79,54 @@ export function getDaysDue (avail) {
   return Math.round(date2.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)
 }
 
-// returns an availability message for each entry ('available', 'x more days')
-export function getAvailabilityMessage (availabilities, preferred) {
-  // get only availabilities from preferred libraries
-  let avail = availabilities.filter(obj => preferred.includes(obj.library))
+// returns an availability object for ('available', 'x more days')
+export function getAvailability (copies, preferredLibraries) {
+  // show only copies from preferred libraries
+  let avail = copies.filter(obj => preferredLibraries.includes(obj.library))
   let available = avail.filter(obj => {
     return obj.status.toLowerCase().startsWith('verfügbar') || obj.status === 'ist verfügbar'
   }).length > 0
   if (available) {
-    return 'available'
+    return {
+      days: 0,
+      message: 'available'
+    }
   } else {
     let notAvail = ['Nicht im Regal', 'Reserviert', 'Ausgeliehen', 'siehe Vollanzeige']
     avail = avail.filter(obj => notAvail.indexOf(obj.status) === -1)
     if (avail.length === 0) {
-      return 'not available'
+      return {
+        days: Number.MAX_SAFE_INTEGER,
+        message: 'not available'
+      }
     }
     let dd = avail.map(obj => getDaysDue(obj.status))
-    return `${Math.min(...dd)} days left`
+    // overdue or days due
+    if (Math.min(...dd) < 0) {
+      return {
+        days: Math.min(...dd),
+        message: `${-Math.min(...dd)} days overdue`
+      }
+    } else {
+      return {
+        days: Math.min(...dd),
+        message: `${Math.min(...dd)} days left`
+      }
+    }
+  }
+}
+
+// extracts a year out of a string and returns it as an integer
+// returns 0 if no year found or empty string
+export function extractYear (str) {
+  if (str === '') {
+    return 0
+  }
+  // extract 4 digit year
+  let year = str.match(/\b(19|20)\d{2}\b/gm)
+  if (year && year.length) {
+    return parseInt(year[0])
+  } else {
+    return 0
   }
 }

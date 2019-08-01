@@ -3,11 +3,14 @@
         <div
             v-if='data.identifier'
             class='grid'>
-            <div>
+            <div :class='{ "no-image": !data.details.img }'>
                 <router-link :to='"/" + getCurrentWrapper + "/Page"'>
                     <BackArrowIcon />
                 </router-link>
-                <h1>{{ getActiveTitle }}</h1>
+                <img
+                  v-if='data.details.img'
+                  :src='data.details.img'>
+                <h1>{{ data.details['Titel'] }}</h1>
                 <BookmarkButtonIcon :identifier='data.identifier' />
                 <LinkButtonIcon :identifier='data.identifier' />
             </div>
@@ -29,7 +32,9 @@
                 <router-view />
             </keep-alive>
         </div>
-        <LoadingCircle v-else-if='isLoading()'/>
+        <LoadingCircle
+          v-else-if='isLoading()'
+          :msg='loading.msg' />
     </div>
 </template>
 
@@ -39,7 +44,7 @@ import BackArrowIcon from '../assets/back-arrow.svg'
 import MediumIcon from './icons/MediumIcon.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
 import LinkButtonIcon from './icons/LinkButtonIcon.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { LOADING } from '../utils/constants.js'
 
 export default {
@@ -52,12 +57,9 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.preview,
-      loading: state => state.loading.preview
+      data: state => state.preview.data,
+      loading: state => state.preview.loading
     }),
-    ...mapGetters([
-      'getActiveTitle'
-    ]),
     getCurrentWrapper () {
       let path = this.$route.path.slice(1)
       return path.slice(0, path.indexOf('/'))
@@ -88,8 +90,12 @@ export default {
 .grid div:nth-child(1) {
     margin-bottom: 32px;
     display: grid;
-    grid-template-columns: 32px 1fr 32px 32px;
+    grid-template-columns: 32px 1fr 4fr 32px 32px;
     grid-column-gap: 12px;
+}
+
+.grid div.no-image:nth-child(1) {
+    grid-template-columns: 32px 1fr 32px 32px;
 }
 
 .grid svg {
@@ -109,6 +115,9 @@ h1 {
     display: inline;
     font-weight: 300;
     vertical-align: top;
+}
+
+.no-image h1 {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -136,5 +145,9 @@ span.router-link-active {
     border-color: var(--color-4);
     border-style: solid;
     color: var(--color-4);
+}
+
+img {
+  width: 100%;
 }
 </style>

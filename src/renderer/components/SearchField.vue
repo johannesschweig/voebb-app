@@ -1,31 +1,70 @@
 <template>
-    <div>
+    <div class='container'>
         <h1>Search</h1>
-        <div class='inputfield'>
-            <SearchIcon />
-            <input ref='input' placeholder='Search for books, cds...' @keyup.enter='search($refs.input.value)'/>
+        <div class='grid'>
+            <div class='inputfield'>
+                <SearchIcon />
+                <input
+                    ref='input'
+                    placeholder='Search for books, cds...'
+                    @keyup.enter='search($refs.input.value)' />
+            </div>
+            <Sorter
+              v-if='multipleResultsAvailable'
+              :sorting='sorterSorting'
+              :criterions='SEARCH_PAGE_CRITERIONS'
+              @set-sorting='(criterion) => setSorting({ page: SEARCH, criterion })' />
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import SearchIcon from '../assets/search.svg'
+import Sorter from './Sorter.vue'
+import { SEARCH, SEARCH_PAGE_CRITERIONS } from '../utils/constants.js'
 
 export default {
+  data () {
+    return {
+      SEARCH_PAGE_CRITERIONS,
+      SEARCH
+    }
+  },
   components: {
-    SearchIcon
+    SearchIcon,
+    Sorter
   },
   methods: mapActions([
-    'search'
-  ])
+    'search',
+    'setSorting'
+  ]),
+  computed: {
+    ...mapState({
+      sorterSorting: state => state.search.sorting
+    }),
+    ...mapGetters([
+      'multipleResultsAvailable'
+    ])
+  }
 }
 </script>
 
 <style scoped>
+.container {
+  position: absolute;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+}
+
 .inputfield {
     position: relative;
     width: 360px;
+    display: inline-block;
 }
 
 .inputfield input {
@@ -61,4 +100,8 @@ export default {
     stroke: var(--color-3);
 }
 
+.grid > div:nth-child(2) {
+  align-self: center;
+  justify-self: right;
+}
 </style>

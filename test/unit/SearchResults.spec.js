@@ -13,7 +13,9 @@ describe('SearchResults.vue', () => {
         loading: () => ({
           status: DONE,
           msg
-        })
+        }),
+        resultsAvailable: () => false,
+        getSortedSearchData: () => []
       }
     })
 
@@ -25,7 +27,12 @@ describe('SearchResults.vue', () => {
     const wrapper = shallowMount(SearchResults, {
       computed: {
         results: () => [],
-        loading: () => ({ status: LOADING })
+        loading: () => ({
+          status: LOADING,
+          msg
+        }),
+        resultsAvailable: () => false,
+        getSortedSearchData: () => []
       }
     })
 
