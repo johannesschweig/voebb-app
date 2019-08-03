@@ -121,6 +121,10 @@ describe('string.js', () => {
 
   it('sanitizes details', () => {
     expect(sanitizeDetail('ISBN', '123-456-789')).toEqual('123456789')
+    expect(sanitizeDetail('Titel', 'foo; bar(123')).toEqual('foo')
+    expect(sanitizeDetail('Titel', 'foo( bar[123')).toEqual('foo')
+    expect(sanitizeDetail('Titel', 'foo[ bar;123')).toEqual('foo')
+    expect(sanitizeDetail('Titel', 'foo. bar.123')).toEqual('foo. bar.123')
     expect(sanitizeDetail('foo', 'bar')).toEqual('bar')
   })
 

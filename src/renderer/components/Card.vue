@@ -10,7 +10,7 @@
         <div class='info'>
             <div class='title'>
                 <MediumIcon :medium='row.medium'/>
-                {{ row.title }} ({{ row.medium }})
+                {{ sanitizeString('Titel', row.title) }} ({{ row.medium }})
             </div>
             <div class='subtitle'>
                 {{ row.name }} - {{ row.year }}
@@ -29,6 +29,7 @@
 import BookmarkButtonIcon from './icons/BookmarkButtonIcon.vue'
 import MediumIcon from './icons/MediumIcon.vue'
 import { mapActions } from 'vuex'
+import { sanitizeDetail } from '../utils/string.js'
 
 export default {
   components: {
@@ -48,7 +49,11 @@ export default {
   methods: {
     ...mapActions([
       'fetchDetails'
-    ])
+    ]),
+    // removes unncessary infos from strings
+    sanitizeString (key, value) {
+      return sanitizeDetail(key, value)
+    }
   }
 }
 </script>

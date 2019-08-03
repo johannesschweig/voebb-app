@@ -31,6 +31,22 @@ export function sanitizeDetail (key, value) {
   switch (key) {
     // remove dashes from isbn
     case 'ISBN': return value.replace(/-/g, '')
+    // remove everthing after special character
+    case 'Titel':
+      let specialChars = [';', '[', '(']
+      let stop = []
+      // find earliest stopping special character
+      specialChars.forEach(char => {
+        if (value.indexOf(char) !== -1) {
+          stop.push(value.indexOf(char))
+        }
+      })
+      // shorten string
+      if (stop.length === 0) {
+        return value
+      } else {
+        return value.slice(0, Math.min(...stop))
+      }
     default: return value
   }
 }

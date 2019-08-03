@@ -75,7 +75,6 @@ export default {
     },
     // get only copies from preferred libraries
     getPreferred (copies) {
-      console.log('xxx', copies)
       return copies.filter(obj => this.getPreferredLibraries.includes(obj.library))
     },
     // get only availabilities from preferred libraries
