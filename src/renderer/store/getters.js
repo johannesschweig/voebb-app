@@ -1,4 +1,4 @@
-import { allLibraries } from '../utils/constants.js'
+import { allLibraries, DONE } from '../utils/constants.js'
 
 export default {
   // returns a list with all the bookmarks identifiers
@@ -28,12 +28,14 @@ export default {
   // get title of active card
   getActiveTitle: state => {
     var r = ''
-    if (state.preview.hasOwnProperty('identifier')) {
-      if (state.searchResults.length) {
-        r = state.searchResults.filter(e => e.identifier === state.preview.identifier)
+    if (state.preview.data.hasOwnProperty('identifier')) {
+      // check search results for title
+      if (state.search.data.length) {
+        r = state.search.data.filter(e => e.identifier === state.preview.data.identifier)
       }
+      // check bookmarks for title
       if (r.length === 0 && state.bookmarks.data.length) {
-        r = state.bookmarks.data.filter(e => e.identifier === state.preview.identifier)
+        r = state.bookmarks.data.filter(e => e.identifier === state.preview.data.identifier)
         r = r[0].details['Titel']
       } else {
         r = r[0].title
@@ -46,5 +48,9 @@ export default {
     return state.bookmarks.data.sort((a, b) => {
       return a.availability.days > b.availability.days
     })
+  },
+  resultsAvailable: state => {
+    return state.search.data.length !== 0 && state.search.loading.status === DONE
   }
+
 }

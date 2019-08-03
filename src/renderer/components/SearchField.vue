@@ -4,15 +4,20 @@
         <div class='grid'>
             <div class='inputfield'>
                 <SearchIcon />
-                <input ref='input' placeholder='Search for books, cds...' @keyup.enter='search($refs.input.value)'/>
+                <input
+                    ref='input'
+                    placeholder='Search for books, cds...'
+                    @keyup.enter='search($refs.input.value)' />
             </div>
-            <Sorter :sorts='["Most relevant", "Newest", "Title (A-Z)", "Title (Z-A)"]'/>
+            <Sorter
+                v-if='resultsAvailable'
+                :criterions='["Most relevant", "Newest", "Title (A-Z)", "Title (Z-A)"]' />
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SearchIcon from '../assets/search.svg'
 import Sorter from './Sorter.vue'
 
@@ -23,6 +28,9 @@ export default {
   },
   methods: mapActions([
     'search'
+  ]),
+  computed: mapGetters([
+    'resultsAvailable'
   ])
 }
 </script>

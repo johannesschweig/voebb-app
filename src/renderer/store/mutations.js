@@ -1,4 +1,4 @@
-import { INITIAL } from '../utils/constants.js'
+import { INITIAL, SEARCH, BOOKMARKS, PREVIEW } from '../utils/constants.js'
 
 // mutations
 export default {
@@ -10,29 +10,29 @@ export default {
   removeBookmark (state, identifier) {
     state.bookmarks.data = state.bookmarks.data.filter(b => b.identifier !== identifier)
   },
-  // sets the search results
-  setSearchResults (state, results) {
-    state.searchResults = results
+  // sets the search results data
+  setSearchResultsData (state, results) {
+    state.search.data = results
   },
   // clear search results
-  clearSearchResults (state) {
-    state.searchResults = []
+  clearSearchResultsData (state) {
+    state.search.data = []
   },
   // sets the preview data
   setPreviewData (state, results) {
-    state.preview = results
+    state.preview.data = results
   },
   // clear the preview data
   clearPreviewData (state) {
-    state.preview = {
+    state.preview.data = {
       details: [],
       copies: [],
       availability: {}
     }
     // reset loading status
-    state.loading.preview.status = INITIAL
+    state.preview.loading.status = INITIAL
   },
-  setBookmarks (state, results) {
+  setBookmarksData (state, results) {
     state.bookmarks.data = results
   },
   // sets the last updated label to a new string
@@ -43,8 +43,19 @@ export default {
   setLibraries (state, libraries) {
     state.libraries = libraries
   },
-  //
+  // sets the loading state
   setLoading (state, payload) {
-    state.loading[payload.component] = payload.data
+    switch (payload.component) {
+      case SEARCH: state.search.loading = payload.data
+        break
+      case PREVIEW: state.preview.loading = payload.data
+        break
+      case BOOKMARKS: state.bookmarks.loading = payload.data
+        break
+    }
+  },
+  // sets the sorting of a page
+  setSorting(state, payload) {
+    
   }
 }

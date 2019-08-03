@@ -25,8 +25,8 @@ import { sanitizeDetail } from '../utils/string.js'
 export default {
   computed: {
     ...mapState({
-      data: state => state.preview,
-      loading: state => state.loading.preview
+      data: state => state.preview.data,
+      loading: state => state.preview.loading
     })
   },
   methods: {

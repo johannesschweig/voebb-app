@@ -46,7 +46,7 @@ export default {
   computed: {
     ...mapState({
       lastUpdated: state => state.bookmarks.lastUpdated,
-      loading: state => state.loading.bookmarks
+      loading: state => state.bookmarks.loading
     }),
     ...mapGetters([
       'detailsAvailable',

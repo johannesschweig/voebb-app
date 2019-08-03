@@ -87,8 +87,8 @@ export function search (term, mocked = false) {
           id = id.substring(id.lastIndexOf('=') + 2)
           console.log('Redirected to entry details page of', results.details['Titel'])
 
-          return {
-            details: {
+          return [
+            {
               'title': results.details['Titel'],
               'name': results.details['Verfasser'],
               'medium': results.details['Medienart'],
@@ -96,7 +96,7 @@ export function search (term, mocked = false) {
               'img': null,
               'identifier': id
             }
-          }
+          ]
         } else {
           // extract results from html
           let results = extractResult(res)

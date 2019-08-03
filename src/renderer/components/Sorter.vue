@@ -1,21 +1,26 @@
 <template>
     <div>
         <span>Sort:</span>  
-        <select :style='calculateWidth'>
-          <option
-              v-for='sort in sorts'
-              :key='sort'
-              value='sort' >
-              {{ sort }}
-          </option>
+        <select
+            :style='calculateWidth'
+            @change='sortResults($event)'>
+            <option
+                v-for='crit in criterions'
+                :key='crit'
+                :value='crit' >
+                {{ crit }}
+            </option>
         </select>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { SEARCH_PAGE } from '../utils/constants.js'
+
 export default {
   props: {
-    sorts: {
+    criterions: {
       type: Array,
       required: true
     }
@@ -23,11 +28,20 @@ export default {
   computed: {
     // calculates the recommended width for the select box according to the lengths of its labels
     calculateWidth() {
-      let len = this.sorts.map(sort => sort.length)
+      let len = this.criterions.map(crit => crit.length)
       let w = Math.round(Math.max(...len) * 6.7 + 26)
       return {
         width: w + 'px'
       }
+    }
+  },
+  methods: {
+    ...mapActions([
+    'setSorting'
+    ]),
+    // sorts the results according to the sorter's criterion
+    sortResults (event) {
+      this.sort({ page: SEARCH_PAGE, criterion: event.target.value })
     }
   }
 }

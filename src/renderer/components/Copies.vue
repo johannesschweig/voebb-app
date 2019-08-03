@@ -58,8 +58,8 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.preview,
-      loading: state => state.loading.preview
+      data: state => state.preview.data,
+      loading: state => state.preview.loading
     }),
     ...mapGetters([
       'getPreferredLibraries'

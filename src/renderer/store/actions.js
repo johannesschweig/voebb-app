@@ -1,7 +1,7 @@
 import { search, getEntryDetails } from '../utils/requests.js'
 import { getCurrentDateString, getAvailability } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
-import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE } from '../utils/constants.js'
+import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE, SEARCH, BOOKMARKS, PREVIEW } from '../utils/constants.js'
 import { getLoadingObject, CustomError } from '../utils/utils.js'
 
 // actions
@@ -20,7 +20,7 @@ export default {
     })
     // read bookmarks
     getUserData('bookmarks').then(data => {
-      commit('setLoading', getLoadingObject('bookmarks', LOADING))
+      commit('setLoading', getLoadingObject(BOOKMARKS, LOADING))
       // no bookmarks
       if (Object.keys(data).length === 0) {
         throw new CustomError('Bookmarks file missing')
@@ -33,23 +33,23 @@ export default {
       })
       return Promise.all(promises)
     }).then(res => {
-      commit('setLoading', getLoadingObject('bookmarks', DONE))
+      commit('setLoading', getLoadingObject(BOOKMARKS, DONE))
       // get availability
       let results = res.map(result => ({
         ...result,
         availability: getAvailability(result.copies, getters.getPreferredLibraries)
       }))
-      commit('setBookmarks', results)
+      commit('setBookmarksData', results)
       commit('setLastUpdated', getCurrentDateString())
     }).catch(err => {
       if (err instanceof CustomError) {
         switch (err.message) {
           case 'Bookmarks file missing':
-            commit('setLoading', getLoadingObject('bookmarks', DONE, 'You have not added any bookmarks yet'))
+            commit('setLoading', getLoadingObject(BOOKMARKS, DONE, 'You have not added any bookmarks yet'))
             console.log('Bookmarks user file not available')
             break
           case 'Request timeout':
-            commit('setLoading', getLoadingObject('bookmarks', DONE, 'Request timed out. Retry again.'))
+            commit('setLoading', getLoadingObject(BOOKMARKS, DONE, 'Request timed out. Retry again.'))
             console.log('Request timeout')
             break
         }
@@ -67,7 +67,7 @@ export default {
       dispatch('removeBookmark', payload.identifier)
     } else if (getters.bookmarksList.indexOf(payload.identifier) === -1) {
       // fetch all bookmarks details, availability
-      commit('setLoading', getLoadingObject('bookmarks', LOADING))
+      commit('setLoading', getLoadingObject(BOOKMARKS, LOADING))
       getEntryDetails(payload.identifier)
         .then(res => {
           let bookmarks = getters.bookmarksList.concat([payload.identifier])
@@ -80,7 +80,7 @@ export default {
           }
           commit('addBookmark', results)
           commit('setLastUpdated', getCurrentDateString())
-          commit('setLoading', getLoadingObject('bookmarks', DONE))
+          commit('setLoading', getLoadingObject(BOOKMARKS, DONE))
           console.log('Added bookmark', payload.identifier)
         })
     } else {
@@ -90,26 +90,26 @@ export default {
   // fake search for testing purposes
   fakeSearch ({ commit }) {
     // clear search results and preview data
-    commit('clearSearchResults')
+    commit('clearSearchResultsData')
     commit('clearPreviewData')
     // prepare loading objects
-    let loading = getLoadingObject('searchResults', LOADING)
+    let loading = getLoadingObject(SEARCH, LOADING)
     commit('setLoading', loading)
-    let done = getLoadingObject('searchResults', DONE)
+    let done = getLoadingObject(SEARCH, DONE)
     search('', true).then(res => {
       commit('setLoading', done)
-      commit('setSearchResults', res)
+      commit('setSearchResultsData', res)
     })
   },
   // search for term
   search ({ commit }, term) {
     // clear search results and preview data
-    commit('clearSearchResults')
+    commit('clearSearchResultsData')
     commit('clearPreviewData')
     // prepare loading objects
-    let loading = getLoadingObject('searchResults', LOADING)
+    let loading = getLoadingObject(SEARCH, LOADING)
     commit('setLoading', loading)
-    let done = getLoadingObject('searchResults')
+    let done = getLoadingObject(SEARCH)
 
     // start search
     search(term, false).then(res => {
@@ -127,7 +127,7 @@ export default {
       commit('setLoading', done)
       // reset preview
       commit('setPreviewData', { details: [], availability: [] })
-      commit('setSearchResults', res)
+      commit('setSearchResultsData', res)
     })
   },
   // fetch details data on instance
@@ -135,9 +135,9 @@ export default {
     // clear preview data
     commit('clearPreviewData')
     // prepare loading objects
-    let loading = getLoadingObject('preview', LOADING)
+    let loading = getLoadingObject(PREVIEW, LOADING)
     commit('setLoading', loading)
-    let done = getLoadingObject('preview', DONE)
+    let done = getLoadingObject(PREVIEW, DONE)
     // fetch details
     getEntryDetails(identifier).then(res => {
       commit('setLoading', done)
@@ -149,9 +149,9 @@ export default {
     // clear preview data
     commit('clearPreviewData')
     // prepare loading objects
-    let loading = getLoadingObject('preview', LOADING)
+    let loading = getLoadingObject(PREVIEW, LOADING)
     commit('setLoading', loading)
-    let done = getLoadingObject('preview', DONE)
+    let done = getLoadingObject(PREVIEW, DONE)
     // fetch details
     getEntryDetails('', true).then(res => {
       commit('setLoading', done)
@@ -164,7 +164,7 @@ export default {
     let bookmarks = getters.bookmarksList.filter(b => b !== identifier)
     // check if last bookmark
     if (bookmarks.length === 0) {
-      commit('setLoading', getLoadingObject('bookmarks', INITIAL, 'You have not added any bookmarks yet.'))
+      commit('setLoading', getLoadingObject(BOOKMARKS, INITIAL, 'You have not added any bookmarks yet.'))
     }
     // update user storage
     setUserData('bookmarks', bookmarks)
@@ -176,5 +176,15 @@ export default {
     console.log('Updating libraries', libraries.length, 'entries')
     setUserData('libraries', libraries)
     commit('setLibraries', libraries)
+  },
+  // sorts the sorting criterion for a list of results
+  // page: the page to sort (search or bookmarks)
+  // criterion: which sorting criterion to apply
+  setSorting ({ commit }, payload) {
+    if (payload.page === SEARCH_PAGE) {
+      console.log('changing search', payload.criterion)
+    } else if (payload.page === BOOKMARKS_PAGE) {
+      // nothing yet
+    }
   }
 }

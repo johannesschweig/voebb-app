@@ -28,7 +28,7 @@ export default {
     // read in bookmarks from file
     this.$store.dispatch('readUserData')
     // this.$store.dispatch('fakeSearch')
-    // this.$store.dispatch('search', 'felix und felka')
+    this.$store.dispatch('search', 'felix felka')
   }
 }
 </script>
