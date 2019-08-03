@@ -47,6 +47,10 @@ export const mediumIcons = [
     icon: 'fas fa-compact-disc'
   },
   {
+    name: 'CD-ROM',
+    icon: 'fas fa-compact-disc'
+  },
+  {
     name: 'Buch',
     icon: 'fas fa-book'
   },
