@@ -20,21 +20,16 @@ import { mapActions, mapState } from 'vuex'
 import { SEARCH, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS, SEARCH_WRAPPER, BOOKMARKS_WRAPPER } from '../utils/constants.js'
 
 export default {
+  data() {
+    return {
+      criterions: null
+    }
+  },
   computed: {
     ...mapState({
       sortingSearch: state => state.search.sorting,
       sortingBookmarks: state => state.bookmarks.sorting
     }),
-    // returns the criterions for this sorter
-    criterions() {
-      let path = this.$route.path.slice(1)
-      path = path.slice(0, path.indexOf('/'))
-      if (path === SEARCH_WRAPPER) {
-        return SEARCH_PAGE_CRITERIONS
-      } else if (path === BOOKMARKS_WRAPPER) {
-        return BOOKMARKS_PAGE_CRITERIONS
-      }
-    },
     // calculates the recommended width for the select box according to the lengths of its labels
     calculateWidth() {
       let len = this.criterions.map(crit => crit.length)
@@ -54,13 +49,23 @@ export default {
     },
     // returns true if criterion is selected
     isSelected (criterion) {
-      let path = this.$route.path.slice(1)
-      path = path.slice(0, path.indexOf('/'))
-      if (path === SEARCH_WRAPPER) {
+      if (this.wrapper === SEARCH_WRAPPER) {
         return criterion === this.sortingSearch
-      } else if (path === BOOKMARKS_WRAPPER) {
+      } else if (this.wrapper === BOOKMARKS_WRAPPER) {
         return criterion === this.sortingBookmarks
       }
+    }
+  },
+  created() {
+    // parse route to figure out where the sorter belongs to
+    let path = this.$route.path.slice(1)
+    path = path.slice(0, path.indexOf('/'))
+    if (path === SEARCH_WRAPPER) {
+      this.wrapper = SEARCH_WRAPPER
+      this.criterions = SEARCH_PAGE_CRITERIONS
+    } else if (path === BOOKMARKS_WRAPPER) {
+      this.wrapper = BOOKMARKS_WRAPPER
+      this.criterions = BOOKMARKS_PAGE_CRITERIONS
     }
   }
 }
@@ -82,6 +87,7 @@ select {
 	font-size: 14px;
   font-weight: 700;
 	color: var(--color-4);
+  /* Ignore the warning, this is important */
 	height: 28px;
 	max-width: 100%;
 	box-sizing: border-box;

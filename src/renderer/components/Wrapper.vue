@@ -24,14 +24,14 @@ export default {
       // top level navigation
       if (prior[0] !== after[0]) {
         this.transitionName = ''
-      } else {
+      } //else {
         // sub level navigation
-        if (after[1] === PREVIEW) {
-          this.transitionName = 'slide-left'
-        } else {
-          this.transitionName = 'slide-right'
-        }
-      }
+      //   if (after[1] === PREVIEW) {
+      //     this.transitionName = 'slide-left'
+      //   } else {
+      //     this.transitionName = 'slide-right'
+      //   }
+      // }
     }
   }
 }
