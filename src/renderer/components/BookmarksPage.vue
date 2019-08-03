@@ -69,9 +69,6 @@ export default {
 <style scoped>
 .container {
     width: calc(100vw - 84px - 16px);
-    position: absolute;
-    left: 84px;
-    top: 16px;
 }
 
 .list {

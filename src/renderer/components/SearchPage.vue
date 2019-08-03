@@ -21,8 +21,9 @@ export default {
 <style scoped>
 .root {
     display: grid;
-    grid-template: 108px 1fr / 100vw 100vw;
+    grid-template-rows: 108px 1fr;
     overflow-x: hidden;
+    width: calc(100vw - 84px - 32px);
 }
 
 .root > div:nth-child(1) {

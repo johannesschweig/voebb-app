@@ -45,8 +45,5 @@ export default {
 <style scoped>
 .container {
     grid-row: 2 / 3;
-    grid-column: 1 / 2;
-    margin-right: 16px;
-    width: calc(100vw - 84px - 32px);
 }
 </style>

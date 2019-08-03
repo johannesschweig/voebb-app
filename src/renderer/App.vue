@@ -27,10 +27,7 @@ export default {
   created () {
     // read in bookmarks from file
     this.$store.dispatch('readUserData')
-    // TODO remove before deployment
     // this.$store.dispatch('fakeSearch')
-    // this.$store.dispatch('fakeFetchDetails')
-    // this.$store.dispatch('fetchDetails', 'AK02020127')
     // this.$store.dispatch('search', 'felix und felka')
   }
 }

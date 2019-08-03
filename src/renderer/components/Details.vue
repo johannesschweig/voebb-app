@@ -3,7 +3,9 @@
         v-if='data.details.length != 0'
         class='table'>
         <tbody>
-            <tr v-for='(value, key) in data.details'>
+            <tr
+              v-for='(value, key) in data.details'
+              :key='key' >
                     <td> {{ key }} </td>
                     <td> {{ sanitizeString(key, value) }} </td>
             </tr>
