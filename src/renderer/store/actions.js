@@ -92,6 +92,7 @@ export default {
     // clear search results and preview data
     commit('clearSearchResultsData')
     commit('clearPreviewData')
+    commit('resetSorting', SEARCH)
     // prepare loading objects
     let loading = getLoadingObject(SEARCH, LOADING)
     commit('setLoading', loading)
@@ -106,6 +107,7 @@ export default {
     // clear search results and preview data
     commit('clearSearchResultsData')
     commit('clearPreviewData')
+    commit('resetSorting', SEARCH)
     // prepare loading objects
     let loading = getLoadingObject(SEARCH, LOADING)
     commit('setLoading', loading)

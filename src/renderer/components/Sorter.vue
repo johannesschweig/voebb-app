@@ -7,7 +7,8 @@
             <option
                 v-for='crit in criterions'
                 :key='crit'
-                :value='crit' >
+                :value='crit'
+                :selected='isSelected(crit)' >
                 {{ crit }}
             </option>
         </select>
@@ -15,17 +16,25 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { SEARCH } from '../utils/constants.js'
+import { mapActions, mapState } from 'vuex'
+import { SEARCH, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS, SEARCH_WRAPPER, BOOKMARKS_WRAPPER } from '../utils/constants.js'
 
 export default {
-  props: {
-    criterions: {
-      type: Array,
-      required: true
-    }
-  },
   computed: {
+    ...mapState({
+      sortingSearch: state => state.search.sorting,
+      sortingBookmarks: state => state.bookmarks.sorting
+    }),
+    // returns the criterions for this sorter
+    criterions() {
+      let path = this.$route.path.slice(1)
+      path = path.slice(0, path.indexOf('/'))
+      if (path === SEARCH_WRAPPER) {
+        return SEARCH_PAGE_CRITERIONS
+      } else if (path === BOOKMARKS_WRAPPER) {
+        return BOOKMARKS_PAGE_CRITERIONS
+      }
+    },
     // calculates the recommended width for the select box according to the lengths of its labels
     calculateWidth() {
       let len = this.criterions.map(crit => crit.length)
@@ -37,11 +46,21 @@ export default {
   },
   methods: {
     ...mapActions([
-    'setSorting'
+      'setSorting'
     ]),
     // sorts the results according to the sorter's criterion
     sortResults (event) {
       this.setSorting({ page: SEARCH, criterion: event.target.value })
+    },
+    // returns true if criterion is selected
+    isSelected (criterion) {
+      let path = this.$route.path.slice(1)
+      path = path.slice(0, path.indexOf('/'))
+      if (path === SEARCH_WRAPPER) {
+        return criterion === this.sortingSearch
+      } else if (path === BOOKMARKS_WRAPPER) {
+        return criterion === this.sortingBookmarks
+      }
     }
   }
 }

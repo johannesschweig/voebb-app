@@ -9,9 +9,7 @@
                     placeholder='Search for books, cds...'
                     @keyup.enter='search($refs.input.value)' />
             </div>
-            <Sorter
-                v-if='resultsAvailable'
-                :criterions='["Most relevant", "Newest", "Title (A-Z)", "Title (Z-A)"]' />
+            <Sorter v-if='resultsAvailable' />
         </div>
     </div>
 </template>
