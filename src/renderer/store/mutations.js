@@ -56,6 +56,11 @@ export default {
   },
   // sets the sorting of a page
   setSorting(state, payload) {
-    
+    switch(payload.page) {
+      case SEARCH: state.search.sorting = payload.criterion
+        break
+      case BOOKMARKS: state.bookmarks.sorting = payload.criterion
+        break
+    }
   }
 }

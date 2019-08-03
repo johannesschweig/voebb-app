@@ -2,7 +2,7 @@
     <div class='container'>
         <template v-if='resultsAvailable'>
             <Card
-                v-for='row in data'
+                v-for='row in getSortedSearchData'
                 :key='row.identifier'
                 :row='row'
                 wrapper='Search' />
@@ -29,11 +29,12 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.search.data,
-      loading: state => state.search.loading
+      loading: state => state.search.loading,
+      data: state => state.search.data
     }),
     ...mapGetters([
-      'resultsAvailable'
+      'resultsAvailable',
+      'getSortedSearchData'
     ])
   },
   methods: {

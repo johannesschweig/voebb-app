@@ -1,4 +1,4 @@
-import { allLibraries, DONE } from '../utils/constants.js'
+import { allLibraries, DONE, MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A } from '../utils/constants.js'
 
 export default {
   // returns a list with all the bookmarks identifiers
@@ -45,12 +45,26 @@ export default {
   },
   // returns sorted list of bookmarks with data
   getSortedBookmarks: state => {
-    return state.bookmarks.data.sort((a, b) => {
-      return a.availability.days > b.availability.days
+    return state.bookmarks.data.slice().sort((a, b) => {
+      return a.availability.days - b.availability.days
     })
   },
   resultsAvailable: state => {
     return state.search.data.length !== 0 && state.search.loading.status === DONE
+  },
+  getSortedSearchData: state => {
+    switch(state.search.sorting) {
+      case MOST_RELEVANT: return state.search.data
+      case NEWEST: return state.search.data.slice().sort((a, b) => {
+        return b.year - a.year
+      })
+      case TITLE_A_Z: return state.search.data.slice().sort((a, b) => {
+        return a.title.localeCompare(b.title)
+      })
+      case TITLE_Z_A: return state.search.data.slice().sort((a, b) => {
+        return b.title.localeCompare(a.title)
+      })
+    }
   }
 
 }

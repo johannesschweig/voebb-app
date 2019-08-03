@@ -181,10 +181,6 @@ export default {
   // page: the page to sort (search or bookmarks)
   // criterion: which sorting criterion to apply
   setSorting ({ commit }, payload) {
-    if (payload.page === SEARCH_PAGE) {
-      console.log('changing search', payload.criterion)
-    } else if (payload.page === BOOKMARKS_PAGE) {
-      // nothing yet
-    }
+    commit('setSorting', payload)
   }
 }

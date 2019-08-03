@@ -16,7 +16,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { SEARCH_PAGE } from '../utils/constants.js'
+import { SEARCH } from '../utils/constants.js'
 
 export default {
   props: {
@@ -41,7 +41,7 @@ export default {
     ]),
     // sorts the results according to the sorter's criterion
     sortResults (event) {
-      this.sort({ page: SEARCH_PAGE, criterion: event.target.value })
+      this.setSorting({ page: SEARCH, criterion: event.target.value })
     }
   }
 }
