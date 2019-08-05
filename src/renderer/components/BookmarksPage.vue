@@ -1,11 +1,10 @@
 <template>
     <div class='container'>
         <h1>Bookmarks</h1>
-        <div
-            v-if='detailsAvailable'
-            class='list' >
+        <Sorter />
+        <div v-if='detailsAvailable' >
             <Card
-                v-for='row in getSortedBookmarks'
+                v-for='row in getSortedBookmarksData'
                 :key='row.identifier'
                 :row='{
                     title: row.details["Titel"],
@@ -34,6 +33,7 @@
 
 <script>
 import Card from './Card.vue'
+import Sorter from './Sorter.vue'
 import LoadingCircle from './icons/LoadingCircle.vue'
 import { mapState, mapGetters } from 'vuex'
 import { LOADING } from '../utils/constants.js'
@@ -42,7 +42,8 @@ import { exportBookmarksFile } from '../utils/file.js'
 export default {
   components: {
     Card,
-    LoadingCircle
+    LoadingCircle,
+    Sorter
   },
   computed: {
     ...mapState({
@@ -51,7 +52,7 @@ export default {
     }),
     ...mapGetters([
       'detailsAvailable',
-      'getSortedBookmarks'
+      'getSortedBookmarksData'
     ])
   },
   methods: {
@@ -69,11 +70,11 @@ export default {
 
 <style scoped>
 .container {
-    width: calc(100vw - 84px - 16px);
+    width: calc(100vw - 84px - 32px);
 }
 
-.list {
-  margin-right: 16px;
+.container > div:nth-child(2) {
+    float: right;
 }
 
 .last-updated {
@@ -86,5 +87,9 @@ export default {
 
 i {
     padding-right: 2px;
+}
+
+h1 {
+  display: inline-block;
 }
 </style>

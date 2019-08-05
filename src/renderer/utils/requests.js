@@ -1,5 +1,6 @@
 import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions } from './requestOptions.js'
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
+import { extractYear } from './string.js'
 import req from './httpPromise.js'
 const $ = require('cheerio')
 
@@ -93,17 +94,7 @@ export function search (term, mocked = false) {
           console.log('Redirected to entry details page of', results.details['Titel'])
           // parse year
           let year = results.details['Veröffentlichung']
-          if (year === '') {
-            year = 0
-          } else {
-            // extract 4 digit year
-            year = year.match(/\b(19|20)\d{2}\b/gm)
-            if (year.length) {
-              year = parseInt(year[0])
-            } else {
-              year = 0
-            }
-          }
+          year = extractYear(year) 
 
           return [
             {

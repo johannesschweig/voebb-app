@@ -115,3 +115,18 @@ export function getAvailability (copies, preferredLibraries) {
     }
   }
 }
+
+// extracts a year out of a string and returns it as an integer
+// returns 0 if no year found or empty string
+export function extractYear (str) {
+  if (str === '') {
+    return 0
+  }
+  // extract 4 digit year
+  let year = str.match(/\b(19|20)\d{2}\b/gm)
+  if (year.length) {
+    return parseInt(year[0])
+  } else {
+    return 0
+  }
+}

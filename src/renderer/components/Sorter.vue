@@ -17,12 +17,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { SEARCH, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS, SEARCH_WRAPPER, BOOKMARKS_WRAPPER } from '../utils/constants.js'
+import { SEARCH, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS, SEARCH_WRAPPER, BOOKMARKS_WRAPPER, BOOKMARKS } from '../utils/constants.js'
 
 export default {
   data() {
     return {
-      criterions: null
+      criterions: null,
+      wrapper: null
     }
   },
   computed: {
@@ -45,7 +46,13 @@ export default {
     ]),
     // sorts the results according to the sorter's criterion
     sortResults (event) {
-      this.setSorting({ page: SEARCH, criterion: event.target.value })
+      let page
+      if (this.wrapper === SEARCH_WRAPPER) {
+        page = SEARCH
+      } else if (this.wrapper === BOOKMARKS_WRAPPER) {
+        page = BOOKMARKS
+      }
+      this.setSorting({ page, criterion: event.target.value })
     },
     // returns true if criterion is selected
     isSelected (criterion) {
