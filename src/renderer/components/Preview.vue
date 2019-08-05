@@ -3,11 +3,13 @@
         <div
             v-if='data.identifier'
             class='grid'>
-            <div>
+            <div :class='{ "no-image": !data.details.img }'>
                 <router-link :to='"/" + getCurrentWrapper + "/Page"'>
                     <BackArrowIcon />
                 </router-link>
-                <img :src='data.details.img'>
+                <img
+                  v-if='data.details.img'
+                  :src='data.details.img'>
                 <h1>{{ getActiveTitle }}</h1>
                 <BookmarkButtonIcon :identifier='data.identifier' />
                 <LinkButtonIcon :identifier='data.identifier' />
@@ -93,6 +95,10 @@ export default {
     grid-column-gap: 12px;
 }
 
+.grid div.no-image:nth-child(1) {
+    grid-template-columns: 32px 1fr 32px 32px;
+}
+
 .grid svg {
     cursor: pointer;
 }
@@ -110,6 +116,12 @@ h1 {
     display: inline;
     font-weight: 300;
     vertical-align: top;
+}
+
+.no-image h1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .navigation {
