@@ -52,6 +52,9 @@ export default {
   resultsAvailable: state => {
     return state.search.data.length !== 0 && state.search.loading.status === DONE
   },
+  multipleResultsAvailable: state => {
+    return state.search.data.length > 1 && state.search.loading.status === DONE
+  },
   getSortedSearchData: state => {
     switch(state.search.sorting) {
       case MOST_RELEVANT: return state.search.data

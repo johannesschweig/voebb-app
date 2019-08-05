@@ -9,7 +9,7 @@
                     placeholder='Search for books, cds...'
                     @keyup.enter='search($refs.input.value)' />
             </div>
-            <Sorter v-if='resultsAvailable' />
+            <Sorter v-if='multipleResultsAvailable' />
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
     'search'
   ]),
   computed: mapGetters([
-    'resultsAvailable'
+    'multipleResultsAvailable'
   ])
 }
 </script>
