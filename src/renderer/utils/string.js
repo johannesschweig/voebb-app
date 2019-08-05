@@ -101,9 +101,17 @@ export function getAvailability (copies, preferredLibraries) {
       }
     }
     let dd = avail.map(obj => getDaysDue(obj.status))
-    return {
-      days: Math.min(...dd),
-      message: `${Math.min(...dd)} days left`
+    // overdue or days due
+    if (Math.min(...dd) < 0) {
+      return {
+        days: Math.min(...dd),
+        message: `${-Math.min(...dd)} days overdue`
+      }
+    } else {
+      return {
+        days: Math.min(...dd),
+        message: `${Math.min(...dd)} days left`
+      }
     }
   }
 }

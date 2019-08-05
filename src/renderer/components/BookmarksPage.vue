@@ -13,7 +13,7 @@
                     name: row.details["Verfasser"] || row.details["Person"],
                     year: row.details["Veröffentlichung"],
                     img: row.details.img,
-                    availability: row.availability.message,
+                    availability: row.availability,
                     identifier: row.identifier
                   }'
                 wrapper='Bookmarks' />

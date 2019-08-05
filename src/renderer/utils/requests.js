@@ -181,9 +181,12 @@ function extractEntryDetails (html) {
   }
   // extract image
   let img = $('#R001 img', html).attr('src')
-  details.img = `https://voebb.de${img}`
-
-  console.log('xxx', img)
+  // check for rating image
+  if (img.indexOf('Sterne.gif') === -1) {
+    details.img = `https://voebb.de${img}`
+  } else {
+    img = ''
+  }
 
   // extract all copies
   var copies = []

@@ -1,11 +1,10 @@
 <template>
     <router-link
         :to='"/" + wrapper + "Wrapper/Preview"'
-        :class='["card", wrapper.toLowerCase(), { "not-available": wrapper === "Bookmarks" && row.availability !== "available" }]'
+        :class='["card", wrapper.toLowerCase(), { "not-available": wrapper === "Bookmarks" && row.availability.days > 0 }]'
         tag='div'
         @click.left.native='fetchDetails(row.identifier)' >
-        <img
-            :src='row.img ? row.img : ""' />
+        <img :src='row.img ? row.img : ""' />
         <div class='info'>
             <div class='title'>
                 <MediumIcon :medium='row.medium'/>
@@ -19,7 +18,7 @@
             v-if='wrapper === "Search"'
             :identifier='row.identifier' />
         <span v-else>
-            {{ row.availability }}
+            {{ row.availability.message }}
         </span>
     </router-link>
 </template>
@@ -72,12 +71,16 @@ export default {
     color: var(--color-3);
 }
 
+.card.card.not-available img{
+    opacity: .7;
+}
+
 .card.search {
     grid-template-columns: 90px 1fr 60px;
 }
 
 .card.bookmarks {
-    grid-template-columns: 1fr 140px;
+    grid-template-columns: 90px 1fr 155px;
 }
 
 .card:hover,
@@ -85,15 +88,8 @@ export default {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
 }
 
-.search .info {
-    grid-column: 2 / 3;
-}
-
-.bookmarks .info {
-    grid-column: 1 / 2;
-}
-
 .info {
+    grid-column: 2 / 3;
     padding-top: 4px;
 }
 
@@ -107,21 +103,17 @@ export default {
 }
 
 img {
+    width: 100%;
     padding-right: 16px;
     min-width: 90px;
     min-height: 50px;
     grid-column: 1 / 2;
 }
 
-svg {
+svg,
+span {
     grid-column: 3 / 4;
     padding: 24px;
-    grid-row: 1 / 3;
-}
-
-span {
-    grid-column: 2 / 3;
-    padding: 24px;
-    grid-row: 1 / 3;
+    text-align: right;
 }
 </style>
