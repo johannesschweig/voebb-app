@@ -46,6 +46,7 @@ i {
 }
 
 .placeholder {
+    display: block;
     font-size: 14px;
     font-weight: 300;
     opacity: .5;
