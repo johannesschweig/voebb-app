@@ -6,20 +6,22 @@
 * While searching if requesting new search provide more feedback
 * Remove search results if deleting all in the searchfield
 * timeout handling is shitty (a lot of bookmarks require long timeout, search requires short one)
+* New label for books < 0 days -> "3 days overdue"
+* crawl image from detail/result page
+  - weird jpeg format parsed with js
 
 # TODO
-* Copies: Sorting copies after availability
-* New label for books < 0 days -> "3 days overdue"
-* create nice icons for too many hits, no hits or error
-* Copies: Show place if signature is empty (AK34099010)
-* Available in: Shorten to "Available in X other libraries"; add collapser to show
+## Details
 * Sanitize: remove ¬ out of "Weitere Ausgabe" (AK34099010)
-* sort bookmarks by availability
-* display bookmarks individually as soon as they are loaded
-* add application icon
-  - weird electron-builder problems
-* enable auto-updating
-  - is possible via snap
+* resort preview headers (title > person > summary > pages/language/isbn/year ...)
+* sanitize details
+  - remove tab character
+## Copies
+* Sorting copies after availability
+* Show place if signature is empty (AK34099010)
+* Available in: Shorten to "Available in X other libraries"; add collapser to show
+## Search
+* create nice icons for too many hits, no hits or error
 * create search filters
   - year (minimum)
   - ISBN
@@ -31,25 +33,29 @@
   - medium
   - available only
   - only e-resources/no e-resouces
-* create settings page
-  - allowed languages
-* remove electron warnings
-* make it easier to tick libraries (by districts)
-* change application name
-* resort preview headers (title > person > summary > pages/language/isbn/year ...)
 * MediumIcons for
   - Mehrteiliges Werk (empty) https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=SAK15876158
   - Medienkombination (empty)
-* split settings-libraries into a view component ("Your preferred libraries are:...") and a edit component: checkboxes
+* remove duplicate medium references in title
+* create loading feedback for BookmarksIcon
+## Bookmarks
+* display bookmarks individually as soon as they are loaded
 * last updated label: constantly updating time diff ("2 minutes ago")
-* sanitize details
-  - remove tab character
+## Settings
+* create settings page
+  - allowed languages
+* make it easier to tick libraries (by districts)
+* split settings-libraries into a view component ("Your preferred libraries are:...") and a edit component: checkboxes
+## Application
+* add application icon
+  - weird electron-builder problems
+* enable auto-updating
+  - is possible via snap
+* remove electron warnings
+* change application name
 * put all reused strings in constants file
 * investigate long load times
-* remove duplicate medium references in title searchresults
-* create loading feedback for BookmarksIcon
-* crawl image from detail/result page
-  - weird jpeg format parsed with js
+* add mocks for e2e tests
 * improve e2e tests
   - Search: yields x results
   - Search: returns empty
@@ -60,6 +66,7 @@
     o Remove: from Search result
     o Remove: from Search Preview
     o Remove: from Bookmars Preview
+## Rest
 
 # DROPPED
 * fix 403 forbidden and 404 errors for retrieving images
