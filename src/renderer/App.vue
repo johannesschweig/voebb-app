@@ -26,7 +26,8 @@ export default {
   }),
   created () {
     // read in bookmarks from file
-    this.$store.dispatch('readUserData')
+    // this.$store.dispatch('readUserData')
+    this.$store.dispatch('fakeReadUserData')
     this.$store.dispatch('fakeSearch')
     // this.$store.dispatch('search', 'felix felka')
   }
@@ -46,7 +47,6 @@ i {
 }
 
 .placeholder {
-    display: block;
     font-size: 14px;
     font-weight: 300;
     opacity: .5;

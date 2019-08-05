@@ -59,6 +59,19 @@ export default {
       }
     })
   },
+  fakeReadUserData({ commit, getters }) {
+    getEntryDetails('foo', true)
+    .then(res => {
+      // get availability
+      let results = res.map(result => ({
+        ...result,
+        availability: getAvailability(result.copies, getters.getPreferredLibraries)
+      }))
+      commit('setBookmarksData', results)
+      commit('setLastUpdated', `fake-${getCurrentDateString()}`)
+    })
+
+  },
   // toggles a bookmark: removes or adds it
   // active: if the bookmark icon is filled or not
   // identifier: of the instance

@@ -72,9 +72,9 @@ export function search (term, mocked = false) {
         console.log('SearchPage successfull')
         // open search results page with search term
         return req(resultsPageOptions(session), resultsPageData(searchTerm))
-      }).then(res => {
+      }).then(html => {
         // check for no hits or too many hits
-        let rzero = $('#R01', res)
+        let rzero = $('#R01', html)
         if (rzero.length !== 0) {
           // no hits
           if (rzero.html().includes('Ihre Suche im Verbund erzielte keinen Treffer')) {
@@ -86,10 +86,10 @@ export function search (term, mocked = false) {
           }
         }
         // redirected to entry details page
-        if ($('.rList > li', res).length === 0 && $('.gi > tbody > tr', res).length > 0) {
-          let results = extractEntryDetails(res)
+        if ($('.rList > li', html).length === 0 && $('.gi > tbody > tr', html).length > 0) {
+          let results = extractEntryDetails(html)
           // extract identifier
-          let id = $('.gi tr:nth-of-type(1) td a', res).attr('href')
+          let id = $('.gi tr:nth-of-type(1) td a', html).attr('href')
           id = id.substring(id.lastIndexOf('=') + 2)
           console.log('Redirected to entry details page of', results.details['Titel'])
           // parse year
@@ -214,8 +214,8 @@ export function getEntryDetails (identifier, mocked = false) {
     return req(resultPageOptions(identifier))
       .then(res => {
         return res
-      }).then(res => {
-        let results = extractEntryDetails(res)
+      }).then(html => {
+        let results = extractEntryDetails(html)
         results.identifier = identifier
         return results
       })
@@ -223,7 +223,10 @@ export function getEntryDetails (identifier, mocked = false) {
     // reads a prepared html file and extracts the data
     var fs = require('fs')
     var path = require('path')
-    let results = fs.readFileSync(path.join(__dirname, '..', 'details.json'), { encoding: 'utf8' })
-    return Promise.resolve(JSON.parse(results))
+    let html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', 'AK15650473.html'), { encoding: 'utf8' })
+    let results = extractEntryDetails(html)
+    results.identifier = identifier
+    console.log(results)
+    return Promise.resolve([results])
   }
 }

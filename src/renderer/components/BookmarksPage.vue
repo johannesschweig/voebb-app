@@ -1,7 +1,7 @@
 <template>
     <div class='container'>
         <h1>Bookmarks</h1>
-        <Sorter />
+        <Sorter v-if='multipleBookmarksAvailable' />
         <div v-if='detailsAvailable' >
             <Card
                 v-for='row in getSortedBookmarksData'
@@ -52,7 +52,8 @@ export default {
     }),
     ...mapGetters([
       'detailsAvailable',
-      'getSortedBookmarksData'
+      'getSortedBookmarksData',
+      'multipleBookmarksAvailable'
     ])
   },
   methods: {
@@ -91,5 +92,9 @@ i {
 
 h1 {
   display: inline-block;
+}
+
+span.placeholder {
+  display: block;
 }
 </style>

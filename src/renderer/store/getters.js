@@ -64,6 +64,9 @@ export default {
       })
     }
   },
+  multipleBookmarksAvailable: state => {
+    return state.bookmarks.data.length > 1 && state.bookmarks.loading.status === DONE
+  },
   getSortedBookmarksData: state => {
     switch (state.bookmarks.sorting) {
       case AVAILABLE: return state.bookmarks.data.slice().sort((a, b) => {
