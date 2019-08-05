@@ -179,6 +179,11 @@ function extractEntryDetails (html) {
       details[left] = right
     }
   }
+  // extract image
+  let img = $('#R001 img', html).attr('src')
+  details.img = `https://voebb.de${img}`
+
+  console.log('xxx', img)
 
   // extract all copies
   var copies = []

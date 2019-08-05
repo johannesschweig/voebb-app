@@ -5,7 +5,6 @@
         tag='div'
         @click.left.native='fetchDetails(row.identifier)' >
         <img
-            v-if='wrapper === "Search"'
             :src='row.img ? row.img : ""' />
         <div class='info'>
             <div class='title'>

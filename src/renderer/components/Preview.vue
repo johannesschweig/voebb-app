@@ -7,6 +7,7 @@
                 <router-link :to='"/" + getCurrentWrapper + "/Page"'>
                     <BackArrowIcon />
                 </router-link>
+                <img :src='data.details.img'>
                 <h1>{{ getActiveTitle }}</h1>
                 <BookmarkButtonIcon :identifier='data.identifier' />
                 <LinkButtonIcon :identifier='data.identifier' />
@@ -88,7 +89,7 @@ export default {
 .grid div:nth-child(1) {
     margin-bottom: 32px;
     display: grid;
-    grid-template-columns: 32px 1fr 32px 32px;
+    grid-template-columns: 32px 1fr 4fr 32px 32px;
     grid-column-gap: 12px;
 }
 
@@ -109,9 +110,6 @@ h1 {
     display: inline;
     font-weight: 300;
     vertical-align: top;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
 .navigation {
@@ -136,5 +134,9 @@ span.router-link-active {
     border-color: var(--color-4);
     border-style: solid;
     color: var(--color-4);
+}
+
+img {
+  width: 100%;
 }
 </style>

@@ -8,7 +8,12 @@
 * timeout handling is shitty (a lot of bookmarks require long timeout, search requires short one)
 
 # TODO
+* Copies: Sorting copies after availability
+* New label for books < 0 days -> "3 days overdue"
 * create nice icons for too many hits, no hits or error
+* Copies: Show place if signature is empty (AK34099010)
+* Available in: Shorten to "Available in X other libraries"; add collapser to show
+* Sanitize: remove ¬ out of "Weitere Ausgabe" (AK34099010)
 * sort bookmarks by availability
 * display bookmarks individually as soon as they are loaded
 * add application icon
