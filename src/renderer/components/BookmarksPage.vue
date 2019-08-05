@@ -94,7 +94,7 @@ h1 {
   display: inline-block;
 }
 
-span.placeholder {
+.container > span.placeholder {
   display: block;
 }
 </style>
