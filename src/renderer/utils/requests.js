@@ -1,4 +1,4 @@
-import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions } from './requestOptions.js'
+import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions, nextPageOptions, nextPageData } from './requestOptions.js'
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
 import { extractYear } from './string.js'
 import req from './httpPromise.js'
@@ -11,6 +11,15 @@ function getSession (html) {
   let start = html.indexOf('jsessionid=') + 'jsessionid='.length
   let end = html.indexOf('?', start)
   return html.substr(start, end - start)
+}
+
+// returns number of pages from search results page
+// each page holds 22 entries
+function getNumberOfPages (html) {
+  let hits = $('#R06 > p > span', html).text()
+  hits = parseInt(hits.substr(hits.indexOf('von') + 4))
+  let pages = (hits - hits % 22) / 22 + 1
+  return pages
 }
 
 // extracts all the fields from a single result row
@@ -108,9 +117,32 @@ export function search (term, mocked = false) {
           ]
         } else {
           // extract results from html
-          let results = extractResult(res)
+          let results = extractResult(html)
           console.log('ResultsPage successfull:', results.length, 'results')
-          return results
+
+          // extract results from subsequent pages
+          // there is only one page
+          if (results.length < 22) {
+            return results
+          } else {
+            let pages = getNumberOfPages(html)
+            
+          }
+          // return results
+
+          // let promises = []
+          // data.map(bookmark => {
+            // promises.push(req(nextPageOptions(session), nextPageData))
+          // })
+          // return Promise.all(promises)
+          // return results
+          return req(nextPageOptions(session), nextPageData)
+          .then(html => {
+            console.log(html)
+            results = results.concat(extractResult(html))
+            console.log(results[22])
+            return results
+          })
         }
       })
       .catch((err) => {

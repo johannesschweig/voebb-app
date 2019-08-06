@@ -21,7 +21,10 @@ function request (options, data, header) {
     })
     req.setTimeout(8000)
     req.on('timeout', () => reject(timeout))
-    req.on('error', reject)
+    req.on('error', err => {
+      console.log(err)
+      reject
+    })
     // if header present, set header
     if (header !== '') {
       // iterate over key-value pairs and set header
