@@ -226,7 +226,6 @@ export function getEntryDetails (identifier, mocked = false) {
     let html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', 'AK15650473.html'), { encoding: 'utf8' })
     let results = extractEntryDetails(html)
     results.identifier = identifier
-    console.log(results)
     return Promise.resolve([results])
   }
 }

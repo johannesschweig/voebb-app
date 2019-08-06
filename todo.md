@@ -16,6 +16,7 @@
 * resort preview headers (title > person > summary > pages/language/isbn/year ...)
 * sanitize details
   - remove tab character
+  - remove ... at the end of value (title)
 ## Copies
 * Sorting copies after availability
 * Show place if signature is empty (AK34099010)

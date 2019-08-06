@@ -60,7 +60,7 @@ export default {
     })
   },
   fakeReadUserData({ commit, getters }) {
-    getEntryDetails('foo', true)
+    getEntryDetails('AK15650473', true)
     .then(res => {
       // get availability
       let results = res.map(result => ({
