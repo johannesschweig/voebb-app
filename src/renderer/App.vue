@@ -27,10 +27,10 @@ export default {
   created () {
     // read in bookmarks from file
     // this.$store.dispatch('readUserData')
-    // this.$store.dispatch('fakeReadUserData')
+    this.$store.dispatch('fakeReadUserData')
     // this.$store.dispatch('fakeSearch')
     // this.$store.dispatch('search', 'felix felka')
-    this.$store.dispatch('search', 'vuillard')
+    // this.$store.dispatch('search', 'sams taschenbier')
   }
 }
 </script>

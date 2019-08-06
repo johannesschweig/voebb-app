@@ -37,6 +37,7 @@
 * MediumIcons for
   - Mehrteiliges Werk (empty) https://voebb.de/aDISWeb/app?service=direct/0/Home/$DirectLink&sp=SPROD00&sp=SAK15876158
   - Medienkombination (empty)
+  - MC (music casette/tape) https://github.com/FortAwesome/Font-Awesome/issues/1736
 * remove duplicate medium references in title
 * create loading feedback for BookmarksIcon
 ## Bookmarks
@@ -108,4 +109,4 @@
 * search results: differentiate between no results and too many results
 
 # INFO
-* session terminated >9 min, <20min
+* session terminated >9 min, <15min

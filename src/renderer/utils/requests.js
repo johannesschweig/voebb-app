@@ -2,6 +2,7 @@ import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageD
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
 import { extractYear } from './string.js'
 import req from './httpPromise.js'
+import { SSL_OP_EPHEMERAL_RSA } from 'constants';
 const $ = require('cheerio')
 
 var session
@@ -81,7 +82,7 @@ export function search (term, mocked = false) {
         console.log('SearchPage successfull')
         // open search results page with search term
         return req(resultsPageOptions(session), resultsPageData(searchTerm))
-      }).then(html => {
+      }).then(async (html) => {
         // check for no hits or too many hits
         let rzero = $('#R01', html)
         if (rzero.length !== 0) {
@@ -122,33 +123,17 @@ export function search (term, mocked = false) {
           // extract results from subsequent pages
           // there is only one page
           if (pages === 1) {
-            return Promise.resolve([html])
+            return Promise.resolve(extractResult(html))
           } else {
-            let promises = []
+            let results = extractResult(html)
             for (let i = 1; i < pages; i++) {
-              promises.push(req(nextPageOptions(session), nextPageData(i + 1)))
+              let html = await req(nextPageOptions(session), nextPageData(i + 1))
+              results = results.concat(extractResult(html))
             }
-            return Promise.all(promises)
+            console.log('ResultsPage successfull:', results.length, 'results')
+            return results
           }
         }
-      })
-      .then(htmls => {
-        let results = []
-        for (let i = 0; i < htmls.length; i++) {
-          results = results.concat(extractResult(htmls[i]))
-        }
-        htmls = htmls.map(html => {
-          if (html.indexOf('Wir haben seit einiger Zeit keine Meldung mehr von Ihnen erhalten.') !== -1) {
-            return 'sitzung beendet'
-          } else if (html.length > 0) {
-            return 'results'
-          } else {
-            return 'empty'
-          }
-        })
-        console.log('xxx', results, htmls)
-        console.log('ResultsPage successfull:', results.length, 'results')
-        return results
       })
       .catch((err) => {
         console.log(err)

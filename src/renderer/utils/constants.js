@@ -123,6 +123,10 @@ export const mediumIcons = [
   {
     name: 'konventionelles Spiel',
     icon: 'fas fa-dice'
+  },
+  {
+    name: 'Karte/Plan',
+    icon: 'fas fa-map-marked-alt'
   }
 ]
 
