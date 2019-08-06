@@ -4,7 +4,6 @@
 * Show cover in preview
 * include all results pages, not just the first
 * While searching if requesting new search provide more feedback
-* Remove search results if deleting all in the searchfield
 * timeout handling is shitty (a lot of bookmarks require long timeout, search requires short one)
 * New label for books < 0 days -> "3 days overdue"
 * crawl image from detail/result page
@@ -22,6 +21,8 @@
 * Show place if signature is empty (AK34099010)
 * Available in: Shorten to "Available in X other libraries"; add collapser to show
 ## Search
+* make lens in searchfield dark when focused input field (no previous sibling selector in css)
+* use previous session if not too old (keep track of requestCount??)
 * create nice icons for too many hits, no hits or error
 * create search filters
   - year (minimum)
@@ -75,6 +76,8 @@
   - Apparantly not fixable https://stackoverflow.com/questions/7035466/check-if-file-exists-but-prevent-404-error-in-console-from-showing-up
 * searchresults: active preview should be highlighted
   - obsolete
+* Remove search results if deleting all in the searchfield
+  - not sure if this is good practice
 
 # DONE
 * bookmarks should not be added twice

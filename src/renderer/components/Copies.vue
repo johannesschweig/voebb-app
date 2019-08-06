@@ -6,20 +6,23 @@
             <tbody>
                 <tr
                     v-for='instance in getPreferred(data.copies)' 
-                    :class='{"not-available": instance.status !== "Verfügbar"}' >
+                    :class='{"not-available": !instance.status.toLowerCase().startsWith("verfügbar") }' >
                     <td>
                         <LibraryIcon />
                         {{ getShortLibrary(instance.library) }}
-                        <template v-if='instance.status === "Verfügbar"'>
+                        <template v-if='instance.status.toLowerCase().startsWith("verfügbar")'>
                             ({{ instance.place }})
                         </template>
                     </td>
-                    <td v-if='instance.status.startsWith("Verfügbar")'>
+                    <td v-if='instance.status.toLowerCase().startsWith("verfügbar")'>
                         <SignatureIcon />
                         {{ instance.signature }}
                     </td>
-                    <td v-else-if='instance.status.startsWith("Ausgeliehen -")'>
+                    <td v-else-if='instance.status.toLowerCase().startsWith("ausgeliehen -")'>
                         {{ getDaysDueString(instance.status) }} days left
+                    </td>
+                    <td v-else-if='instance.status === "Nicht im Regal"'>
+                      lost
                     </td>
                     <td v-else>
                         {{ instance.status }}
