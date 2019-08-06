@@ -117,33 +117,38 @@ export function search (term, mocked = false) {
           ]
         } else {
           // extract results from html
-          let results = extractResult(html)
-          console.log('ResultsPage successfull:', results.length, 'results')
+          let pages = getNumberOfPages(html)
 
           // extract results from subsequent pages
           // there is only one page
-          if (results.length < 22) {
-            return results
+          if (pages === 1) {
+            return Promise.resolve([html])
           } else {
-            let pages = getNumberOfPages(html)
-            
+            let promises = []
+            for (let i = 1; i < pages; i++) {
+              promises.push(req(nextPageOptions(session), nextPageData(i + 1)))
+            }
+            return Promise.all(promises)
           }
-          // return results
-
-          // let promises = []
-          // data.map(bookmark => {
-            // promises.push(req(nextPageOptions(session), nextPageData))
-          // })
-          // return Promise.all(promises)
-          // return results
-          return req(nextPageOptions(session), nextPageData)
-          .then(html => {
-            console.log(html)
-            results = results.concat(extractResult(html))
-            console.log(results[22])
-            return results
-          })
         }
+      })
+      .then(htmls => {
+        let results = []
+        for (let i = 0; i < htmls.length; i++) {
+          results = results.concat(extractResult(htmls[i]))
+        }
+        htmls = htmls.map(html => {
+          if (html.indexOf('Wir haben seit einiger Zeit keine Meldung mehr von Ihnen erhalten.') !== -1) {
+            return 'sitzung beendet'
+          } else if (html.length > 0) {
+            return 'results'
+          } else {
+            return 'empty'
+          }
+        })
+        console.log('xxx', results, htmls)
+        console.log('ResultsPage successfull:', results.length, 'results')
+        return results
       })
       .catch((err) => {
         console.log(err)
@@ -260,4 +265,8 @@ export function getEntryDetails (identifier, mocked = false) {
     results.identifier = identifier
     return Promise.resolve([results])
   }
+}
+
+function getNextResultsPages () {
+  
 }

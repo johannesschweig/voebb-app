@@ -61,6 +61,10 @@ export const mediumIcons = [
     icon: 'fas fa-film'
   },
   {
+    name: 'Blu-ray Disc',
+    icon: 'fas fa-film'
+  },
+  {
     name: 'CD',
     icon: 'fas fa-compact-disc'
   },

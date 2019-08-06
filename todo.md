@@ -106,3 +106,6 @@
 * search field: width 300px
 * create loading feedback for search, bookmarks and preview
 * search results: differentiate between no results and too many results
+
+# INFO
+* session terminated >9 min, <20min
