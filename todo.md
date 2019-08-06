@@ -109,4 +109,4 @@
 * search results: differentiate between no results and too many results
 
 # INFO
-* session terminated >9 min, <15min
+* session terminated >9 min, <10:30min

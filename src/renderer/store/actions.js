@@ -60,17 +60,19 @@ export default {
     })
   },
   fakeReadUserData({ commit, getters }) {
-    getEntryDetails('AK15650473', true)
-    .then(res => {
-      // get availability
-      let results = res.map(result => ({
-        ...result,
-        availability: getAvailability(result.copies, getters.getPreferredLibraries)
-      }))
-      commit('setBookmarksData', results)
-      commit('setLastUpdated', `fake-${getCurrentDateString()}`)
+    let results = []
+    let ids = ['AK15650473', 'AK34211530']
+    ids.map(identifier => {
+      results.push(getEntryDetails(identifier, true))
     })
-
+    // get availability
+    results = results.map(result => ({
+      ...result,
+      availability: getAvailability(result.copies, getters.getPreferredLibraries)
+    }))
+    commit('setBookmarksData', results)
+    commit('setLastUpdated', `fake-${getCurrentDateString()}`)
+    commit('setLoading', getLoadingObject(BOOKMARKS, DONE))
   },
   // toggles a bookmark: removes or adds it
   // active: if the bookmark icon is filled or not
@@ -167,11 +169,9 @@ export default {
     let loading = getLoadingObject(PREVIEW, LOADING)
     commit('setLoading', loading)
     let done = getLoadingObject(PREVIEW, DONE)
-    // fetch details
-    getEntryDetails('', true).then(res => {
-      commit('setLoading', done)
-      commit('setPreviewData', res)
-    })
+    // fake fetch details
+    commit('setLoading', done)
+    commit('setPreviewData', getEntryDetails('AK34211530', true))
   },
   // removes bookmark
   removeBookmark ({ commit, getters }, identifier) {

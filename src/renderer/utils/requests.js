@@ -2,12 +2,12 @@ import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageD
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
 import { extractYear } from './string.js'
 import req from './httpPromise.js'
-import { SSL_OP_EPHEMERAL_RSA } from 'constants';
 const $ = require('cheerio')
 
 var session
 var searchTerm
 
+// retrieves session from html
 function getSession (html) {
   let start = html.indexOf('jsessionid=') + 'jsessionid='.length
   let end = html.indexOf('?', start)
@@ -245,10 +245,10 @@ export function getEntryDetails (identifier, mocked = false) {
     // reads a prepared html file and extracts the data
     var fs = require('fs')
     var path = require('path')
-    let html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', 'AK15650473.html'), { encoding: 'utf8' })
+    let html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', `${identifier}.html`), { encoding: 'utf8' })
     let results = extractEntryDetails(html)
     results.identifier = identifier
-    return Promise.resolve([results])
+    return results
   }
 }
 
