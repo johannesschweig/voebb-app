@@ -1,10 +1,11 @@
 // returns a loading obj with component, status and message
-export function getLoadingObject (component, status = '', msg = '') {
+export function getLoadingObject (component, status = '', msg = '', progress = 0) {
   return {
     component: component,
     data: {
-      status: status,
-      msg: msg
+      status,
+      msg,
+      progress
     }
   }
 }

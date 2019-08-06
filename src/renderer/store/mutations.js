@@ -57,8 +57,8 @@ export default {
   // sets the sorting of a page
   // page: page to apply it to
   // criterion: criterion to set it to
-  setSorting(state, payload) {
-    switch(payload.page) {
+  setSorting (state, payload) {
+    switch (payload.page) {
       case SEARCH: state.search.sorting = payload.criterion
         break
       case BOOKMARKS: state.bookmarks.sorting = payload.criterion
@@ -67,12 +67,18 @@ export default {
   },
   // reset the sorting to the default
   // page: page to apply it to
-  resetSorting(state, page) {
-    switch(page) {
+  resetSorting (state, page) {
+    switch (page) {
       case SEARCH: state.search.sorting = SEARCH_PAGE_CRITERIONS[0]
         break
       case BOOKMARKS: state.bookmarks.sorting = BOOKMARKS_PAGE_CRITERIONS[0]
         break
     }
+  },
+  // sets the loading progress for a component
+  setProgress (state, progress) {
+    console.log('setting to', progress)
+    state.search.loading.progress = progress
+    console.log('state', state.search.loading.progress)
   }
 }

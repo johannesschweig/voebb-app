@@ -65,7 +65,7 @@ function extractResult (html) {
 
 // search for a searchTerm
 // mocked: if the search should return fake/mocked result
-export function search (term, mocked = false) {
+export function search (term, mocked = false, progressCallback) {
   searchTerm = term
 
   if (!mocked) {
@@ -75,6 +75,7 @@ export function search (term, mocked = false) {
         // retrieve session from landing page
         session = getSession(res)
         console.log('Session', session)
+        progressCallback(10)
         // open search page
         return req(searchPageOptions(session))
       })
@@ -86,6 +87,7 @@ export function search (term, mocked = false) {
         // check for no hits or too many hits
         let rzero = $('#R01', html)
         if (rzero.length !== 0) {
+          progressCallback(100)
           // no hits
           if (rzero.html().includes('Ihre Suche im Verbund erzielte keinen Treffer')) {
             console.log('No hits for', term)
@@ -97,6 +99,7 @@ export function search (term, mocked = false) {
         }
         // redirected to entry details page
         if ($('.rList > li', html).length === 0 && $('.gi > tbody > tr', html).length > 0) {
+          progressCallback(100)
           let results = extractEntryDetails(html)
           // extract identifier
           let id = $('.gi tr:nth-of-type(1) td a', html).attr('href')
@@ -104,7 +107,7 @@ export function search (term, mocked = false) {
           console.log('Redirected to entry details page of', results.details['Titel'])
           // parse year
           let year = results.details['Veröffentlichung']
-          year = extractYear(year) 
+          year = extractYear(year)
 
           return [
             {
@@ -119,6 +122,7 @@ export function search (term, mocked = false) {
         } else {
           // extract results from html
           let pages = getNumberOfPages(html)
+          progressCallback(20)
 
           // extract results from subsequent pages
           // there is only one page

@@ -59,7 +59,7 @@ export default {
       }
     })
   },
-  fakeReadUserData({ commit, getters }) {
+  fakeReadUserData ({ commit, getters }) {
     let results = []
     let ids = ['AK15650473', 'AK34211530']
     ids.map(identifier => {
@@ -128,8 +128,10 @@ export default {
     commit('setLoading', loading)
     let done = getLoadingObject(SEARCH)
 
+     
+
     // start search
-    search(term, false).then(res => {
+    search(term, false, (prog) => commit('setProgress', prog)).then(res => {
       // check result and update loading state
       if (typeof res === 'string') {
         done.data.status = res
@@ -141,10 +143,13 @@ export default {
       } else { // all fine
         done.data.status = DONE
       }
+      setTimeout(() => {
       commit('setLoading', done)
       // reset preview
       commit('setPreviewData', { details: [], availability: [] })
       commit('setSearchResultsData', res)
+
+      }, 350)
     })
   },
   // fetch details data on instance

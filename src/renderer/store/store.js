@@ -12,8 +12,9 @@ const state = {
   search: {
     data: [], // { title: ..., name: ..., medium: ..., year: ..., img: ..., avail: ...}
     loading: {
+      progress: 0, // progress from 0 to 100
       // status of the component: either initial, loading, done, error
-      status: INITIAL,
+      status: 'loading',
       // message to the user
       msg: 'You have not searched for anything yet.'
     },
