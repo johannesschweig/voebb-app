@@ -52,80 +52,52 @@ export const detailsBlacklist = [
 // contains the medium - font awesome class mappings
 export const mediumIcons = [
   {
-    name: 'DVD',
-    icon: 'fas fa-film'
+    icon: 'fas fa-film',
+    text: [ 'DVD', 'DVD-ROM', 'Blu-ray Disc' ]
   },
   {
-    name: 'DVD-ROM',
-    icon: 'fas fa-film'
+    icon: 'fas fa-compact-disc',
+    text: [ 'CD', 'CD-ROM', 'Schallplatte' ]
   },
   {
-    name: 'Blu-ray Disc',
-    icon: 'fas fa-film'
+    icon: 'fas fa-book',
+    text: [ 'Buch', 'Band', 'Stücktitel/Band', 'Gebundenes Werk' ]
   },
   {
-    name: 'CD',
-    icon: 'fas fa-compact-disc'
+    icon: 'far fa-file-audio',
+    text: [ 'E-Audio', 'MP3' ]
   },
   {
-    name: 'CD-ROM',
-    icon: 'fas fa-compact-disc'
+    icon: 'fas fa-atlas',
+    text: [ 'E-Book', 'E-Learning', 'E-Ressource' ]
   },
   {
-    name: 'Buch',
-    icon: 'fas fa-book'
+    icon: 'fas fa-video',
+    text: [ 'Video' ]
   },
   {
-    name: 'Band',
-    icon: 'fas fa-book'
+    icon: 'fab fa-itunes-note',
+    text: [ 'Noten' ]
   },
   {
-    name: 'E-Audio',
-    icon: 'far fa-file-audio'
+    icon: 'far fa-newspaper',
+    text: [ 'Zeitschrift', 'Zeitschriftenheft', 'Aufsatz', 'Zeitschriftenartige Reihe', 'Beitrag' ]
   },
   {
-    name: 'MP3',
-    icon: 'far fa-file-audio'
+    icon: 'fas fa-dice',
+    text: [ 'Konventionelles Spiel' ]
   },
   {
-    name: 'E-Book',
-    icon: 'fas fa-atlas'
+    icon: 'fas fa-map-marked-alt',
+    text: [ 'Karte/Plan' ]
   },
   {
-    name: 'Video',
-    icon: 'fas fa-video'
+    icon: 'fas fa-gamepad',
+    text: [ 'Konsolenspiel', 'Computerspiel' ]
   },
   {
-    name: 'E-Learning',
-    icon: 'fas fa-atlas'
-  },
-  {
-    name: 'Schallplatte',
-    icon: 'fas fa-compact-disc'
-  },
-  {
-    name: 'Noten',
-    icon: 'fab fa-itunes-note'
-  },
-  {
-    name: 'Stücktitel/Band',
-    icon: 'fas fa-book'
-  },
-  {
-    name: 'E-Ressource',
-    icon: 'fas fa-atlas'
-  },
-  {
-    name: 'Zeitschrift',
-    icon: 'far fa-newspaper'
-  },
-  {
-    name: 'konventionelles Spiel',
-    icon: 'fas fa-dice'
-  },
-  {
-    name: 'Karte/Plan',
-    icon: 'fas fa-map-marked-alt'
+    icon: 'fas fa-swatchbook',
+    text: [ 'Mehrteiliges Werk', 'Serie/Reihe', 'Medienkombination' ]
   }
 ]
 

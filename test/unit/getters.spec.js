@@ -160,5 +160,60 @@ describe('getters', () => {
     expect(sorted).toEqual(sortedSample)
   })
 
-  // FIXME add unit tests for dependend getters: getSortedSearchIdentifiers, getSortedBookmarksIdentifiers
+  it('extracts identifiers from search and bookmarks data', () => {
+    let fakeGetters = {
+      getSortedSearchData: [
+        { identifier: '1' },
+        { identifier: '2' },
+        { identifier: '3' }
+      ],
+      getSortedBookmarksData: [
+        { identifier: '1' },
+        { identifier: '2' },
+        { identifier: '3' }
+      ]
+    }
+    expect(getters.getSortedSearchIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
+    expect(getters.getSortedBookmarksIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
+  })
+
+  it('sorts copies', () => {
+    const fakeGetters = {
+      getPreferredLibraries: ['foo']
+    }
+    const state = {
+      preview: {
+        data: {
+          copies: [
+            { library: 'foo', availability: { days: 13 } },
+            { library: 'foo', availability: { days: -13 } },
+            { library: 'foo', availability: { days: 0 } },
+            { library: 'foo', availability: { days: 3 } },
+            { library: 'bar', availability: { days: -99 } }
+          ]
+        }
+      }
+    }
+    expect(getters.getSortedPreferredCopies(state, fakeGetters).map(obj => obj.availability.days)).toEqual([ -13, 0, 3, 13 ])
+  })
+
+  it('returns a string with non-preferred libraries', () => {
+    const fakeGetters = {
+      getPreferredLibraries: ['foo']
+    }
+    const state = {
+      preview: {
+        data: {
+          copies: [
+            { library: 'bb' },
+            { library: 'aa' },
+            { library: 'b' },
+            { library: 'a' },
+            { library: 'foo' }
+          ]
+        }
+      }
+    }
+    expect(getters.getNotPreferredCopiesString(state, fakeGetters)).toEqual('a, aa, b, bb')
+  })
 })

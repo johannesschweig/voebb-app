@@ -30,7 +30,7 @@ describe('Search', function () {
       .waitForExist('.card')
       .elements('.card')
       .then(res => {
-        expect(res.value.length).to.equal(100)
+        expect(res.value).to.have.lengthOf.within(95, 105)
       })
   })
 

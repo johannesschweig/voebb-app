@@ -1,17 +1,17 @@
 <template>
     <div v-if='isDone()'>
         <table
-            v-if='getPreferred(data.copies).length != 0 '
+            v-if='getPreferredLibs().length != 0 '
             class='availability'>
             <tbody>
                 <tr
-                    v-for='instance in getPreferred(data.copies)' 
-                    :class='{"not-available": !instance.status.toLowerCase().startsWith("verfügbar") }' >
+                    v-for='instance in getPreferredLibs()' 
+                    :class='{"not-available": instance.availability.message != "available" }' >
                     <td>
                         <LibraryIcon />
                         {{ getShortLibrary(instance.library) }}
                     </td>
-                    <td v-if='instance.status.toLowerCase().startsWith("verfügbar")'>
+                    <td v-if='instance.availability.message === "available"'>
                         <template v-if='instance.signature'>
                           <SignatureIcon />
                           {{ instance.signature }}
@@ -21,30 +21,19 @@
                           {{ instance.place }}
                         </template>
                     </td>
-                    <td v-else-if='instance.status.toLowerCase().startsWith("ausgeliehen -")'>
-                        <template v-if='getDaysDueString(instance.status) <= 0'>
-                           {{ -getDaysDueString(instance.status) }} days overdue
-                        </template>
-                        <template v-else-if='getDaysDueString(instance.status) > 0'>
-                            {{ getDaysDueString(instance.status) }} days left
-                        </template>
-                    </td>
-                    <td v-else-if='instance.status === "Nicht im Regal"'>
-                      lost
-                    </td>
                     <td v-else>
-                        {{ instance.status }}
+                        {{ instance.availability.message }}
                     </td>
                 </tr>
             </tbody>
         </table>
         <div
-            v-if='getNotPreferred(data.copies).length != 0'
+            v-if='getNotPreferredLibsString().length'
             class='placeholder'>
             <span>Available in:</span>
             <br />
             <span>
-                {{ getNotPreferred(data.copies).map(e => getShortLibrary(e.library)).join(', ') }}
+                {{ getNotPreferredLibsString() }}
             </span>
         </div>
         <span
@@ -73,7 +62,9 @@ export default {
       loading: state => state.preview.loading
     }),
     ...mapGetters([
-      'getPreferredLibraries'
+      'getPreferredLibraries',
+      'getNotPreferredCopiesString',
+      'getSortedPreferredCopies'
     ])
   },
   methods: {
@@ -84,17 +75,17 @@ export default {
     getShortLibrary (library) {
       return shortenLibraryName(library)
     },
-    // get only copies from preferred libraries
-    getPreferred (copies) {
-      return copies.filter(obj => this.getPreferredLibraries.includes(obj.library))
-    },
-    // get only availabilities from preferred libraries
-    getNotPreferred (copies) {
-      return copies.filter(obj => !this.getPreferredLibraries.includes(obj.library))
-    },
     // returns true if the component has finished fetching data
     isDone () {
       return this.loading.status === DONE
+    },
+    // returns a label with non preferred libraries
+    getNotPreferredLibsString () {
+      return this.getNotPreferredCopiesString
+    },
+    // returns a sorted list of copies from preferred libraries
+    getPreferredLibs () {
+      return this.getSortedPreferredCopies
     }
   }
 }

@@ -1,5 +1,5 @@
 import { search, getEntryDetails } from '../utils/requests.js'
-import { getCurrentDateString, getAvailability } from '../utils/string.js'
+import { getCurrentDateString, addAvailability } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
 import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE, SEARCH, BOOKMARKS, PREVIEW } from '../utils/constants.js'
 import { getLoadingObject, CustomError } from '../utils/utils.js'
@@ -34,11 +34,8 @@ export default {
       return Promise.all(promises)
     }).then(res => {
       commit('setLoading', getLoadingObject(BOOKMARKS, DONE))
-      // get availability
-      let results = res.map(result => ({
-        ...result,
-        availability: getAvailability(result.copies, getters.getPreferredLibraries)
-      }))
+      // adds availability to results
+      let results = addAvailability(res, getters.getPreferredLibraries)
       commit('setBookmarksData', results)
       commit('setLastUpdated', getCurrentDateString())
     }).catch(err => {
@@ -62,10 +59,7 @@ export default {
       results.push(getEntryDetails(identifier, true))
     })
     // get availability
-    results = results.map(result => ({
-      ...result,
-      availability: getAvailability(result.copies, getters.getPreferredLibraries)
-    }))
+    results = addAvailability(results, getters.getPreferredLibraries)
     commit('setBookmarksData', results)
     commit('setLastUpdated', `fake-${getCurrentDateString()}`)
     commit('setLoading', getLoadingObject(BOOKMARKS, DONE))
@@ -85,10 +79,7 @@ export default {
           // update user storage
           setUserData('bookmarks', bookmarks)
           // get availability
-          let results = {
-            ...res,
-            availability: getAvailability(res.copies, getters.getPreferredLibraries)
-          }
+          let results = addAvailability([res], getters.getPreferredLibraries)[0]
           commit('addBookmark', results)
           commit('setLastUpdated', getCurrentDateString())
           commit('setLoading', getLoadingObject(BOOKMARKS, DONE))

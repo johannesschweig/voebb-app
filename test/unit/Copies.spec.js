@@ -5,31 +5,55 @@ const instances = [{
   library: 'library1',
   place: 'place1',
   signature: 'signature1',
-  status: 'Ausgeliehen - Fällig am: 24.6.2019'
+  status: 'Ausgeliehen - Fällig am: 24.6.2019',
+  availability: {
+    days: 13,
+    message: '13 days overdue'
+  }
 }, {
   library: 'library2',
   place: 'place2',
   signature: 'signature2',
-  status: 'verfügbar'
+  status: 'verfügbar',
+  availability: {
+    days: -Number.MAX_SAFE_INTEGER,
+    message: 'available'
+  }
 }, {
   library: 'library3',
   place: 'place3',
   signature: 'signature3',
-  status: 'Nicht im Regal'
+  status: 'Nicht im Regal',
+  availability: {
+    days: Number.MAX_SAFE_INTEGER,
+    message: 'lost'
+  }
 }, {
   library: 'library4',
   place: 'place4',
   signature: 'signature4',
-  status: 'foo'
+  status: 'foo',
+  availability: {
+    days: -99,
+    message: '99 days overdue'
+  }
 }, {
   library: 'library5',
   place: 'place5',
   signature: 'signature5',
-  status: 'Ausgeliehen - Fällig am: 24.6.2119'
+  status: 'Ausgeliehen - Fällig am: 24.6.2119',
+  availability: {
+    days: 100,
+    message: '100 days left'
+  }
 }, {
   library: 'library6',
   place: 'place6',
-  status: 'verfügbar'
+  status: 'verfügbar',
+  availability: {
+    days: -Number.MAX_SAFE_INTEGER,
+    message: 'available'
+  }
 }]
 
 describe('Copies.vue', () => {
@@ -52,8 +76,8 @@ describe('Copies.vue', () => {
       },
       methods: {
         isDone: () => true,
-        getPreferred: () => [],
-        getNotPreferred: () => []
+        getPreferredLibs: () => [],
+        getNotPreferredLibsString: () => ''
       }
     })
 
@@ -69,8 +93,8 @@ describe('Copies.vue', () => {
       },
       methods: {
         isDone: () => true,
-        getPreferred: () => instances,
-        getNotPreferred: () => instances
+        getPreferredLibs: () => instances,
+        getNotPreferredLibsString: () => 'foo, bar, foo'
       }
     })
 
@@ -85,11 +109,12 @@ describe('Copies.vue', () => {
     // lost
     expect(wrapper.findAll('tr').at(2).findAll('td').at(1).text()).toEqual('lost')
     // unknown status
-    expect(wrapper.findAll('tr').at(3).findAll('td').at(1).text()).toEqual(instances[3].status)
-    expect(wrapper.find('.placeholder > span:nth-child(3)').text()).toEqual(instances.map(e => e.library).join(', '))
+    expect(wrapper.findAll('tr').at(3).findAll('td').at(1).text()).toEqual(instances[3].availability.message)
     // days left
     expect(wrapper.findAll('tr').at(4).findAll('td').at(1).text()).toMatch(new RegExp('^.*days left$'))
     // no signature -> only place
     expect(wrapper.findAll('tr').at(5).findAll('td').at(1).text()).toEqual(instances[5].place)
+    // non preferred libraries placeholder
+    expect(wrapper.find('.placeholder > span:nth-child(3)').text()).toEqual('foo, bar, foo')
   })
 })

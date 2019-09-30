@@ -79,40 +79,64 @@ export function getDaysDue (avail) {
   return Math.round(date2.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)
 }
 
-// returns an availability object for ('available', 'x more days')
-export function getAvailability (copies, preferredLibraries) {
-  // show only copies from preferred libraries
-  let avail = copies.filter(obj => preferredLibraries.includes(obj.library))
-  let available = avail.filter(obj => {
-    return obj.status.toLowerCase().startsWith('verfügbar') || obj.status === 'ist verfügbar'
-  }).length > 0
-  if (available) {
+// adds availability to results
+export function addAvailability (results, preferredLibraries) {
+  return results.map(result => {
+    // consider only copies from preferred libraries
+    let copies = result.copies.filter(obj => preferredLibraries.includes(obj.library))
+
     return {
-      days: 0,
+      ...result,
+      availability: getCondensedAvailability(copies)
+    }
+  })
+}
+
+// returns an availability object for multiple copies ('available', 'x more days')
+export function getCondensedAvailability (copies) {
+  // empty array
+  if (!copies.length) {
+    return { days: Number.MAX_SAFE_INTEGER, message: 'not available' }
+  }
+  return copies.sort((a, b) => a.availability.days - b.availability.days)[0].availability
+}
+
+// returns a days and message object for a copy's status
+export function getAvailability (status) {
+  status = status.toLowerCase()
+  if (status.startsWith('verfügbar') || status === 'ist verfügbar') {
+    return {
+      days: -Number.MAX_SAFE_INTEGER,
       message: 'available'
     }
-  } else {
-    let notAvail = ['Nicht im Regal', 'Reserviert', 'Ausgeliehen', 'siehe Vollanzeige']
-    avail = avail.filter(obj => notAvail.indexOf(obj.status) === -1)
-    if (avail.length === 0) {
+  }
+  switch (status) {
+    case 'nicht im regal':
       return {
         days: Number.MAX_SAFE_INTEGER,
-        message: 'not available'
+        message: 'lost'
       }
-    }
-    let dd = avail.map(obj => getDaysDue(obj.status))
-    // overdue or days due
-    if (Math.min(...dd) < 0) {
+    case 'reserviert':
       return {
-        days: Math.min(...dd),
-        message: `${-Math.min(...dd)} days overdue`
+        days: Number.MAX_SAFE_INTEGER,
+        message: 'reserved'
       }
-    } else {
+    case 'ausgeliehen':
       return {
-        days: Math.min(...dd),
-        message: `${Math.min(...dd)} days left`
+        days: Number.MAX_SAFE_INTEGER,
+        message: 'borrowed'
       }
-    }
+    case 'siehe vollanzeige':
+      return {
+        days: Number.MAX_SAFE_INTEGER,
+        message: 'unknown'
+      }
+    default:
+      let days = getDaysDue(status)
+      return {
+        days,
+        message: days < 0 ? `${-days} days overdue` : `${days} days left`
+      }
   }
 }
 

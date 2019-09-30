@@ -1,5 +1,7 @@
 # BACKLOG
-
+* create filter for medium
+* create loading feedback for BookmarksIcon
+* refactor table row in Copies to its own Component
 
 # TODO
 ## Details
@@ -9,46 +11,33 @@
   - remove tab character
   - remove ... at the end of value (title)
 ## Copies
-* Sorting copies after availability
 * Available in: Shorten to "Available in X other libraries"; add collapser to show
 ## Search
 * number of results
 * make lens in searchfield dark when focused input field (no previous sibling selector in css)
 * use previous session if not too old (keep track of requestCount??)
 * create nice icons for too many hits, no hits or error
-* create search filters
+* create filters
+  - medium (only book, game, cd, only e-resources/no e-resouces etc.)
   - year (minimum)
   - ISBN
   - person
-  - medium
   - genre: bestseller
   - language: german/english
-* create filter
-  - medium (only book, game, cd etc.)
-  - available only
-  - only e-resources/no e-resouces
 * MediumIcons for
-  - Mehrteiliges Werk AK15876158
-  - Serie/Reihe AK12594953
-  - Medienkombination
   - MC (music casette/tape) https://github.com/FortAwesome/Font-Awesome/issues/1736 only available as pro
-  - Zeitschriftenheft
-  - Hochschulschrift
-  - Aufsatz
-  - Zeitschriftenartige Reihe
-  - Beitrag
-  - Konsolenspiel
-  - Computerspiel
-  - Gebundenes Werk
+  - Gerät; what is this?
+  - Dias
+  - Punktschrift (Vollschrift)
+  - AV-Medium
 * remove duplicate medium references in title
-* create loading feedback for BookmarksIcon
 * merge multiple entries in one if same book (title/isbn?)
   - difficult, because then it looses the 1:1 relationship between preview and detail page
   - expamles: AK01393145, AK15903049
 ## Bookmarks
 * display bookmarks individually as soon as they are loaded
 * last updated label: constantly updating time diff ("2 minutes ago")
-* cover are missing if session expires
+* bug: cover are missing if session expires
 ## Preview
 * cache multiple previews (10?)
 * changing from preview to settings gives weird transition 
@@ -88,6 +77,7 @@
   - not sure if this is good practice
 
 # DONE
+* Sorting copies after availability
 * Sorting in search: Year/Recency (Ascending/Descending), Title, Relevance (default)
 * Sorting in bookmarks: Year/Recency (Ascending/Descending), Title, Availability (default)
 * Show cover in preview

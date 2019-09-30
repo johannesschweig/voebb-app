@@ -1,5 +1,5 @@
 import { allLibraries, DONE, MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A, AVAILABLE } from '../utils/constants.js'
-import { extractYear } from '../utils/string.js'
+import { extractYear, shortenLibraryName } from '../utils/string.js'
 
 export default {
   // returns a list with all the bookmarks identifiers
@@ -50,18 +50,10 @@ export default {
     return state.bookmarks.data.length > 1 && state.bookmarks.loading.status === DONE
   },
   getSortedBookmarksData: state => {
-    // sorts available to front
-    function adjustDays (avail) {
-      if (avail.message === 'available') {
-        return -Number.MAX_SAFE_INTEGER
-      }
-      return avail.days
-    }
-
     switch (state.bookmarks.sorting) {
       // sort available (0 days) > days due (-x days) > days left (x days) > not available (INF days)
       case AVAILABLE: return state.bookmarks.data.slice().sort((a, b) => {
-        return adjustDays(a.availability) - adjustDays(b.availability)
+        return a.availability.days - b.availability.days
       })
       case TITLE_A_Z: return state.bookmarks.data.slice().sort((a, b) => {
         return a.details['Titel'].localeCompare(b.details['Titel'])
@@ -74,10 +66,25 @@ export default {
       })
     }
   },
+  // extracts identifier from search data
   getSortedSearchIdentifiers: (_state, getters) => {
     return getters.getSortedSearchData.map(e => e.identifier)
   },
+  // extracts identifier from bookmarks data
   getSortedBookmarksIdentifiers: (_state, getters) => {
     return getters.getSortedBookmarksData.map(e => e.identifier)
+  },
+  // returns copies from preferred libraries sorted by availability
+  getSortedPreferredCopies: (state, getters) => {
+    return state.preview.data.copies.filter(obj => getters.getPreferredLibraries.includes(obj.library)).sort((a, b) => a.availability.days - b.availability.days)
+  },
+  // returns a comma-separated string with copies from non-preferred libraries sorted alphabetically
+  getNotPreferredCopiesString: (state, getters) => {
+    let copies = state.preview.data.copies.filter(obj => !getters.getPreferredLibraries.includes(obj.library))
+    if (copies.length) {
+      return copies.map(e => shortenLibraryName(e.library)).sort().join(', ')
+    } else {
+      return ''
+    }
   }
 }

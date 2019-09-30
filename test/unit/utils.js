@@ -28,7 +28,7 @@ export const bookmarksSample = {
           'Veröffentlichung': '1919'
         },
         availability: {
-          days: 0,
+          days: -Number.MAX_SAFE_INTEGER,
           message: 'available'
         }
       },

@@ -31,6 +31,7 @@ export default {
     // this.$store.dispatch('fakeSearch')
     // this.$store.dispatch('fakeFetchDetails')
     // this.$store.dispatch('search', 'koppetsch')
+    // this.$store.dispatch('search', 'Die Gesellschaft des Zorns : Rechtspopulismus im globalen Zeitalter / Cornelia Koppetsch')
     // this.$store.dispatch('search', 'sams taschenbier')
   }
 }

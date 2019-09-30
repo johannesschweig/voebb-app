@@ -1,6 +1,6 @@
 import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions, nextPageOptions, nextPageData } from './requestOptions.js'
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
-import { extractYear } from './string.js'
+import { extractYear, getAvailability } from './string.js'
 import req from './httpPromise.js'
 const $ = require('cheerio')
 
@@ -71,9 +71,9 @@ export function search (term, mocked = false) {
   if (!mocked) {
     // open landing page
     return req(landingPageOptions)
-      .then(res => {
+      .then(html => {
         // retrieve session from landing page
-        session = getSession(res)
+        session = getSession(html)
         console.log('Session', session)
         // open search page
         return req(searchPageOptions(session))
@@ -122,10 +122,11 @@ export function search (term, mocked = false) {
 
           // extract results from subsequent pages
           // there is only one page
+          let results = extractResult(html)
           if (pages === 1) {
-            return Promise.resolve(extractResult(html))
+            console.log('ResultsPage successfull:', results.length, 'results')
+            return Promise.resolve(results)
           } else {
-            let results = extractResult(html)
             for (let i = 1; i < pages; i++) {
               let html = await req(nextPageOptions(session), nextPageData(i + 1))
               results = results.concat(extractResult(html))
@@ -170,7 +171,8 @@ function extractCopy (row, header) {
     'place': place,
     'signature': signature,
     'orderStatus': orderStatus,
-    'status': status
+    'status': status,
+    'availability': getAvailability(status)
   }
 }
 
