@@ -6,16 +6,18 @@ function getDateFromToday (days) {
 }
 
 let statusAvail = [
-  { status: 'Verfügbar', avail: { days: -Number.MAX_SAFE_INTEGER, message: 'available' } },
-  { status: 'ist verfügbar', avail: { days: -Number.MAX_SAFE_INTEGER, message: 'available' } },
-  { status: 'Ausgeliehen - Fällig am: ' + getDateFromToday(2), avail: { days: 2, message: '2 days left' } },
-  { status: 'Ausgeliehen - Fällig am: ' + getDateFromToday(-12), avail: { days: -12, message: '12 days overdue' } },
-  { status: 'Ausgeliehen Fällig am', avail: { days: -99, message: '99 days overdue' } },
-  { status: 'Ausgeliehen - Fällig am: d.d.a', avail: { days: -99, message: '99 days overdue' } },
-  { status: 'Nicht im Regal', avail: { days: Number.MAX_SAFE_INTEGER, message: 'lost' } },
-  { status: 'Reserviert', avail: { days: Number.MAX_SAFE_INTEGER, message: 'reserved' } },
-  { status: 'Ausgeliehen', avail: { days: Number.MAX_SAFE_INTEGER, message: 'borrowed' } },
-  { status: 'Siehe Vollanzeige', avail: { days: Number.MAX_SAFE_INTEGER, message: 'unknown' } }
+  { text: 'Verfügbar', available: true, avail: { days: -Number.MAX_SAFE_INTEGER, message: 'available' } },
+  { text: 'ist verfügbar', available: true, avail: { days: -Number.MAX_SAFE_INTEGER, message: 'available' } },
+  { text: 'Ausgeliehen - Fällig am: ' + getDateFromToday(2), available: false, avail: { days: 2, message: '2 days left' } },
+  { text: 'Ausgeliehen - Fällig am: ' + getDateFromToday(-12), available: false, avail: { days: -12, message: '12 days overdue' } },
+  { text: 'Ausgeliehen Fällig am', available: false, avail: { days: -99, message: '99 days overdue' } },
+  { text: 'Ausgeliehen - Fällig am: d.d.a', available: false, avail: { days: -99, message: '99 days overdue' } },
+  { text: 'Nicht im Regal', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'lost' } },
+  { text: 'verloren', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'lost' } },
+  { text: 'zurzeit vermisst', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'lost' } },
+  { text: 'Reserviert', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'reserved' } },
+  { text: 'Ausgeliehen', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'borrowed' } },
+  { text: 'Siehe Vollanzeige', available: false, avail: { days: Number.MAX_SAFE_INTEGER, message: 'unknown' } }
 ]
 
 describe('string.js', () => {
@@ -53,7 +55,7 @@ describe('string.js', () => {
 
   it('transforms status in availability object', () => {
     for (let i = 0; i < statusAvail.length; i++) {
-      expect(getAvailability(statusAvail[i].status)).toEqual(statusAvail[i].avail)
+      expect(getAvailability(statusAvail[i].text, statusAvail[i].available)).toEqual(statusAvail[i].avail)
     }
   })
 })

@@ -32,7 +32,7 @@ describe('Card.vue', () => {
     expect(wrapper.find('.card.search').exists()).toBeTruthy()
     expect(wrapper.find('img').attributes('src')).toEqual(img)
     expect(wrapper.find('.title').text()).toEqual(`${row.title} (${row.medium})`)
-    expect(wrapper.find('.subtitle').text()).toEqual(`${row.name} - ${row.year}`)
+    expect(wrapper.find('.subtitle').text()).toMatch(new RegExp(row.name + '\\s*-.*' + row.year))
   })
 
   it('renders for Bookmarks', () => {
@@ -49,7 +49,7 @@ describe('Card.vue', () => {
     expect(wrapper.find('.card.bookmarks').exists()).toBeTruthy()
     expect(wrapper.find('img').attributes('src')).toEqual('')
     expect(wrapper.find('.title').text()).toEqual(`${row.title} (${row.medium})`)
-    expect(wrapper.find('.subtitle').text()).toEqual(`${row.name} - ${row.year}`)
+    expect(wrapper.find('.subtitle').text()).toMatch(new RegExp(row.name + '\\s*-.*' + row.year))
     expect(wrapper.find('span').text()).toEqual(row.availability.message)
   })
 
@@ -70,5 +70,22 @@ describe('Card.vue', () => {
     })
 
     expect(wrapper.find('.card.not-available').exists()).toBeTruthy()
+  })
+
+  it('omits year if empty', () => {
+    const wrapper = shallowMount(Card, {
+      propsData: {
+        row: {
+          ...row,
+          year: 0
+        },
+        wrapper: 'Search'
+      },
+      stubs: {
+        RouterLink: RouterLinkStub
+      }
+    })
+
+    expect(wrapper.find('.subtitle').text()).toEqual(row.name)
   })
 })

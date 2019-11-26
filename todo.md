@@ -1,7 +1,12 @@
 # BACKLOG
+* show number of hits in header
+
 * create filter for medium
 * create loading feedback for BookmarksIcon
 * refactor table row in Copies to its own Component
+* create loading feedback for BookmarksIcon
+## Copies
+* Available in: Shorten to "Available in X other libraries" if more than 5
 
 # TODO
 ## Details
@@ -10,10 +15,7 @@
 * sanitize details
   - remove tab character
   - remove ... at the end of value (title)
-## Copies
-* Available in: Shorten to "Available in X other libraries"; add collapser to show
 ## Search
-* number of results
 * make lens in searchfield dark when focused input field (no previous sibling selector in css)
 * use previous session if not too old (keep track of requestCount??)
 * create nice icons for too many hits, no hits or error
@@ -29,6 +31,7 @@
   - Gerät; what is this?
   - Dias
   - Punktschrift (Vollschrift)
+  - Hochschulschrift
   - AV-Medium
 * remove duplicate medium references in title
 * merge multiple entries in one if same book (title/isbn?)

@@ -1,3 +1,5 @@
+import { statusMapping } from './constants.js'
+
 // returns the current date string dd.mm.yyyy hh:mm
 export function getCurrentDateString () {
   let date = new Date()
@@ -51,7 +53,7 @@ export function sanitizeDetail (key, value) {
   }
 }
 
-// computes the days due until the book is available from a string ("Ausgeliehen - Fällig am: 8.7.2019")
+// computes the days due until the book is available from a string ("Ausgeliehen -  Fällig am: 27.11.2019")
 export function getDaysDue (avail) {
   if (avail.indexOf(':') === -1) {
     console.log('Days due cannot be computed for', avail)
@@ -102,41 +104,28 @@ export function getCondensedAvailability (copies) {
 }
 
 // returns a days and message object for a copy's status
-export function getAvailability (status) {
-  status = status.toLowerCase()
-  if (status.startsWith('verfügbar') || status === 'ist verfügbar') {
+export function getAvailability (text, available) {
+  text = text.toLowerCase()
+  if (available) {
     return {
       days: -Number.MAX_SAFE_INTEGER,
       message: 'available'
     }
   }
-  switch (status) {
-    case 'nicht im regal':
+  // map status for non-available stati without date
+  for (let i = 0; i < statusMapping.length; i++) {
+    if (statusMapping[i].text.includes(text)) {
       return {
         days: Number.MAX_SAFE_INTEGER,
-        message: 'lost'
+        message: statusMapping[i].message
       }
-    case 'reserviert':
-      return {
-        days: Number.MAX_SAFE_INTEGER,
-        message: 'reserved'
-      }
-    case 'ausgeliehen':
-      return {
-        days: Number.MAX_SAFE_INTEGER,
-        message: 'borrowed'
-      }
-    case 'siehe vollanzeige':
-      return {
-        days: Number.MAX_SAFE_INTEGER,
-        message: 'unknown'
-      }
-    default:
-      let days = getDaysDue(status)
-      return {
-        days,
-        message: days < 0 ? `${-days} days overdue` : `${days} days left`
-      }
+    }
+  }
+
+  let days = getDaysDue(text)
+  return {
+    days,
+    message: days < 0 ? `${-days} days overdue` : `${days} days left`
   }
 }
 

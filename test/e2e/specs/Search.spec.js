@@ -40,22 +40,17 @@ describe('Search', function () {
       .element('.card:nth-child(1) .title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Das Sams : die große Hörspielbox (CD)')
+        expect(text).to.equal('Ein Sams für Martin Taschenbier (Band)')
       })
-      .element('.card:nth-child(2) .title')
+      .element('.card:nth-child(18) .title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Die grosse Sams-Hörspielbox : die ersten 4 Sams-Hörspiele in einer Box! (CD)')
-      })
-      .element('.card:nth-child(3) .title')
-      .getText()
-      .then(text => {
-        expect(text).to.equal('Sams im Glück (Band)')
+        expect(text).to.equal('Neue Punkte für das Sams (Buch)')
       })
       // sort by newest
       .element('option[value="' + NEWEST + '"]')
       .click()
-      .element('.card:nth-child(2) .title')
+      .element('.card:nth-child(1) .title')
       .getText()
       .then(text => {
         expect(text).to.equal('Ein Taucheranzug für das Sams (Band)')
@@ -66,7 +61,7 @@ describe('Search', function () {
       .element('.card:nth-child(1) .title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Am Samstag kam das Sams zurück : (CD)')
+        expect(text).to.equal('Am Samstag kam das Sams zurück (E-Book)')
       })
       // sort by title z-a
       .element('option[value="' + TITLE_Z_A + '"]')
@@ -94,7 +89,7 @@ describe('Search', function () {
       .element('h1')
       .getText()
       .then(text => {
-        expect(text).to.equal('Sams im Glück / Paul Maar')
+        expect(text).to.equal('Ein Sams für Martin Taschenbier / Paul Maar')
       })
       // go back to search
       .element('a[label="Search"]')
@@ -120,11 +115,11 @@ describe('Search', function () {
       .element('.title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Sams im Glück / Paul Maar (Band)')
+        expect(text).to.equal('Ein Sams für Martin Taschenbier / Paul Maar (Band)')
       })
   })
 
   it('bookmarks settings file gets updated', function () {
-    return expect(utils.readBookmarks()).to.equal('["AK01377559"]')
+    return expect(utils.readBookmarks()).to.equal('["AK15099763"]')
   })
 })

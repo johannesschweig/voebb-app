@@ -1,9 +1,9 @@
 {
   "name": "voebb-app",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Johannes Schweig <j.schweig@posteo.de>",
   "description": "An electron-vue project",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -45,19 +45,24 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "target": "dmg"
     },
     "win": {
       "icon": "build/icons/icon.ico"
     },
     "linux": {
       "category": "Utility",
-      "target": [ "AppImage" ]
+      "target": [
+        "AppImage"
+      ]
     }
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "electron-json-storage": "^4.1.6",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
@@ -91,7 +96,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^2.0.4",
-    "electron-builder": "^20.41.0",
+    "electron-builder": "^21.2.0",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",

@@ -1,6 +1,8 @@
 # voebb-app
 
-> An electron-vue project
+Library application for the public libraries in berlin (Voebb) 
+
+![](voebb.gif)
 
 ### Build Setup
 

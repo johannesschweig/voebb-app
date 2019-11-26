@@ -1,8 +1,10 @@
-import { landingPageOptions, searchPageOptions, resultsPageOptions, resultsPageData, resultPageOptions, nextPageOptions, nextPageData } from './requestOptions.js'
+import { landingPageOptions, resultsPageOptions, singleResultPageOptions, resultPageOptions, nextPageOptions } from './requestOptions.js'
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
 import { extractYear, getAvailability } from './string.js'
-import req from './httpPromise.js'
+var rp = require('request-promise-native')
 const $ = require('cheerio')
+var fs = require('fs')
+var path = require('path')
 
 var session
 var searchTerm
@@ -16,11 +18,12 @@ function getSession (html) {
 
 // returns number of pages from search results page
 // each page holds 22 entries
-function getNumberOfPages (html) {
-  let hits = $('#R06 > p > span', html).text()
-  hits = parseInt(hits.substr(hits.indexOf('von') + 4))
-  let pages = (hits - hits % 22) / 22 + 1
-  return pages
+export function getNumberOfPages (html) {
+  let hits = $('#R06', html).text().trim()
+  hits = hits.substr(hits.indexOf('Treffer'))
+  // extract number with regex
+  hits = parseInt(hits.match(/\d+/)[0])
+  return Math.ceil(hits / 22)
 }
 
 // extracts all the fields from a single result row
@@ -35,10 +38,10 @@ function extractFields (row) {
   let identifier = $('.rList_titel > a', row).attr('href')
   identifier = identifier.match(/'([^']+)'/)[1]
   // name
-  let name = $('.rList_name:nth-child(4)', row).text()
+  let name = $('.rList_name:nth-child(2)', row).text()
   // year
   let year = $('.rList_jahr', row).text()
-  if (year === '') {
+  if (year === '' || year.length === 1) {
     year = 0
   } else {
     year = parseInt(year)
@@ -70,18 +73,13 @@ export function search (term, mocked = false) {
 
   if (!mocked) {
     // open landing page
-    return req(landingPageOptions)
+    return rp(landingPageOptions)
       .then(html => {
         // retrieve session from landing page
         session = getSession(html)
         console.log('Session', session)
-        // open search page
-        return req(searchPageOptions(session))
-      })
-      .then(() => {
-        console.log('SearchPage successfull')
         // open search results page with search term
-        return req(resultsPageOptions(session), resultsPageData(searchTerm))
+        return rp(resultsPageOptions(session, searchTerm))
       }).then(async (html) => {
         // check for no hits or too many hits
         let rzero = $('#R01', html)
@@ -128,7 +126,7 @@ export function search (term, mocked = false) {
             return Promise.resolve(results)
           } else {
             for (let i = 1; i < pages; i++) {
-              let html = await req(nextPageOptions(session), nextPageData(i + 1))
+              let html = await rp(nextPageOptions(session, i))
               results = results.concat(extractResult(html))
             }
             console.log('ResultsPage successfull:', results.length, 'results')
@@ -141,8 +139,6 @@ export function search (term, mocked = false) {
       })
   } else {
     // reads a mocked html file and extracts the data
-    var fs = require('fs')
-    var path = require('path')
     var html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', `${term}.html`), { encoding: 'utf8' })
     return extractResult(html)
   }
@@ -164,15 +160,17 @@ function extractCopy (row, header) {
   let signature = $('td:nth-of-type(' + header[2] + ')', row).text().trim()
   // orderStatus
   let orderStatus = $('td:nth-of-type(' + header[3] + ')', row).text().trim()
-  // status
-  let status = $('td:nth-of-type(' + header[4] + ')', row).text().trim()
+  // status text
+  let statusText = $('td:nth-of-type(' + header[4] + ') > span', row).text().trim()
+  // if the available class is set
+  let avail = $('td:nth-of-type(' + header[4] + ') > span', row).attr('class') === 'available'
   return {
     'library': library,
     'place': place,
     'signature': signature,
     'orderStatus': orderStatus,
-    'status': status,
-    'availability': getAvailability(status)
+    'status': statusText,
+    'availability': getAvailability(statusText, avail)
   }
 }
 
@@ -215,7 +213,7 @@ function extractEntryDetails (html) {
         break
       case 'Bestellmöglichkeit': header[3] = i
         break
-      case 'Status': header[4] = i
+      case 'Verfügbarkeit': header[4] = i
         break
     }
   }
@@ -233,9 +231,12 @@ function extractEntryDetails (html) {
 // mocked: if the search should return fake/mocked result
 export function getEntryDetails (identifier, mocked = false) {
   if (!mocked) {
-    return req(resultPageOptions(identifier))
-      .then(res => {
-        return res
+    return rp(singleResultPageOptions(identifier))
+      .then(html => {
+        // retrieve session from result page
+        session = getSession(html)
+        console.log('Session', session)
+        return rp(resultPageOptions(session))
       }).then(html => {
         let results = extractEntryDetails(html)
         results.identifier = identifier
@@ -243,8 +244,6 @@ export function getEntryDetails (identifier, mocked = false) {
       })
   } else {
     // reads a prepared html file and extracts the data
-    var fs = require('fs')
-    var path = require('path')
     let html = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'mocks', `${identifier}.html`), { encoding: 'utf8' })
     let results = extractEntryDetails(html)
     results.identifier = identifier

@@ -54,7 +54,7 @@ export default {
   },
   fakeReadUserData ({ commit, getters }) {
     let results = []
-    let ids = ['AK34245414', 'AK34211530', 'AK12594954', 'AK12594953', 'AK12009789']
+    let ids = ['AK34245414']//, 'AK34211530', 'AK12594954', 'AK12594953', 'AK12009789']
     ids.map(identifier => {
       results.push(getEntryDetails(identifier, true))
     })

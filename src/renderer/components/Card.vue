@@ -11,7 +11,10 @@
                 {{ sanitizeString('Titel', row.title) }} ({{ row.medium }})
             </div>
             <div class='subtitle'>
-                {{ row.name }} - {{ row.year }}
+                {{ row.name }}
+                <template v-if='row.year'>
+                    - {{ row.year }}
+                </template>
             </div>
         </div>
         <BookmarkButtonIcon
