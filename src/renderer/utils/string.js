@@ -1,4 +1,4 @@
-import { statusMapping } from './constants.js'
+import { statusMapping, mediumFilter, ALL } from './constants.js'
 
 // returns the current date string dd.mm.yyyy hh:mm
 export function getCurrentDateString () {
@@ -33,8 +33,10 @@ export function sanitizeDetail (key, value) {
   switch (key) {
     // remove dashes from isbn
     case 'ISBN': return value.replace(/-/g, '')
-    // remove everthing after special character
+    // remove everything after special character
     case 'Titel':
+      // remove numbers in brackets in the middle of the string, e.g. foo [412] bar
+      value = value.replace(/ \[\d+\]/, '')
       let specialChars = [';', '[', '(']
       let stop = []
       // find earliest stopping special character
@@ -141,5 +143,50 @@ export function extractYear (str) {
     return parseInt(year[0])
   } else {
     return 0
+  }
+}
+
+// calculates the recommended width for the select box according to the lengths of its labels
+export function calculateWidth (arr) {
+  let len = arr.map(obj => obj.length)
+  let w = Math.round(Math.max(...len) * 6.7 + 26)
+  return {
+    width: w + 'px'
+  }
+}
+
+// returns an array of filters applicable for the current search data (media)
+export function getMediaFilter (media) {
+  // filter to applicable filters
+  // count number of hits in results
+  let filter = mediumFilter.map(obj => ({ ...obj, num: 0 }))
+  for (let i = 0; i < media.length; i++) {
+    for (let j = 0; j < filter.length; j++) {
+      // medium filter matches current medium
+      if (filter[j].text.indexOf(media[i]) !== -1) {
+        filter[j].num += 1
+        break
+      }
+    }
+  }
+  // remove filters without hits
+  filter = filter.filter(obj => obj.num > 0)
+  // sort by number of hits
+  filter = filter.sort((a, b) => b.num - a.num)
+  filter.unshift({ label: ALL })
+  return filter
+}
+
+// debug: check if session ended and prints a debug message
+export function checkEndOfSession (html, place) {
+  if (html.indexOf('Ende der Sitzung') !== -1) {
+    console.log('Session ended (check request "' + place + '")')
+  }
+}
+
+export function checkPagesVsResults (pages, results) {
+  // less than the expected amount of results (at least 22 results per page except the last one)
+  if (results < (pages - 1) * 22 + 1) {
+    console.log('Number of results (' + results + ') does not fit the number of pages (' + pages + ')')
   }
 }

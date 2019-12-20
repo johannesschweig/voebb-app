@@ -16,7 +16,7 @@ describe('BookmarksPage.vue', () => {
           msg
         }),
         detailsAvailable: () => false,
-        getSortedBookmarksData: () => [],
+        getBookmarksData: () => [],
         multipleBookmarksAvailable: () => false
       }
     })
@@ -30,7 +30,7 @@ describe('BookmarksPage.vue', () => {
       computed: {
         lastUpdated: () => lastUpdated,
         detailsAvailable: () => true,
-        getSortedBookmarksData: () => [],
+        getBookmarksData: () => [],
         multipleBookmarksAvailable: () => false
 
       }
@@ -45,7 +45,7 @@ describe('BookmarksPage.vue', () => {
       computed: {
         loading: () => ({ status: LOADING, msg: msg }),
         detailsAvailable: () => false,
-        getSortedBookmarksData: () => [],
+        getBookmarksData: () => [],
         multipleBookmarksAvailable: () => false
       }
     })
@@ -64,7 +64,7 @@ describe('BookmarksPage.vue', () => {
         sorterSorting: () => 'foo',
         loading: () => ({ status: LOADING, msg: msg }),
         detailsAvailable: () => false,
-        getSortedBookmarksData: () => [],
+        getBookmarksData: () => [],
         multipleBookmarksAvailable: () => true
       }
     })

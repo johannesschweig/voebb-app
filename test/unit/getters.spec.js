@@ -1,6 +1,6 @@
 import getters from '../../src/renderer/store/getters'
 import { bookmarksSample } from './utils'
-import { allLibraries, DONE, MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A, AVAILABLE } from '../../src/renderer/utils/constants'
+import { allLibraries, DONE, MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A, AVAILABLE, ALL } from '../../src/renderer/utils/constants'
 
 describe('getters', () => {
   it('returns list with bookmarks identifiers', () => {
@@ -53,36 +53,20 @@ describe('getters', () => {
     expect(libs).toEqual(allLibraries)
   })
 
-  it('returns if single or multiple results available', () => {
+  it('returns number of results', () => {
     let state = {
       search: {
-        data: []
+        data: [ 1, 2, 3 ],
+        loading: {
+          status: 'foo'
+        }
       }
     }
-    // search data empty
-    let single = getters.resultsAvailable(state)
-    let multiple = getters.multipleResultsAvailable(state)
-    expect(single).toEqual(false)
-    expect(multiple).toEqual(false)
-    // still not done with loading
-    state.search.loading = { status: 'foo' }
-    single = getters.resultsAvailable(state)
-    multiple = getters.multipleResultsAvailable(state)
-    expect(single).toEqual(false)
-    expect(multiple).toEqual(false)
-    // results and loading done
-    state.search.data = [1]
-    state.search.loading = { status: DONE }
-    single = getters.resultsAvailable(state)
-    multiple = getters.multipleResultsAvailable(state)
-    expect(single).toEqual(true)
-    expect(multiple).toEqual(false)
-    // multiple results
-    state.search.data = [1, 2]
-    single = getters.resultsAvailable(state)
-    multiple = getters.multipleResultsAvailable(state)
-    expect(single).toEqual(true)
-    expect(multiple).toEqual(true)
+    // loading not done
+    expect(getters.numberOfResults(state)).toEqual(0)
+    state.search.loading.status = DONE
+    // loading done
+    expect(getters.numberOfResults(state)).toEqual(3)
   })
 
   it('sorts search results correctly', () => {
@@ -94,24 +78,27 @@ describe('getters', () => {
           { title: 'c', year: 4 },
           { title: 'cc', year: 2 },
           { title: 'a', year: 3 }
-        ]
+        ],
+        filter: {
+          label: ALL
+        }
       }
     }
 
     // most relevant
-    let sorting = getters.getSortedSearchData(state)
+    let sorting = getters.getSearchData(state)
     expect(sorting).toEqual(state.search.data)
     // newest
     state.search.sorting = NEWEST
-    sorting = getters.getSortedSearchData(state)
+    sorting = getters.getSearchData(state)
     expect(sorting).toEqual([1, 3, 2, 0].map(i => state.search.data[i]))
     // title a-z
     state.search.sorting = TITLE_A_Z
-    sorting = getters.getSortedSearchData(state)
+    sorting = getters.getSearchData(state)
     expect(sorting).toEqual([3, 0, 1, 2].map(i => state.search.data[i]))
     // title z-a
     state.search.sorting = TITLE_Z_A
-    sorting = getters.getSortedSearchData(state)
+    sorting = getters.getSearchData(state)
     expect(sorting).toEqual([2, 1, 0, 3].map(i => state.search.data[i]))
   })
 
@@ -140,41 +127,41 @@ describe('getters', () => {
     state.bookmarks.sorting = AVAILABLE
 
     // available
-    let sorted = getters.getSortedBookmarksData(state)
+    let sorted = getters.getBookmarksData(state)
     let sortedSample = [2, 6, 3, 5, 4, 1, 0].map(val => bookmarksSample.bookmarks.data[val])
     expect(sorted).toEqual(sortedSample)
     // title a-z
     state.bookmarks.sorting = TITLE_A_Z
-    sorted = getters.getSortedBookmarksData(state)
+    sorted = getters.getBookmarksData(state)
     sortedSample = [1, 2, 0, 5, 6, 3, 4].map(val => bookmarksSample.bookmarks.data[val])
     expect(sorted).toEqual(sortedSample)
     // title z-a
     state.bookmarks.sorting = TITLE_Z_A
-    sorted = getters.getSortedBookmarksData(state)
+    sorted = getters.getBookmarksData(state)
     sortedSample = [4, 3, 6, 5, 0, 2, 1].map(val => bookmarksSample.bookmarks.data[val])
     expect(sorted).toEqual(sortedSample)
     // newest
     state.bookmarks.sorting = NEWEST
-    sorted = getters.getSortedBookmarksData(state)
+    sorted = getters.getBookmarksData(state)
     sortedSample = [4, 3, 1, 6, 5, 0, 2].map(val => bookmarksSample.bookmarks.data[val])
     expect(sorted).toEqual(sortedSample)
   })
 
   it('extracts identifiers from search and bookmarks data', () => {
     let fakeGetters = {
-      getSortedSearchData: [
+      getSearchData: [
         { identifier: '1' },
         { identifier: '2' },
         { identifier: '3' }
       ],
-      getSortedBookmarksData: [
+      getBookmarksData: [
         { identifier: '1' },
         { identifier: '2' },
         { identifier: '3' }
       ]
     }
-    expect(getters.getSortedSearchIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
-    expect(getters.getSortedBookmarksIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
+    expect(getters.getSearchIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
+    expect(getters.getBookmarksIdentifiers(null, fakeGetters)).toEqual(['1', '2', '3'])
   })
 
   it('sorts copies', () => {
@@ -194,7 +181,7 @@ describe('getters', () => {
         }
       }
     }
-    expect(getters.getSortedPreferredCopies(state, fakeGetters).map(obj => obj.availability.days)).toEqual([ -13, 0, 3, 13 ])
+    expect(getters.getPreferredCopies(state, fakeGetters).map(obj => obj.availability.days)).toEqual([ -13, 0, 3, 13 ])
   })
 
   it('returns a string with non-preferred libraries', () => {

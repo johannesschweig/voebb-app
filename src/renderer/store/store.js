@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import mutations from './mutations.js'
 import actions from './actions.js'
 import getters from './getters.js'
-import { INITIAL, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS } from '../utils/constants.js'
+import { INITIAL, SEARCH_PAGE_CRITERIONS, BOOKMARKS_PAGE_CRITERIONS, ALL } from '../utils/constants.js'
 
 Vue.use(Vuex)
 
@@ -17,7 +17,8 @@ const state = {
       // message to the user
       msg: 'You have not searched for anything yet.'
     },
-    sorting: SEARCH_PAGE_CRITERIONS[0] // most relevant
+    sorting: SEARCH_PAGE_CRITERIONS[0], // most relevant
+    filter: { label: ALL } // Filter for the search results { label: 'Digital', text: ["E-Book", "E-Learning", "E-Ressource", "E-Journal"], num: 12 }
   },
   preview: {
     data: {

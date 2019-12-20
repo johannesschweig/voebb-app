@@ -27,6 +27,9 @@ export const AVAILABLE = 'Available'
 export const SEARCH_PAGE_CRITERIONS = [ MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A ]
 export const BOOKMARKS_PAGE_CRITERIONS = [ AVAILABLE, TITLE_A_Z, TITLE_Z_A, NEWEST ]
 
+// filter
+export const ALL = 'All'
+
 export const detailsBlacklist = [
   '',
   'Anmerkungen',
@@ -99,6 +102,46 @@ export const mediumIcons = [
   {
     icon: 'fas fa-swatchbook',
     text: [ 'Mehrteiliges Werk', 'Serie/Reihe', 'Medienkombination' ]
+  }
+]
+
+// contains the medium - filter mappings
+export const mediumFilter = [
+  {
+    label: 'Movies',
+    text: [ 'DVD', 'DVD-ROM', 'Blu-ray Disc', 'Video' ]
+  },
+  {
+    label: 'CD',
+    text: [ 'CD', 'CD-ROM' ]
+  },
+  {
+    label: 'Vinyl',
+    text: [ 'Schallplatte' ]
+  },
+  {
+    label: 'Book',
+    text: [ 'Buch', 'Band', 'Stücktitel/Band', 'Gebundenes Werk', 'Mehrteiliges Werk', 'Serie/Reihe', 'Medienkombination' ]
+  },
+  {
+    label: 'Audio',
+    text: [ 'E-Audio', 'MP3', 'E-Music' ]
+  },
+  {
+    label: 'Digital',
+    text: [ 'E-Book', 'E-Learning', 'E-Ressource', 'E-Journal' ]
+  },
+  {
+    label: 'Article',
+    text: [ 'Zeitschrift', 'Zeitschriftenheft', 'Aufsatz', 'Zeitschriftenartige Reihe', 'Beitrag', 'Zeitschriftenband', 'Hochschulschrift' ]
+  },
+  {
+    label: 'Map',
+    text: [ 'Karte/Plan' ]
+  },
+  {
+    label: 'Game',
+    text: [ 'Konsolenspiel', 'Computerspiel', 'Konventionelles Spiel' ]
   }
 ]
 

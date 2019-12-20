@@ -1,27 +1,32 @@
 <template>
     <div class='container'>
         <h1>Search</h1>
-        <div class='grid'>
-            <div class='inputfield'>
-                <SearchIcon />
-                <input
-                    ref='input'
-                    placeholder='Search for books, cds...'
-                    @keyup.enter='search($refs.input.value)' />
-            </div>
+        <div class='inputfield'>
+            <input
+                ref='input'
+                placeholder='Search for books, cds...'
+                @keyup.enter='search($refs.input.value)' />
+        </div>
+        <div
+            class='grid'
+            v-if='numberOfResults > 1'>
+            <span>
+                {{ getNumberOfResultsString }}
+            </span>
+            <MediumFilter
+              :criterions='getCurrentMediaFilters' />
             <Sorter
-              v-if='multipleResultsAvailable'
-              :sorting='sorterSorting'
-              :criterions='SEARCH_PAGE_CRITERIONS'
-              @set-sorting='(criterion) => setSorting({ page: SEARCH, criterion })' />
+                :sorting='sorterSorting'
+                :criterions='SEARCH_PAGE_CRITERIONS'
+                @set-sorting='(criterion) => setSorting({ page: SEARCH, criterion })' />
         </div>
     </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import SearchIcon from '../assets/search.svg'
 import Sorter from './Sorter.vue'
+import MediumFilter from './MediumFilter.vue'
 import { SEARCH, SEARCH_PAGE_CRITERIONS } from '../utils/constants.js'
 
 export default {
@@ -32,7 +37,7 @@ export default {
     }
   },
   components: {
-    SearchIcon,
+    MediumFilter,
     Sorter
   },
   methods: mapActions([
@@ -44,8 +49,19 @@ export default {
       sorterSorting: state => state.search.sorting
     }),
     ...mapGetters([
-      'multipleResultsAvailable'
-    ])
+      'numberOfResults',
+      'getCurrentMediaFilters',
+      'numberOfFilteredResults'
+    ]),
+    // returns a string for the number of results
+    getNumberOfResultsString () {
+      let fil = this.numberOfFilteredResults
+      let all = this.numberOfResults
+      if (fil === all) {
+        return all + ' results'
+      }
+      return fil + '/' + all + ' results'
+    }
   }
 }
 </script>
@@ -56,15 +72,16 @@ export default {
   width: 100%;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 360px 1fr;
+h1 {
+  display: inline-grid;
+  margin-right: 40px;
 }
 
+
 .inputfield {
-    position: relative;
-    width: 360px;
+    width: 300px;
     display: inline-block;
+    vertical-align: top;
 }
 
 .inputfield input {
@@ -74,7 +91,7 @@ export default {
     height: 32px;
     width: 100%;
     box-sizing: border-box;
-    padding-left: 32px;
+    padding-left: 8px;
     font-size: 18px;
     border: 1px solid var(--color-2);
     border-radius: 2px;
@@ -100,8 +117,22 @@ export default {
     stroke: var(--color-3);
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: 100px 1fr 200px 150px;
+  align-items: center;
+}
+
+.grid > span:first-child {
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .grid > div:nth-child(2) {
-  align-self: center;
-  justify-self: right;
+  grid-column: 3/4;
+}
+
+.grid > div:nth-child(3) {
+  grid-column: 4/5;
 }
 </style>

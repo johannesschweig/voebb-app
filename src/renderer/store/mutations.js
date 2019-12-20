@@ -74,5 +74,9 @@ export default {
       case BOOKMARKS: state.bookmarks.sorting = BOOKMARKS_PAGE_CRITERIONS[0]
         break
     }
+  },
+  // sets the filter for the search results
+  setFilter (state, filter) {
+    state.search.filter = filter
   }
 }

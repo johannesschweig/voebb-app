@@ -20,8 +20,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getSortedSearchIdentifiers',
-      'getSortedBookmarksIdentifiers'
+      'getSearchIdentifiers',
+      'getBookmarksIdentifiers'
     ]),
     ...mapState({
       previewIdentifier: state => state.preview.data.identifier
@@ -34,12 +34,12 @@ export default {
         // check which entry to return to
         if (this.$route.path === '/' + SEARCH_WRAPPER + '/' + PAGE) {
           // check which entry to return to
-          let index = this.getSortedSearchIdentifiers.indexOf(this.previewIdentifier) + 1
+          let index = this.getSearchIdentifiers.indexOf(this.previewIdentifier) + 1
           document.querySelector('#app > div.root > div:nth-child(2) > div:nth-child(' + index + ')').scrollIntoView()
           document.getElementById('app').scrollTop -= 8
         } else if (this.$route.path === '/' + BOOKMARKS_WRAPPER + '/' + PAGE) {
           // check which entry to return to
-          let index = this.getSortedBookmarksIdentifiers.indexOf(this.previewIdentifier) + 1
+          let index = this.getBookmarksIdentifiers.indexOf(this.previewIdentifier) + 1
           // if 0, the bookmark was just removed
           if (index > 0) {
             document.querySelector('#app > div:nth-child(3) > div:nth-child(3) > div:nth-child(' + index + ')').scrollIntoView()

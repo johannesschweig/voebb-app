@@ -1,4 +1,5 @@
-import { getCurrentDateString, shortenLibraryName, sanitizeDetail, getDaysDue, getAvailability, getCondensedAvailability } from '@/utils/string.js'
+import { getCurrentDateString, shortenLibraryName, sanitizeDetail, getDaysDue, getAvailability, getCondensedAvailability, calculateWidth, getMediaFilter } from '@/utils/string.js'
+import { mediumFilter } from '@/utils/constants.js'
 
 function getDateFromToday (days) {
   let date = new Date(new Date().getTime() + (days * 24 * 60 * 60 * 1000))
@@ -38,6 +39,7 @@ describe('string.js', () => {
     expect(sanitizeDetail('Titel', 'foo( bar[123')).toEqual('foo')
     expect(sanitizeDetail('Titel', 'foo[ bar;123')).toEqual('foo')
     expect(sanitizeDetail('Titel', 'foo. bar.123')).toEqual('foo. bar.123')
+    expect(sanitizeDetail('Titel', 'foo [123] bar')).toEqual('foo bar')
     expect(sanitizeDetail('foo', 'bar')).toEqual('bar')
   })
 
@@ -57,5 +59,16 @@ describe('string.js', () => {
     for (let i = 0; i < statusAvail.length; i++) {
       expect(getAvailability(statusAvail[i].text, statusAvail[i].available)).toEqual(statusAvail[i].avail)
     }
+  })
+
+  it('calculates the width for dropdowns', () => {
+    expect(calculateWidth(['x', 'fooo', 'xx'])).toEqual({ width: '53px' })
+  })
+
+  it('returns correct filters for media', () => {
+    let media = ['CD', 'Band', 'Buch']
+    let expected = [ { 'label': 'All' }, { 'label': 'Book', 'num': 2, 'text': mediumFilter[3].text }, { 'label': 'CD', 'num': 1, 'text': mediumFilter[1].text } ]
+
+    expect(getMediaFilter(media)).toEqual(expected)
   })
 })

@@ -1,7 +1,7 @@
 import { search, getEntryDetails } from '../utils/requests.js'
 import { getCurrentDateString, addAvailability } from '../utils/string.js'
 import { getUserData, setUserData } from '../utils/userStorage.js'
-import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE, SEARCH, BOOKMARKS, PREVIEW } from '../utils/constants.js'
+import { INITIAL, LOADING, TOO_MANY_HITS, NO_HITS, DONE, SEARCH, BOOKMARKS, PREVIEW, ALL } from '../utils/constants.js'
 import { getLoadingObject, CustomError } from '../utils/utils.js'
 
 // actions
@@ -95,6 +95,7 @@ export default {
     commit('clearSearchResultsData')
     commit('clearPreviewData')
     commit('resetSorting', SEARCH)
+    commit('setFilter', { label: ALL })
     // prepare loading objects
     commit('setLoading', getLoadingObject(SEARCH, LOADING, 'Fake search'))
     let res = search('SearchResultsPageRegular', true)
@@ -105,6 +106,7 @@ export default {
   search ({ commit }, term) {
     // clear search results
     commit('resetSorting', SEARCH)
+    commit('setFilter', { label: ALL })
     // prepare loading objects
     let loading = getLoadingObject(SEARCH, LOADING, `Searching for ${term}`)
     commit('setLoading', loading)
@@ -180,5 +182,9 @@ export default {
   // criterion: which sorting criterion to apply
   setSorting ({ commit }, payload) {
     commit('setSorting', payload)
+  },
+  // sets the medium filter for search results
+  setFilter ({ commit }, filter) {
+    commit('setFilter', filter)
   }
 }

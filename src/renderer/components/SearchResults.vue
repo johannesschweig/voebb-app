@@ -1,8 +1,8 @@
 <template>
     <div class='container'>
-        <template v-if='resultsAvailable'>
+        <template v-if='numberOfResults !== 0'>
             <Card
-                v-for='row in getSortedSearchData'
+                v-for='row in getSearchData'
                 :key='row.identifier'
                 :row='row'
                 wrapper='Search' />
@@ -35,8 +35,8 @@ export default {
       data: state => state.search.data
     }),
     ...mapGetters([
-      'resultsAvailable',
-      'getSortedSearchData'
+      'numberOfResults',
+      'getSearchData'
     ])
   },
   methods: {

@@ -9,7 +9,7 @@
           @set-sorting='(criterion) => setSorting({ page: BOOKMARKS, criterion })' />
         <div v-if='detailsAvailable' >
             <Card
-                v-for='row in getSortedBookmarksData'
+                v-for='row in getBookmarksData'
                 :key='row.identifier'
                 :row='{
                     title: row.details["Titel"],
@@ -67,7 +67,7 @@ export default {
     }),
     ...mapGetters([
       'detailsAvailable',
-      'getSortedBookmarksData',
+      'getBookmarksData',
       'multipleBookmarksAvailable'
     ])
   },
@@ -77,7 +77,7 @@ export default {
     ]),
     // exports the bookmarks to a text file
     exportBookmarks () {
-      exportBookmarksFile(this.getSortedBookmarks)
+      exportBookmarksFile(this.getBookmarks)
     }
   }
 }

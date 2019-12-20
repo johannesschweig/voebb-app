@@ -64,7 +64,7 @@ export default {
     ...mapGetters([
       'getPreferredLibraries',
       'getNotPreferredCopiesString',
-      'getSortedPreferredCopies'
+      'getPreferredCopies'
     ])
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
     },
     // returns a sorted list of copies from preferred libraries
     getPreferredLibs () {
-      return this.getSortedPreferredCopies
+      return this.getPreferredCopies
     }
   }
 }

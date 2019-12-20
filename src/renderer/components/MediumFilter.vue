@@ -1,15 +1,15 @@
 <template>
     <div>
-        <span>Sort:</span>  
+        <span>Filter:</span>  
         <select
             :style='getWidth()'
-            @change='$emit("set-sorting", $event.target.value)'>
+            @change='setFilter(criterions[$event.target.selectedIndex])'>
             <option
                 v-for='crit in criterions'
-                :key='crit'
-                :value='crit'
-                :selected='crit === sorting' >
-                {{ crit }}
+                :key='crit.label'
+                :value='crit.label'
+                :selected='crit.label === filter.label' >
+                {{ crit.label }}
             </option>
         </select>
     </div>
@@ -17,21 +17,24 @@
 
 <script>
 import { calculateWidth } from '../utils/string.js'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   props: {
-    sorting: {
-      type: String,
-      required: true
-    },
     criterions: {
       type: Array,
       required: true
     }
   },
+  computed: mapState({
+    filter: state => state.search.filter
+  }),
   methods: {
+    ...mapActions([
+      'setFilter'
+    ]),
     getWidth () {
-      return calculateWidth(this.criterions)
+      return calculateWidth(this.criterions.map(obj => obj.label))
     }
   }
 }

@@ -14,8 +14,8 @@ describe('SearchResults.vue', () => {
           status: DONE,
           msg
         }),
-        resultsAvailable: () => false,
-        getSortedSearchData: () => []
+        numberOfResults: () => 0,
+        getSearchData: () => []
       }
     })
 
@@ -31,8 +31,8 @@ describe('SearchResults.vue', () => {
           status: LOADING,
           msg
         }),
-        resultsAvailable: () => false,
-        getSortedSearchData: () => []
+        numberOfResults: () => 0,
+        getSearchData: () => []
       }
     })
 

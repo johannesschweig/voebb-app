@@ -24,6 +24,7 @@ export async function benchmark () {
   // 9.45 ( 3.776, 11.414, 3.99, 7.878, 6.539, 23.094 ) 16.10.2019 office
   // 18.2 ( 14.539, 13.53, 2.283, 10.181, 23.613, 45.053 ) 07.12.2019 (after redesign) home
   // 13.35 ( 14.684, 14.969, 2.257, 10.559, 3.543, 34.091 ) 07.12.2019 (after redesign) home
+  // 15.82 ( 21.251, 14.565, 3.224, 10.035, 5.106, 40.741 ) 08.02.2020 home
   let terms = ['vuillard', 'biene maja', 'karlson vom dach', '1945', 'gespür für schnee', 'kochen und backen']
   let timeDiffs = []
   for (const term of terms) {
@@ -32,5 +33,5 @@ export async function benchmark () {
   }
   // calculate stats
   let mean = roundTwo(timeDiffs.reduce((a, b) => a + b, 0) / timeDiffs.length)
-  console.log(mean, '(', timeDiffs.join(', '), ')')
+  console.log(mean + '(' + timeDiffs.join(', ') + ')')
 }

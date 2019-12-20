@@ -1,6 +1,6 @@
 import { landingPageOptions, resultsPageOptions, singleResultPageOptions, resultPageOptions, nextPageOptions } from './requestOptions.js'
 import { detailsBlacklist, TOO_MANY_HITS, NO_HITS } from './constants.js'
-import { extractYear, getAvailability } from './string.js'
+import { extractYear, getAvailability, checkEndOfSession, checkPagesVsResults } from './string.js'
 var rp = require('request-promise-native')
 const $ = require('cheerio')
 var fs = require('fs')
@@ -81,6 +81,7 @@ export function search (term, mocked = false) {
         // open search results page with search term
         return rp(resultsPageOptions(session, searchTerm))
       }).then(async (html) => {
+        checkEndOfSession(html, 'resultsPageOptions')
         // check for no hits or too many hits
         let rzero = $('#R01', html)
         if (rzero.length !== 0) {
@@ -117,7 +118,6 @@ export function search (term, mocked = false) {
         } else {
           // extract results from html
           let pages = getNumberOfPages(html)
-
           // extract results from subsequent pages
           // there is only one page
           let results = extractResult(html)
@@ -129,6 +129,7 @@ export function search (term, mocked = false) {
               let html = await rp(nextPageOptions(session, i))
               results = results.concat(extractResult(html))
             }
+            checkPagesVsResults(pages, results.length)
             console.log('ResultsPage successfull:', results.length, 'results')
             return results
           }
@@ -238,6 +239,7 @@ export function getEntryDetails (identifier, mocked = false) {
         console.log('Session', session)
         return rp(resultPageOptions(session))
       }).then(html => {
+        checkEndOfSession(html, 'resultPageOptions')
         let results = extractEntryDetails(html)
         results.identifier = identifier
         return results

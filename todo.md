@@ -1,7 +1,8 @@
 # BACKLOG
-* show number of hits in header
+* bug: wrong book title for (AK15521440) in search results
+* first search hits should be shown as long as others are loading
+  - what about sorting?
 
-* create filter for medium
 * create loading feedback for BookmarksIcon
 * refactor table row in Copies to its own Component
 * create loading feedback for BookmarksIcon
@@ -18,7 +19,7 @@
 ## Search
 * make lens in searchfield dark when focused input field (no previous sibling selector in css)
 * use previous session if not too old (keep track of requestCount??)
-* create nice icons for too many hits, no hits or error
+* create nice icons for no hits or error
 * create filters
   - medium (only book, game, cd, only e-resources/no e-resouces etc.)
   - year (minimum)
@@ -80,6 +81,8 @@
   - not sure if this is good practice
 
 # DONE
+* create filter for medium
+* show number of hits in header
 * Sorting copies after availability
 * Sorting in search: Year/Recency (Ascending/Descending), Title, Relevance (default)
 * Sorting in bookmarks: Year/Recency (Ascending/Descending), Title, Availability (default)

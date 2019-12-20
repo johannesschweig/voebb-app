@@ -1,6 +1,19 @@
 import utils from '../utils'
 import { MOST_RELEVANT, NEWEST, TITLE_A_Z, TITLE_Z_A } from '../../../src/renderer/utils/constants'
 
+// identifier of the bookmarked book
+let bookmarkId
+
+// extract first number with a trailing slash
+function getNumberOfResults (text) {
+  return parseInt(text.match(/^\d\d\//g)[0].slice(0, -1))
+}
+
+// extract last number with leading dash
+function getYearFromSubtitle (text) {
+  return parseInt(text.match(/[0-9]{4}$/g)[0])
+}
+
 describe('Search', function () {
   before(function () {
     // reset bookmarks
@@ -30,30 +43,32 @@ describe('Search', function () {
       .waitForExist('.card')
       .elements('.card')
       .then(res => {
-        expect(res.value).to.have.lengthOf.within(95, 105)
+        expect(res.value).to.have.lengthOf.within(95, 110)
       })
   })
 
   it('sorts entries correctly', function () {
+    let arr = []
     return this.app.client
-      // relevance sort
-      .element('.card:nth-child(1) .title')
-      .getText()
-      .then(text => {
-        expect(text).to.equal('Ein Sams für Martin Taschenbier (Band)')
-      })
-      .element('.card:nth-child(18) .title')
-      .getText()
-      .then(text => {
-        expect(text).to.equal('Neue Punkte für das Sams (Buch)')
-      })
       // sort by newest
       .element('option[value="' + NEWEST + '"]')
       .click()
-      .element('.card:nth-child(1) .title')
+      // TODO: reuse parts, reduce copy-paste
+      .element('.card:nth-child(1) .subtitle')
       .getText()
       .then(text => {
-        expect(text).to.equal('Ein Taucheranzug für das Sams (Band)')
+        arr.push(getYearFromSubtitle(text))
+      })
+      .element('.card:nth-child(10) .subtitle')
+      .getText()
+      .then(text => {
+        arr.push(getYearFromSubtitle(text))
+      })
+      .element('.card:nth-child(20) .subtitle')
+      .getText()
+      .then(text => {
+        arr.push(getYearFromSubtitle(text))
+        expect(arr).to.equal(arr.sort((a, b) => b - a))
       })
       // sort by title a-z
       .element('option[value="' + TITLE_A_Z + '"]')
@@ -61,7 +76,18 @@ describe('Search', function () {
       .element('.card:nth-child(1) .title')
       .getText()
       .then(text => {
-        expect(text).to.equal('Am Samstag kam das Sams zurück (E-Book)')
+        arr.push(text)
+      })
+      .element('.card:nth-child(10) .title')
+      .getText()
+      .then(text => {
+        arr.push(text)
+      })
+      .element('.card:nth-child(20) .title')
+      .getText()
+      .then(text => {
+        arr.push(text)
+        expect(arr).to.equal(arr.sort())
       })
       // sort by title z-a
       .element('option[value="' + TITLE_Z_A + '"]')
@@ -69,10 +95,50 @@ describe('Search', function () {
       .element('.card:nth-child(1) .title')
       .getText()
       .then(text => {
-        expect(text).to.equal("Sem' subbot na nedele (Buch)")
+        arr.push(text)
+      })
+      .element('.card:nth-child(10) .title')
+      .getText()
+      .then(text => {
+        arr.push(text)
+      })
+      .element('.card:nth-child(20) .title')
+      .getText()
+      .then(text => {
+        arr.push(text)
+        expect(arr).to.equal(arr.sort().reverse())
       })
       // reset sorting
       .element('option[value="' + MOST_RELEVANT + '"]')
+      .click()
+  })
+
+  it('filters entries correctly', function () {
+    return this.app.client
+      // books
+      .element('option[value="Book"]')
+      .click()
+      // check number of results
+      .element('.grid > span')
+      .getText()
+      .then(text => {
+        expect(getNumberOfResults(text)).to.be.within(35, 45)
+      })
+      // movies
+      .element('option[value="Movies"]')
+      .click()
+      // check number of results
+      .element('.grid > span')
+      .getText()
+      .then(text => {
+        expect(getNumberOfResults(text)).to.be.within(5, 15)
+      })
+      // check medium icon of first three elements
+      .waitForExist('div:nth-child(1) > div > div.title > i.fa-film')
+      .waitForExist('div:nth-child(2) > div > div.title > i.fa-film')
+      .waitForExist('div:nth-child(3) > div > div.title > i.fa-film')
+      // reset filter
+      .element('option[value="All"]')
       .click()
   })
 
@@ -91,6 +157,12 @@ describe('Search', function () {
       .then(text => {
         expect(text).to.equal('Ein Sams für Martin Taschenbier / Paul Maar')
       })
+      // find id to check in settings file later
+      .element('.grid > div > a:last-child')
+      .getAttribute('href')
+      .then(url => {
+        bookmarkId = url.match(/AK[0-9]{8}/g)
+      })
       // go back to search
       .element('a[label="Search"]')
       .click()
@@ -104,9 +176,10 @@ describe('Search', function () {
     return this.app.client
       // click bookmark
       // FIXME remove pause
-      .pause(1000)
+      .pause(1500)
       .element('#app > div.root > div.container > div:nth-child(3) > svg')
       .click()
+      .pause(10000)
       .waitForExist('#app > div.root > div.container > div:nth-child(3) > svg.active')
       // switch to bookmarks
       .element('a[label="Bookmarks"]')
@@ -120,6 +193,6 @@ describe('Search', function () {
   })
 
   it('bookmarks settings file gets updated', function () {
-    return expect(utils.readBookmarks()).to.equal('["AK15099763"]')
+    return expect(utils.readBookmarks()).to.equal('["' + bookmarkId + '"]')
   })
 })

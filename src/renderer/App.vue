@@ -13,6 +13,7 @@ import Navigation from './components/Navigation.vue'
 import SearchPage from './components/SearchPage.vue'
 import SettingsPage from './components/SettingsPage.vue'
 import { mapState } from 'vuex'
+// import { benchmark } from './utils/benchmark'
 
 export default {
   components: {
@@ -25,6 +26,7 @@ export default {
     'currentPage': state => state.navigation.currentPage
   }),
   created () {
+    // benchmark()
     // read in bookmarks from file
     this.$store.dispatch('readUserData')
     // this.$store.dispatch('fakeReadUserData')
